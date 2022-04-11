@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package fizzyocrapi;
+option go_package = "./;fizzyocrapi";
+
+import "google/api/annotations.proto";
+import "fizzy_ocr.proto";
+
+//票据ocr接口在此定义
+service FizzyOcrApi {
+
+    //通用印刷体识别V1
+    rpc GeneralPrintOCRV1 (GeneralPrintOCRReq) returns(GeneralPrintOCRRsp) {
+        option (google.api.http) = {
+           post:"/ocr-api/print/general/v1"
+           body:"*"
+        };
+    }
+}
+

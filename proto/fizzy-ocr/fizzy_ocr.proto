@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package fizzyocrapi;
+option go_package = "./;fizzyocrapi";
+
+//文本的坐标，以四个顶点坐标表示 注意：此字段可能返回 null，表示取不到有效值
+message Polygon {
+  Coord left_top = 1; // 左上顶点坐标
+  Coord right_top = 2; // 右上顶点坐标
+  Coord right_bottom = 3; // 右下顶点坐标
+  Coord left_bottom = 4; // 左下顶点坐标
+}
+
+//坐标点
+message Coord {
+  float x = 1; //横坐标
+  float y = 2; //纵坐标
+}
+
+/****************  OCR通用印刷体识别  ****************/
+
+//OCR识别请求体（支持的图片格式：PNG、JPG、JPEG、GIF 格式）
+message GeneralPrintOCRReq{
+  string image_url = 1;     //图片的 Url 地址。
+  string image_base64 = 2;  //图片的 Base64 值
+}
+
+// OCR响应体
+message GeneralPrintOCRRsp{
+  int32 code = 1;//状态码
+  string message = 2;//响应信息
+  GeneralPrintOCRRspData data = 3;//响应数据
+}
+
+// OCR识别数据集
+message GeneralPrintOCRRspData{
+  repeated GeneralPrintOCRRspDataItem item = 1;//识别数据集
+}
+
+// OCR识别内容
+message GeneralPrintOCRRspDataItem{
+  Polygon Polygon = 1;//坐标点位
+  string content = 2;//识别内容
+  float Score = 3;//置信度
+}
+
+/****************  OCR通用识别请求体  ****************/
