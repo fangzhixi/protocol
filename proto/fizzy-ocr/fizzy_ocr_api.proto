@@ -10,7 +10,7 @@ import "fizzy_ocr.proto";
 service FizzyOcrApi {
 
     //通用印刷体识别V1
-    rpc GeneralPrintOCRV1 (GeneralPrintOCRReq) returns(GeneralPrintOCRRsp) {
+    rpc GeneralPrintOCRV1 (GeneralOCRReq) returns(GeneralPrintOCRRsp) {
         option (google.api.http) = {
            post:"/ocr-api/print/general/v1"
            body:"*"

@@ -34,7 +34,7 @@ var _ = descriptor.ForMessage
 var _ = metadata.Join
 
 func request_FizzyOcrApi_GeneralPrintOCRV1_0(ctx context.Context, marshaler runtime.Marshaler, client FizzyOcrApiClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GeneralPrintOCRReq
+	var protoReq GeneralOCRReq
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -51,7 +51,7 @@ func request_FizzyOcrApi_GeneralPrintOCRV1_0(ctx context.Context, marshaler runt
 }
 
 func local_request_FizzyOcrApi_GeneralPrintOCRV1_0(ctx context.Context, marshaler runtime.Marshaler, server FizzyOcrApiServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GeneralPrintOCRReq
+	var protoReq GeneralOCRReq
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
