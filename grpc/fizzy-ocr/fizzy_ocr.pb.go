@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.26.0
 // 	protoc        v3.15.6
-// source: fizzy_ocr.proto
+// source: ticket_ocr.proto
 
-package fizzyocrapi
+package ticketocrapi
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -19,6 +19,5758 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
+
+//增值税发票识别 请求
+type VatInvoiceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *VatInvoiceOcrReq) Reset() {
+	*x = VatInvoiceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VatInvoiceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VatInvoiceOcrReq) ProtoMessage() {}
+
+func (x *VatInvoiceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VatInvoiceOcrReq.ProtoReflect.Descriptor instead.
+func (*VatInvoiceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *VatInvoiceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *VatInvoiceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *VatInvoiceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//增值税发票识别 响应
+type VatInvoiceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                 `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *VatInvoiceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *VatInvoiceOcrRsp) Reset() {
+	*x = VatInvoiceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VatInvoiceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VatInvoiceOcrRsp) ProtoMessage() {}
+
+func (x *VatInvoiceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VatInvoiceOcrRsp.ProtoReflect.Descriptor instead.
+func (*VatInvoiceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *VatInvoiceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *VatInvoiceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *VatInvoiceOcrRsp) GetData() *VatInvoiceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//增值税发票识别 响应
+type VatInvoiceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	VatInvoiceInfos []*TextVatInvoice `protobuf:"bytes,1,rep,name=vat_invoice_infos,json=vatInvoiceInfos,proto3" json:"vat_invoice_infos,omitempty"` //增值税发票识别结果
+	Items           []*VatInvoiceItem `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty"`                                              //增值税发票项目明细
+	RequestId       string            `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                     //唯一请求 ID
+}
+
+func (x *VatInvoiceOcrRspData) Reset() {
+	*x = VatInvoiceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VatInvoiceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VatInvoiceOcrRspData) ProtoMessage() {}
+
+func (x *VatInvoiceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VatInvoiceOcrRspData.ProtoReflect.Descriptor instead.
+func (*VatInvoiceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *VatInvoiceOcrRspData) GetVatInvoiceInfos() []*TextVatInvoice {
+	if x != nil {
+		return x.VatInvoiceInfos
+	}
+	return nil
+}
+
+func (x *VatInvoiceOcrRspData) GetItems() []*VatInvoiceItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *VatInvoiceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//增值税发票识别结果
+type TextVatInvoice struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *TextVatInvoice) Reset() {
+	*x = TextVatInvoice{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextVatInvoice) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextVatInvoice) ProtoMessage() {}
+
+func (x *TextVatInvoice) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextVatInvoice.ProtoReflect.Descriptor instead.
+func (*TextVatInvoice) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *TextVatInvoice) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *TextVatInvoice) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+//增值税发票项目明细
+type VatInvoiceItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	LineNo           string `protobuf:"bytes,1,opt,name=line_no,json=lineNo,proto3" json:"line_no,omitempty"`                                 //行号
+	Name             string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                   //名称
+	Spec             string `protobuf:"bytes,3,opt,name=spec,proto3" json:"spec,omitempty"`                                                   //规格
+	Unit             string `protobuf:"bytes,4,opt,name=unit,proto3" json:"unit,omitempty"`                                                   //单位
+	Quantity         string `protobuf:"bytes,5,opt,name=quantity,proto3" json:"quantity,omitempty"`                                           //数量
+	UnitPrice        string `protobuf:"bytes,6,opt,name=unit_price,json=unitPrice,proto3" json:"unit_price,omitempty"`                        //单价
+	AmountWithoutTax string `protobuf:"bytes,7,opt,name=amount_without_tax,json=amountWithoutTax,proto3" json:"amount_without_tax,omitempty"` //不含税金额
+	TaxRate          string `protobuf:"bytes,8,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`                              //税率
+	TaxAmount        string `protobuf:"bytes,9,opt,name=tax_amount,json=taxAmount,proto3" json:"tax_amount,omitempty"`                        //税额
+}
+
+func (x *VatInvoiceItem) Reset() {
+	*x = VatInvoiceItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VatInvoiceItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VatInvoiceItem) ProtoMessage() {}
+
+func (x *VatInvoiceItem) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VatInvoiceItem.ProtoReflect.Descriptor instead.
+func (*VatInvoiceItem) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *VatInvoiceItem) GetLineNo() string {
+	if x != nil {
+		return x.LineNo
+	}
+	return ""
+}
+
+func (x *VatInvoiceItem) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *VatInvoiceItem) GetSpec() string {
+	if x != nil {
+		return x.Spec
+	}
+	return ""
+}
+
+func (x *VatInvoiceItem) GetUnit() string {
+	if x != nil {
+		return x.Unit
+	}
+	return ""
+}
+
+func (x *VatInvoiceItem) GetQuantity() string {
+	if x != nil {
+		return x.Quantity
+	}
+	return ""
+}
+
+func (x *VatInvoiceItem) GetUnitPrice() string {
+	if x != nil {
+		return x.UnitPrice
+	}
+	return ""
+}
+
+func (x *VatInvoiceItem) GetAmountWithoutTax() string {
+	if x != nil {
+		return x.AmountWithoutTax
+	}
+	return ""
+}
+
+func (x *VatInvoiceItem) GetTaxRate() string {
+	if x != nil {
+		return x.TaxRate
+	}
+	return ""
+}
+
+func (x *VatInvoiceItem) GetTaxAmount() string {
+	if x != nil {
+		return x.TaxAmount
+	}
+	return ""
+}
+
+//金融票据整单识别 请求
+type FinanBillOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *FinanBillOcrReq) Reset() {
+	*x = FinanBillOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinanBillOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinanBillOcrReq) ProtoMessage() {}
+
+func (x *FinanBillOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinanBillOcrReq.ProtoReflect.Descriptor instead.
+func (*FinanBillOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *FinanBillOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *FinanBillOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *FinanBillOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//金融票据整单识别 响应
+type FinanBillOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string               `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *FinanBillOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *FinanBillOcrRsp) Reset() {
+	*x = FinanBillOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinanBillOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinanBillOcrRsp) ProtoMessage() {}
+
+func (x *FinanBillOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinanBillOcrRsp.ProtoReflect.Descriptor instead.
+func (*FinanBillOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *FinanBillOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *FinanBillOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *FinanBillOcrRsp) GetData() *FinanBillOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//金融票据整单识别 响应
+type FinanBillOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	FinanBillInfos []*FinanBillInfo `protobuf:"bytes,1,rep,name=finan_bill_infos,json=finanBillInfos,proto3" json:"finan_bill_infos,omitempty"` //金融票据整单识别单个字段的内容
+	RequestId      string           `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                  //唯一请求 ID
+}
+
+func (x *FinanBillOcrRspData) Reset() {
+	*x = FinanBillOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinanBillOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinanBillOcrRspData) ProtoMessage() {}
+
+func (x *FinanBillOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinanBillOcrRspData.ProtoReflect.Descriptor instead.
+func (*FinanBillOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *FinanBillOcrRspData) GetFinanBillInfos() []*FinanBillInfo {
+	if x != nil {
+		return x.FinanBillInfos
+	}
+	return nil
+}
+
+func (x *FinanBillOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//金融票据整单识别单个字段的内容
+type FinanBillInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *FinanBillInfo) Reset() {
+	*x = FinanBillInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinanBillInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinanBillInfo) ProtoMessage() {}
+
+func (x *FinanBillInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinanBillInfo.ProtoReflect.Descriptor instead.
+func (*FinanBillInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *FinanBillInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *FinanBillInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+//增值税发票（卷票）识别 请求
+type VatRollInvoiceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *VatRollInvoiceOcrReq) Reset() {
+	*x = VatRollInvoiceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VatRollInvoiceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VatRollInvoiceOcrReq) ProtoMessage() {}
+
+func (x *VatRollInvoiceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VatRollInvoiceOcrReq.ProtoReflect.Descriptor instead.
+func (*VatRollInvoiceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *VatRollInvoiceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *VatRollInvoiceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *VatRollInvoiceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//增值税发票（卷票）识别 响应
+type VatRollInvoiceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                     `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *VatRollInvoiceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *VatRollInvoiceOcrRsp) Reset() {
+	*x = VatRollInvoiceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VatRollInvoiceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VatRollInvoiceOcrRsp) ProtoMessage() {}
+
+func (x *VatRollInvoiceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VatRollInvoiceOcrRsp.ProtoReflect.Descriptor instead.
+func (*VatRollInvoiceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *VatRollInvoiceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *VatRollInvoiceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *VatRollInvoiceOcrRsp) GetData() *VatRollInvoiceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//增值税发票（卷票）识别 响应
+type VatRollInvoiceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	VatRollInvoiceInfos []*VatRollInvoiceInfo `protobuf:"bytes,1,rep,name=vat_roll_invoice_infos,json=vatRollInvoiceInfos,proto3" json:"vat_roll_invoice_infos,omitempty"` //增值税发票（卷票）识别结果
+	Angle               string                `protobuf:"bytes,2,opt,name=angle,proto3" json:"angle,omitempty"`                                                            //图片旋转角度（角度制），文本的水平方向为0°，顺时针为正，逆时针为负
+	RequestId           string                `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                                   //唯一请求 ID
+}
+
+func (x *VatRollInvoiceOcrRspData) Reset() {
+	*x = VatRollInvoiceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VatRollInvoiceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VatRollInvoiceOcrRspData) ProtoMessage() {}
+
+func (x *VatRollInvoiceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VatRollInvoiceOcrRspData.ProtoReflect.Descriptor instead.
+func (*VatRollInvoiceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *VatRollInvoiceOcrRspData) GetVatRollInvoiceInfos() []*VatRollInvoiceInfo {
+	if x != nil {
+		return x.VatRollInvoiceInfos
+	}
+	return nil
+}
+
+func (x *VatRollInvoiceOcrRspData) GetAngle() string {
+	if x != nil {
+		return x.Angle
+	}
+	return ""
+}
+
+func (x *VatRollInvoiceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//增值税发票卷票信息
+type VatRollInvoiceInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`   //识别出的字段名称（关键字）
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"` //识别出的字段名称对应的值
+	Rect  *Rect  `protobuf:"bytes,3,opt,name=rect,proto3" json:"rect,omitempty"`   //文本行在旋转纠正之后的图像中的像素坐标
+}
+
+func (x *VatRollInvoiceInfo) Reset() {
+	*x = VatRollInvoiceInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VatRollInvoiceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VatRollInvoiceInfo) ProtoMessage() {}
+
+func (x *VatRollInvoiceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VatRollInvoiceInfo.ProtoReflect.Descriptor instead.
+func (*VatRollInvoiceInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *VatRollInvoiceInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *VatRollInvoiceInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *VatRollInvoiceInfo) GetRect() *Rect {
+	if x != nil {
+		return x.Rect
+	}
+	return nil
+}
+
+//矩形坐标
+type Rect struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	X      int32 `protobuf:"varint,1,opt,name=x,proto3" json:"x,omitempty"`           //左上角x
+	Y      int32 `protobuf:"varint,2,opt,name=y,proto3" json:"y,omitempty"`           //左上角y
+	Width  int32 `protobuf:"varint,3,opt,name=width,proto3" json:"width,omitempty"`   //宽度
+	Height int32 `protobuf:"varint,4,opt,name=height,proto3" json:"height,omitempty"` //高度
+}
+
+func (x *Rect) Reset() {
+	*x = Rect{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Rect) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rect) ProtoMessage() {}
+
+func (x *Rect) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rect.ProtoReflect.Descriptor instead.
+func (*Rect) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *Rect) GetX() int32 {
+	if x != nil {
+		return x.X
+	}
+	return 0
+}
+
+func (x *Rect) GetY() int32 {
+	if x != nil {
+		return x.Y
+	}
+	return 0
+}
+
+func (x *Rect) GetWidth() int32 {
+	if x != nil {
+		return x.Width
+	}
+	return 0
+}
+
+func (x *Rect) GetHeight() int32 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+//混贴票据识别 请求
+type MixedInvoiceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string  `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string  `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	Types       []int32 `protobuf:"varint,3,rep,packed,name=types,proto3" json:"types,omitempty"`                        //需要识别的票据类型列表，为空或不填表示识别全部类型
+	OpenOrgId   string  `protobuf:"bytes,4,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *MixedInvoiceOcrReq) Reset() {
+	*x = MixedInvoiceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MixedInvoiceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MixedInvoiceOcrReq) ProtoMessage() {}
+
+func (x *MixedInvoiceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MixedInvoiceOcrReq.ProtoReflect.Descriptor instead.
+func (*MixedInvoiceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *MixedInvoiceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *MixedInvoiceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *MixedInvoiceOcrReq) GetTypes() []int32 {
+	if x != nil {
+		return x.Types
+	}
+	return nil
+}
+
+func (x *MixedInvoiceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//混贴票据识别 响应
+type MixedInvoiceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                   `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                  `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *MixedInvoiceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *MixedInvoiceOcrRsp) Reset() {
+	*x = MixedInvoiceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MixedInvoiceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MixedInvoiceOcrRsp) ProtoMessage() {}
+
+func (x *MixedInvoiceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MixedInvoiceOcrRsp.ProtoReflect.Descriptor instead.
+func (*MixedInvoiceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *MixedInvoiceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *MixedInvoiceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *MixedInvoiceOcrRsp) GetData() *MixedInvoiceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//混贴票据识别 响应
+type MixedInvoiceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Total             int32               `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`                                                   //成功识别票据数量
+	MixedInvoiceItems []*MixedInvoiceItem `protobuf:"bytes,2,rep,name=mixed_invoice_items,json=mixedInvoiceItems,proto3" json:"mixed_invoice_items,omitempty"` //混贴票据识别结果
+	RequestId         string              `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                           //唯一请求 ID
+}
+
+func (x *MixedInvoiceOcrRspData) Reset() {
+	*x = MixedInvoiceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MixedInvoiceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MixedInvoiceOcrRspData) ProtoMessage() {}
+
+func (x *MixedInvoiceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MixedInvoiceOcrRspData.ProtoReflect.Descriptor instead.
+func (*MixedInvoiceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *MixedInvoiceOcrRspData) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *MixedInvoiceOcrRspData) GetMixedInvoiceItems() []*MixedInvoiceItem {
+	if x != nil {
+		return x.MixedInvoiceItems
+	}
+	return nil
+}
+
+func (x *MixedInvoiceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//混贴票据单张发票识别信息
+type MixedInvoiceItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code               string               `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`                                                         //识别结果
+	Type               int32                `protobuf:"varint,2,opt,name=type,proto3" json:"type,omitempty"`                                                        //识别出的图片所属的票据类型
+	Rect               *Rect                `protobuf:"bytes,3,opt,name=rect,proto3" json:"rect,omitempty"`                                                         //识别出的图片在混贴票据图片中的位置信息
+	Angle              string               `protobuf:"bytes,4,opt,name=angle,proto3" json:"angle,omitempty"`                                                       //识别出的图片在混贴票据图片中的旋转角度
+	SingleInvoiceInfos []*SingleInvoiceInfo `protobuf:"bytes,5,rep,name=single_invoice_infos,json=singleInvoiceInfos,proto3" json:"single_invoice_infos,omitempty"` //识别到的内容
+}
+
+func (x *MixedInvoiceItem) Reset() {
+	*x = MixedInvoiceItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MixedInvoiceItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MixedInvoiceItem) ProtoMessage() {}
+
+func (x *MixedInvoiceItem) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MixedInvoiceItem.ProtoReflect.Descriptor instead.
+func (*MixedInvoiceItem) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *MixedInvoiceItem) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *MixedInvoiceItem) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *MixedInvoiceItem) GetRect() *Rect {
+	if x != nil {
+		return x.Rect
+	}
+	return nil
+}
+
+func (x *MixedInvoiceItem) GetAngle() string {
+	if x != nil {
+		return x.Angle
+	}
+	return ""
+}
+
+func (x *MixedInvoiceItem) GetSingleInvoiceInfos() []*SingleInvoiceInfo {
+	if x != nil {
+		return x.SingleInvoiceInfos
+	}
+	return nil
+}
+
+//混贴票据中单张发票的内容
+type SingleInvoiceInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *SingleInvoiceInfo) Reset() {
+	*x = SingleInvoiceInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SingleInvoiceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SingleInvoiceInfo) ProtoMessage() {}
+
+func (x *SingleInvoiceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SingleInvoiceInfo.ProtoReflect.Descriptor instead.
+func (*SingleInvoiceInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *SingleInvoiceInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *SingleInvoiceInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+//混贴票据分类 请求
+type MixedInvoiceDetectReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ReturnImage bool   `protobuf:"varint,1,opt,name=return_image,json=returnImage,proto3" json:"return_image,omitempty"` //是否需要返回裁剪后的图片
+	ImageBase64 string `protobuf:"bytes,2,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"`  //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,3,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`           //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,4,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *MixedInvoiceDetectReq) Reset() {
+	*x = MixedInvoiceDetectReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MixedInvoiceDetectReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MixedInvoiceDetectReq) ProtoMessage() {}
+
+func (x *MixedInvoiceDetectReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MixedInvoiceDetectReq.ProtoReflect.Descriptor instead.
+func (*MixedInvoiceDetectReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *MixedInvoiceDetectReq) GetReturnImage() bool {
+	if x != nil {
+		return x.ReturnImage
+	}
+	return false
+}
+
+func (x *MixedInvoiceDetectReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *MixedInvoiceDetectReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *MixedInvoiceDetectReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//混贴票据分类 响应
+type MixedInvoiceDetectRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                      `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *MixedInvoiceDetectRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *MixedInvoiceDetectRsp) Reset() {
+	*x = MixedInvoiceDetectRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MixedInvoiceDetectRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MixedInvoiceDetectRsp) ProtoMessage() {}
+
+func (x *MixedInvoiceDetectRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MixedInvoiceDetectRsp.ProtoReflect.Descriptor instead.
+func (*MixedInvoiceDetectRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *MixedInvoiceDetectRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *MixedInvoiceDetectRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *MixedInvoiceDetectRsp) GetData() *MixedInvoiceDetectRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//混贴票据分类 响应
+type MixedInvoiceDetectRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	InvoiceDetectInfos []*InvoiceDetectInfo `protobuf:"bytes,1,rep,name=invoice_detect_infos,json=invoiceDetectInfos,proto3" json:"invoice_detect_infos,omitempty"` //检测出的票据类型列表
+	RequestId          string               `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                              //唯一请求 ID
+}
+
+func (x *MixedInvoiceDetectRspData) Reset() {
+	*x = MixedInvoiceDetectRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MixedInvoiceDetectRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MixedInvoiceDetectRspData) ProtoMessage() {}
+
+func (x *MixedInvoiceDetectRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MixedInvoiceDetectRspData.ProtoReflect.Descriptor instead.
+func (*MixedInvoiceDetectRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *MixedInvoiceDetectRspData) GetInvoiceDetectInfos() []*InvoiceDetectInfo {
+	if x != nil {
+		return x.InvoiceDetectInfos
+	}
+	return nil
+}
+
+func (x *MixedInvoiceDetectRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//票据检测结果信息
+type InvoiceDetectInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Angle string `protobuf:"bytes,1,opt,name=angle,proto3" json:"angle,omitempty"` //识别出的图片在混贴票据图片中的旋转角度
+	Type  int32  `protobuf:"varint,2,opt,name=type,proto3" json:"type,omitempty"`  //识别出的图片所属的票据类型
+	Rect  *Rect  `protobuf:"bytes,3,opt,name=rect,proto3" json:"rect,omitempty"`   //识别出的图片在混贴票据图片中的位置信息
+	Image string `protobuf:"bytes,4,opt,name=image,proto3" json:"image,omitempty"` //入参 ReturnImage 为 True 时返回 Base64 编码后的图片
+}
+
+func (x *InvoiceDetectInfo) Reset() {
+	*x = InvoiceDetectInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InvoiceDetectInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InvoiceDetectInfo) ProtoMessage() {}
+
+func (x *InvoiceDetectInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InvoiceDetectInfo.ProtoReflect.Descriptor instead.
+func (*InvoiceDetectInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *InvoiceDetectInfo) GetAngle() string {
+	if x != nil {
+		return x.Angle
+	}
+	return ""
+}
+
+func (x *InvoiceDetectInfo) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *InvoiceDetectInfo) GetRect() *Rect {
+	if x != nil {
+		return x.Rect
+	}
+	return nil
+}
+
+func (x *InvoiceDetectInfo) GetImage() string {
+	if x != nil {
+		return x.Image
+	}
+	return ""
+}
+
+//通用机打发票识别 请求
+type InvoiceGeneralOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *InvoiceGeneralOcrReq) Reset() {
+	*x = InvoiceGeneralOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InvoiceGeneralOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InvoiceGeneralOcrReq) ProtoMessage() {}
+
+func (x *InvoiceGeneralOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InvoiceGeneralOcrReq.ProtoReflect.Descriptor instead.
+func (*InvoiceGeneralOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *InvoiceGeneralOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *InvoiceGeneralOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *InvoiceGeneralOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//通用机打发票识别 响应
+type InvoiceGeneralOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                     `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *InvoiceGeneralOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *InvoiceGeneralOcrRsp) Reset() {
+	*x = InvoiceGeneralOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InvoiceGeneralOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InvoiceGeneralOcrRsp) ProtoMessage() {}
+
+func (x *InvoiceGeneralOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InvoiceGeneralOcrRsp.ProtoReflect.Descriptor instead.
+func (*InvoiceGeneralOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *InvoiceGeneralOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *InvoiceGeneralOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *InvoiceGeneralOcrRsp) GetData() *InvoiceGeneralOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//通用机打发票识别 响应
+type InvoiceGeneralOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	InvoiceGeneralInfos []*InvoiceGeneralInfo `protobuf:"bytes,1,rep,name=invoice_general_infos,json=invoiceGeneralInfos,proto3" json:"invoice_general_infos,omitempty"` //通用机打发票识别结果
+	Angle               string                `protobuf:"bytes,2,opt,name=angle,proto3" json:"angle,omitempty"`                                                          //图片旋转角度（角度制），文本的水平方向为0°，顺时针为正，逆时针为负
+	RequestId           string                `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                                 //唯一请求 ID
+}
+
+func (x *InvoiceGeneralOcrRspData) Reset() {
+	*x = InvoiceGeneralOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InvoiceGeneralOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InvoiceGeneralOcrRspData) ProtoMessage() {}
+
+func (x *InvoiceGeneralOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InvoiceGeneralOcrRspData.ProtoReflect.Descriptor instead.
+func (*InvoiceGeneralOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *InvoiceGeneralOcrRspData) GetInvoiceGeneralInfos() []*InvoiceGeneralInfo {
+	if x != nil {
+		return x.InvoiceGeneralInfos
+	}
+	return nil
+}
+
+func (x *InvoiceGeneralOcrRspData) GetAngle() string {
+	if x != nil {
+		return x.Angle
+	}
+	return ""
+}
+
+func (x *InvoiceGeneralOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//通用机打发票信息
+type InvoiceGeneralInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`   //识别出的字段名称（关键字）
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"` //识别出的字段名称对应的值
+	Rect  *Rect  `protobuf:"bytes,3,opt,name=rect,proto3" json:"rect,omitempty"`   //文本行在旋转纠正之后的图像中的像素坐标
+}
+
+func (x *InvoiceGeneralInfo) Reset() {
+	*x = InvoiceGeneralInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InvoiceGeneralInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InvoiceGeneralInfo) ProtoMessage() {}
+
+func (x *InvoiceGeneralInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InvoiceGeneralInfo.ProtoReflect.Descriptor instead.
+func (*InvoiceGeneralInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *InvoiceGeneralInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *InvoiceGeneralInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *InvoiceGeneralInfo) GetRect() *Rect {
+	if x != nil {
+		return x.Rect
+	}
+	return nil
+}
+
+//完税证明识别 请求
+type DutyPaidProofOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *DutyPaidProofOcrReq) Reset() {
+	*x = DutyPaidProofOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[27]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DutyPaidProofOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DutyPaidProofOcrReq) ProtoMessage() {}
+
+func (x *DutyPaidProofOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[27]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DutyPaidProofOcrReq.ProtoReflect.Descriptor instead.
+func (*DutyPaidProofOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *DutyPaidProofOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *DutyPaidProofOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *DutyPaidProofOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//完税证明识别 响应
+type DutyPaidProofOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *DutyPaidProofOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *DutyPaidProofOcrRsp) Reset() {
+	*x = DutyPaidProofOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[28]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DutyPaidProofOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DutyPaidProofOcrRsp) ProtoMessage() {}
+
+func (x *DutyPaidProofOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[28]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DutyPaidProofOcrRsp.ProtoReflect.Descriptor instead.
+func (*DutyPaidProofOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *DutyPaidProofOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *DutyPaidProofOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *DutyPaidProofOcrRsp) GetData() *DutyPaidProofOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//完税证明识别 响应
+type DutyPaidProofOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DutyPaidProofInfos []*DutyPaidProofInfo `protobuf:"bytes,1,rep,name=duty_paid_proof_infos,json=dutyPaidProofInfos,proto3" json:"duty_paid_proof_infos,omitempty"` //通用机打发票识别结果
+	Angle              string               `protobuf:"bytes,2,opt,name=angle,proto3" json:"angle,omitempty"`                                                         //图片旋转角度（角度制），文本的水平方向为0°，顺时针为正，逆时针为负
+	RequestId          string               `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                                //唯一请求 ID
+}
+
+func (x *DutyPaidProofOcrRspData) Reset() {
+	*x = DutyPaidProofOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[29]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DutyPaidProofOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DutyPaidProofOcrRspData) ProtoMessage() {}
+
+func (x *DutyPaidProofOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[29]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DutyPaidProofOcrRspData.ProtoReflect.Descriptor instead.
+func (*DutyPaidProofOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *DutyPaidProofOcrRspData) GetDutyPaidProofInfos() []*DutyPaidProofInfo {
+	if x != nil {
+		return x.DutyPaidProofInfos
+	}
+	return nil
+}
+
+func (x *DutyPaidProofOcrRspData) GetAngle() string {
+	if x != nil {
+		return x.Angle
+	}
+	return ""
+}
+
+func (x *DutyPaidProofOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//识别出的字段信息
+type DutyPaidProofInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`   //识别出的字段名称（关键字）
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"` //识别出的字段名称对应的值
+	Rect  *Rect  `protobuf:"bytes,3,opt,name=rect,proto3" json:"rect,omitempty"`   //文本行在旋转纠正之后的图像中的像素坐标
+}
+
+func (x *DutyPaidProofInfo) Reset() {
+	*x = DutyPaidProofInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[30]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DutyPaidProofInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DutyPaidProofInfo) ProtoMessage() {}
+
+func (x *DutyPaidProofInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[30]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DutyPaidProofInfo.ProtoReflect.Descriptor instead.
+func (*DutyPaidProofInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *DutyPaidProofInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *DutyPaidProofInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *DutyPaidProofInfo) GetRect() *Rect {
+	if x != nil {
+		return x.Rect
+	}
+	return nil
+}
+
+//出租车发票识别请求
+type TaxiInvoiceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *TaxiInvoiceOcrReq) Reset() {
+	*x = TaxiInvoiceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[31]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TaxiInvoiceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaxiInvoiceOcrReq) ProtoMessage() {}
+
+func (x *TaxiInvoiceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[31]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaxiInvoiceOcrReq.ProtoReflect.Descriptor instead.
+func (*TaxiInvoiceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *TaxiInvoiceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//出租车发票识别 响应
+type TaxiInvoiceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *TaxiInvoiceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *TaxiInvoiceOcrRsp) Reset() {
+	*x = TaxiInvoiceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[32]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TaxiInvoiceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaxiInvoiceOcrRsp) ProtoMessage() {}
+
+func (x *TaxiInvoiceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[32]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaxiInvoiceOcrRsp.ProtoReflect.Descriptor instead.
+func (*TaxiInvoiceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *TaxiInvoiceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *TaxiInvoiceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRsp) GetData() *TaxiInvoiceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//出租车发票识别 响应
+type TaxiInvoiceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	InvoiceNum  string `protobuf:"bytes,1,opt,name=invoice_num,json=invoiceNum,proto3" json:"invoice_num,omitempty"`     // 发票代码
+	InvoiceCode string `protobuf:"bytes,2,opt,name=invoice_code,json=invoiceCode,proto3" json:"invoice_code,omitempty"`  //发票号码
+	Date        string `protobuf:"bytes,3,opt,name=date,proto3" json:"date,omitempty"`                                   // 日期
+	Fare        string `protobuf:"bytes,4,opt,name=fare,proto3" json:"fare,omitempty"`                                   //金额
+	GetOnTime   string `protobuf:"bytes,5,opt,name=get_on_time,json=getOnTime,proto3" json:"get_on_time,omitempty"`      // 上车时间
+	GetOffTime  string `protobuf:"bytes,6,opt,name=get_off_time,json=getOffTime,proto3" json:"get_off_time,omitempty"`   //下车时间
+	Distance    string `protobuf:"bytes,7,opt,name=distance,proto3" json:"distance,omitempty"`                           // 里程
+	Location    string `protobuf:"bytes,8,opt,name=location,proto3" json:"location,omitempty"`                           //发票所在地
+	PlateNumber string `protobuf:"bytes,9,opt,name=plate_number,json=plateNumber,proto3" json:"plate_number,omitempty"`  // 车牌号
+	InvoiceType string `protobuf:"bytes,10,opt,name=invoice_type,json=invoiceType,proto3" json:"invoice_type,omitempty"` //发票消费类型
+	Province    string `protobuf:"bytes,11,opt,name=province,proto3" json:"province,omitempty"`                          // 省
+	City        string `protobuf:"bytes,12,opt,name=city,proto3" json:"city,omitempty"`                                  // 市
+	RequestId   string `protobuf:"bytes,13,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`       // 唯一请求 _i_d，每次请求都会返回
+}
+
+func (x *TaxiInvoiceOcrRspData) Reset() {
+	*x = TaxiInvoiceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[33]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TaxiInvoiceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaxiInvoiceOcrRspData) ProtoMessage() {}
+
+func (x *TaxiInvoiceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[33]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaxiInvoiceOcrRspData.ProtoReflect.Descriptor instead.
+func (*TaxiInvoiceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *TaxiInvoiceOcrRspData) GetInvoiceNum() string {
+	if x != nil {
+		return x.InvoiceNum
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetInvoiceCode() string {
+	if x != nil {
+		return x.InvoiceCode
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetFare() string {
+	if x != nil {
+		return x.Fare
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetGetOnTime() string {
+	if x != nil {
+		return x.GetOnTime
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetGetOffTime() string {
+	if x != nil {
+		return x.GetOffTime
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetDistance() string {
+	if x != nil {
+		return x.Distance
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetLocation() string {
+	if x != nil {
+		return x.Location
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetPlateNumber() string {
+	if x != nil {
+		return x.PlateNumber
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetInvoiceType() string {
+	if x != nil {
+		return x.InvoiceType
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetProvince() string {
+	if x != nil {
+		return x.Province
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetCity() string {
+	if x != nil {
+		return x.City
+	}
+	return ""
+}
+
+func (x *TaxiInvoiceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//定额发票识别 请求
+type QuotaInvoiceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *QuotaInvoiceOcrReq) Reset() {
+	*x = QuotaInvoiceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QuotaInvoiceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QuotaInvoiceOcrReq) ProtoMessage() {}
+
+func (x *QuotaInvoiceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QuotaInvoiceOcrReq.ProtoReflect.Descriptor instead.
+func (*QuotaInvoiceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *QuotaInvoiceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//定额发票识别 响应
+type QuotaInvoiceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                   `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                  `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *QuotaInvoiceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *QuotaInvoiceOcrRsp) Reset() {
+	*x = QuotaInvoiceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[35]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QuotaInvoiceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QuotaInvoiceOcrRsp) ProtoMessage() {}
+
+func (x *QuotaInvoiceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[35]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QuotaInvoiceOcrRsp.ProtoReflect.Descriptor instead.
+func (*QuotaInvoiceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *QuotaInvoiceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *QuotaInvoiceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrRsp) GetData() *QuotaInvoiceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//定额发票识别 响应
+type QuotaInvoiceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	InvoiceNum  string `protobuf:"bytes,1,opt,name=invoice_num,json=invoiceNum,proto3" json:"invoice_num,omitempty"`    // 发票号码
+	InvoiceCode string `protobuf:"bytes,2,opt,name=invoice_code,json=invoiceCode,proto3" json:"invoice_code,omitempty"` //发票代码
+	Rate        string `protobuf:"bytes,3,opt,name=rate,proto3" json:"rate,omitempty"`                                  // 大写金额
+	RateNum     string `protobuf:"bytes,4,opt,name=rate_num,json=rateNum,proto3" json:"rate_num,omitempty"`             //小写金额
+	InvoiceType string `protobuf:"bytes,5,opt,name=invoice_type,json=invoiceType,proto3" json:"invoice_type,omitempty"` // 发票消费类型
+	Province    string `protobuf:"bytes,6,opt,name=province,proto3" json:"province,omitempty"`                          //省
+	City        string `protobuf:"bytes,7,opt,name=city,proto3" json:"city,omitempty"`                                  // 市
+	HasStamp    string `protobuf:"bytes,8,opt,name=has_stamp,json=hasStamp,proto3" json:"has_stamp,omitempty"`          // 是否有公司印章（1有 0无 空为识别不出）
+	RequestId   string `protobuf:"bytes,9,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`       // 唯一请求 _i_d，每次请求都会返回
+}
+
+func (x *QuotaInvoiceOcrRspData) Reset() {
+	*x = QuotaInvoiceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QuotaInvoiceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QuotaInvoiceOcrRspData) ProtoMessage() {}
+
+func (x *QuotaInvoiceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QuotaInvoiceOcrRspData.ProtoReflect.Descriptor instead.
+func (*QuotaInvoiceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *QuotaInvoiceOcrRspData) GetInvoiceNum() string {
+	if x != nil {
+		return x.InvoiceNum
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrRspData) GetInvoiceCode() string {
+	if x != nil {
+		return x.InvoiceCode
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrRspData) GetRate() string {
+	if x != nil {
+		return x.Rate
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrRspData) GetRateNum() string {
+	if x != nil {
+		return x.RateNum
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrRspData) GetInvoiceType() string {
+	if x != nil {
+		return x.InvoiceType
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrRspData) GetProvince() string {
+	if x != nil {
+		return x.Province
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrRspData) GetCity() string {
+	if x != nil {
+		return x.City
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrRspData) GetHasStamp() string {
+	if x != nil {
+		return x.HasStamp
+	}
+	return ""
+}
+
+func (x *QuotaInvoiceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//购车发票识别 请求
+type CarInvoiceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *CarInvoiceOcrReq) Reset() {
+	*x = CarInvoiceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[37]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CarInvoiceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CarInvoiceOcrReq) ProtoMessage() {}
+
+func (x *CarInvoiceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[37]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CarInvoiceOcrReq.ProtoReflect.Descriptor instead.
+func (*CarInvoiceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *CarInvoiceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *CarInvoiceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *CarInvoiceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//购车发票识别 响应
+type CarInvoiceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                 `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *CarInvoiceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *CarInvoiceOcrRsp) Reset() {
+	*x = CarInvoiceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[38]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CarInvoiceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CarInvoiceOcrRsp) ProtoMessage() {}
+
+func (x *CarInvoiceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[38]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CarInvoiceOcrRsp.ProtoReflect.Descriptor instead.
+func (*CarInvoiceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *CarInvoiceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *CarInvoiceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *CarInvoiceOcrRsp) GetData() *CarInvoiceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//购车发票识别 响应
+type CarInvoiceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CarInvoiceInfos []*CarInvoiceInfo `protobuf:"bytes,1,rep,name=car_invoice_infos,json=carInvoiceInfos,proto3" json:"car_invoice_infos,omitempty"` //购车发票识别结果
+	RequestId       string            `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                     //唯一请求 ID
+}
+
+func (x *CarInvoiceOcrRspData) Reset() {
+	*x = CarInvoiceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[39]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CarInvoiceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CarInvoiceOcrRspData) ProtoMessage() {}
+
+func (x *CarInvoiceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[39]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CarInvoiceOcrRspData.ProtoReflect.Descriptor instead.
+func (*CarInvoiceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *CarInvoiceOcrRspData) GetCarInvoiceInfos() []*CarInvoiceInfo {
+	if x != nil {
+		return x.CarInvoiceInfos
+	}
+	return nil
+}
+
+func (x *CarInvoiceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//购车发票识别结果
+type CarInvoiceInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`   //识别出的字段名称（关键字）
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"` //识别出的字段名称对应的值
+}
+
+func (x *CarInvoiceInfo) Reset() {
+	*x = CarInvoiceInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[40]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CarInvoiceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CarInvoiceInfo) ProtoMessage() {}
+
+func (x *CarInvoiceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[40]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CarInvoiceInfo.ProtoReflect.Descriptor instead.
+func (*CarInvoiceInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *CarInvoiceInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CarInvoiceInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+// 金融票据切片识别 请求
+type FinanBillSliceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *FinanBillSliceOcrReq) Reset() {
+	*x = FinanBillSliceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[41]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinanBillSliceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinanBillSliceOcrReq) ProtoMessage() {}
+
+func (x *FinanBillSliceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[41]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinanBillSliceOcrReq.ProtoReflect.Descriptor instead.
+func (*FinanBillSliceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *FinanBillSliceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *FinanBillSliceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *FinanBillSliceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+// 金融票据切片识别 响应
+type FinanBillSliceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                     `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *FinanBillSliceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *FinanBillSliceOcrRsp) Reset() {
+	*x = FinanBillSliceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[42]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinanBillSliceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinanBillSliceOcrRsp) ProtoMessage() {}
+
+func (x *FinanBillSliceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[42]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinanBillSliceOcrRsp.ProtoReflect.Descriptor instead.
+func (*FinanBillSliceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *FinanBillSliceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *FinanBillSliceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *FinanBillSliceOcrRsp) GetData() *FinanBillSliceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 金融票据切片识别 响应
+type FinanBillSliceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	FinanBillSliceInfos []*FinanBillSliceInfo `protobuf:"bytes,1,rep,name=finan_bill_slice_infos,json=finanBillSliceInfos,proto3" json:"finan_bill_slice_infos,omitempty"` // 金融票据切片识别结果
+	RequestId           string                `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                                   // 唯一请求ID
+}
+
+func (x *FinanBillSliceOcrRspData) Reset() {
+	*x = FinanBillSliceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[43]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinanBillSliceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinanBillSliceOcrRspData) ProtoMessage() {}
+
+func (x *FinanBillSliceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[43]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinanBillSliceOcrRspData.ProtoReflect.Descriptor instead.
+func (*FinanBillSliceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *FinanBillSliceOcrRspData) GetFinanBillSliceInfos() []*FinanBillSliceInfo {
+	if x != nil {
+		return x.FinanBillSliceInfos
+	}
+	return nil
+}
+
+func (x *FinanBillSliceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+// 金融票据切片识别信息
+type FinanBillSliceInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`   // 识别出的字段名称
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"` // 识别出的字段名称对应的值，也就是字段Name对应的字符串结果
+}
+
+func (x *FinanBillSliceInfo) Reset() {
+	*x = FinanBillSliceInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[44]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinanBillSliceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinanBillSliceInfo) ProtoMessage() {}
+
+func (x *FinanBillSliceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[44]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinanBillSliceInfo.ProtoReflect.Descriptor instead.
+func (*FinanBillSliceInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *FinanBillSliceInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *FinanBillSliceInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+// 机票行程单识别 请求
+type FlightInvoiceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"`
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *FlightInvoiceOcrReq) Reset() {
+	*x = FlightInvoiceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[45]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FlightInvoiceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FlightInvoiceOcrReq) ProtoMessage() {}
+
+func (x *FlightInvoiceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[45]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FlightInvoiceOcrReq.ProtoReflect.Descriptor instead.
+func (*FlightInvoiceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *FlightInvoiceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *FlightInvoiceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *FlightInvoiceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+// 机票行程单识别 响应
+type FlightInvoiceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *FlightInvoiceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *FlightInvoiceOcrRsp) Reset() {
+	*x = FlightInvoiceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[46]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FlightInvoiceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FlightInvoiceOcrRsp) ProtoMessage() {}
+
+func (x *FlightInvoiceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[46]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FlightInvoiceOcrRsp.ProtoReflect.Descriptor instead.
+func (*FlightInvoiceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *FlightInvoiceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *FlightInvoiceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *FlightInvoiceOcrRsp) GetData() *FlightInvoiceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 机票行程单识别 响应
+type FlightInvoiceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	FlightInvoiceInfos []*FlightInvoiceInfo `protobuf:"bytes,1,rep,name=flight_invoice_infos,json=flightInvoiceInfos,proto3" json:"flight_invoice_infos,omitempty"`
+	RequestId          string               `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+}
+
+func (x *FlightInvoiceOcrRspData) Reset() {
+	*x = FlightInvoiceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[47]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FlightInvoiceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FlightInvoiceOcrRspData) ProtoMessage() {}
+
+func (x *FlightInvoiceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[47]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FlightInvoiceOcrRspData.ProtoReflect.Descriptor instead.
+func (*FlightInvoiceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *FlightInvoiceOcrRspData) GetFlightInvoiceInfos() []*FlightInvoiceInfo {
+	if x != nil {
+		return x.FlightInvoiceInfos
+	}
+	return nil
+}
+
+func (x *FlightInvoiceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+// 机票行程单识别信息
+type FlightInvoiceInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *FlightInvoiceInfo) Reset() {
+	*x = FlightInvoiceInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[48]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FlightInvoiceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FlightInvoiceInfo) ProtoMessage() {}
+
+func (x *FlightInvoiceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[48]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FlightInvoiceInfo.ProtoReflect.Descriptor instead.
+func (*FlightInvoiceInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *FlightInvoiceInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *FlightInvoiceInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+//汽车票识别 请求
+type BusInvoiceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *BusInvoiceOcrReq) Reset() {
+	*x = BusInvoiceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[49]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BusInvoiceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BusInvoiceOcrReq) ProtoMessage() {}
+
+func (x *BusInvoiceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[49]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BusInvoiceOcrReq.ProtoReflect.Descriptor instead.
+func (*BusInvoiceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *BusInvoiceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *BusInvoiceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *BusInvoiceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+// 汽车票识别 响应
+type BusInvoiceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                 `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *BusInvoiceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *BusInvoiceOcrRsp) Reset() {
+	*x = BusInvoiceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[50]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BusInvoiceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BusInvoiceOcrRsp) ProtoMessage() {}
+
+func (x *BusInvoiceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[50]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BusInvoiceOcrRsp.ProtoReflect.Descriptor instead.
+func (*BusInvoiceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *BusInvoiceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *BusInvoiceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *BusInvoiceOcrRsp) GetData() *BusInvoiceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 汽车票识别 响应
+type BusInvoiceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	BusInvoiceInfos []*BusInvoiceInfo `protobuf:"bytes,1,rep,name=bus_invoice_infos,json=busInvoiceInfos,proto3" json:"bus_invoice_infos,omitempty"`
+	Angle           string            `protobuf:"bytes,2,opt,name=angle,proto3" json:"angle,omitempty"` //图片旋转角度（角度制），文本的水平方向为0°，顺时针为正，逆时针为负
+	RequestId       string            `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+}
+
+func (x *BusInvoiceOcrRspData) Reset() {
+	*x = BusInvoiceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[51]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BusInvoiceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BusInvoiceOcrRspData) ProtoMessage() {}
+
+func (x *BusInvoiceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[51]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BusInvoiceOcrRspData.ProtoReflect.Descriptor instead.
+func (*BusInvoiceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{51}
+}
+
+func (x *BusInvoiceOcrRspData) GetBusInvoiceInfos() []*BusInvoiceInfo {
+	if x != nil {
+		return x.BusInvoiceInfos
+	}
+	return nil
+}
+
+func (x *BusInvoiceOcrRspData) GetAngle() string {
+	if x != nil {
+		return x.Angle
+	}
+	return ""
+}
+
+func (x *BusInvoiceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+// 汽车票识别信息
+type BusInvoiceInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Rect  *Rect  `protobuf:"bytes,3,opt,name=rect,proto3" json:"rect,omitempty"`
+}
+
+func (x *BusInvoiceInfo) Reset() {
+	*x = BusInvoiceInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[52]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BusInvoiceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BusInvoiceInfo) ProtoMessage() {}
+
+func (x *BusInvoiceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[52]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BusInvoiceInfo.ProtoReflect.Descriptor instead.
+func (*BusInvoiceInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{52}
+}
+
+func (x *BusInvoiceInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *BusInvoiceInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *BusInvoiceInfo) GetRect() *Rect {
+	if x != nil {
+		return x.Rect
+	}
+	return nil
+}
+
+// 火车票识别 请求
+type TrainTicketOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *TrainTicketOcrReq) Reset() {
+	*x = TrainTicketOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[53]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TrainTicketOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrainTicketOcrReq) ProtoMessage() {}
+
+func (x *TrainTicketOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[53]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrainTicketOcrReq.ProtoReflect.Descriptor instead.
+func (*TrainTicketOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{53}
+}
+
+func (x *TrainTicketOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *TrainTicketOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *TrainTicketOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+// 火车票识别 响应
+type TrainTicketOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32            `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string           `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *TrainTicketInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *TrainTicketOcrRsp) Reset() {
+	*x = TrainTicketOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[54]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TrainTicketOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrainTicketOcrRsp) ProtoMessage() {}
+
+func (x *TrainTicketOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[54]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrainTicketOcrRsp.ProtoReflect.Descriptor instead.
+func (*TrainTicketOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *TrainTicketOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *TrainTicketOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *TrainTicketOcrRsp) GetData() *TrainTicketInfo {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 火车票字段信息
+type TrainTicketInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TicketNum          string `protobuf:"bytes,1,opt,name=ticket_num,json=ticketNum,proto3" json:"ticket_num,omitempty"`                            //编号
+	StartStation       string `protobuf:"bytes,2,opt,name=start_station,json=startStation,proto3" json:"start_station,omitempty"`                   //出发站
+	DestinationStation string `protobuf:"bytes,3,opt,name=destination_station,json=destinationStation,proto3" json:"destination_station,omitempty"` //到达站
+	Date               string `protobuf:"bytes,4,opt,name=date,proto3" json:"date,omitempty"`                                                       //出发时间
+	TrainNum           string `protobuf:"bytes,5,opt,name=train_num,json=trainNum,proto3" json:"train_num,omitempty"`                               //车次
+	Seat               string `protobuf:"bytes,6,opt,name=seat,proto3" json:"seat,omitempty"`                                                       //座位号
+	Name               string `protobuf:"bytes,7,opt,name=name,proto3" json:"name,omitempty"`                                                       //姓名
+	Price              string `protobuf:"bytes,8,opt,name=price,proto3" json:"price,omitempty"`                                                     //票价
+	SeatCategory       string `protobuf:"bytes,9,opt,name=seat_category,json=seatCategory,proto3" json:"seat_category,omitempty"`                   //席别
+	Id                 string `protobuf:"bytes,10,opt,name=id,proto3" json:"id,omitempty"`                                                          //身份证号
+	InvoiceType        string `protobuf:"bytes,11,opt,name=invoice_type,json=invoiceType,proto3" json:"invoice_type,omitempty"`                     //发票消费类型
+	SerialNumber       string `protobuf:"bytes,12,opt,name=serial_number,json=serialNumber,proto3" json:"serial_number,omitempty"`                  //序列号
+	RequestId          string `protobuf:"bytes,13,opt,name=requestId,proto3" json:"requestId,omitempty"`                                            //唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId
+}
+
+func (x *TrainTicketInfo) Reset() {
+	*x = TrainTicketInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[55]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TrainTicketInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrainTicketInfo) ProtoMessage() {}
+
+func (x *TrainTicketInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[55]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrainTicketInfo.ProtoReflect.Descriptor instead.
+func (*TrainTicketInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{55}
+}
+
+func (x *TrainTicketInfo) GetTicketNum() string {
+	if x != nil {
+		return x.TicketNum
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetStartStation() string {
+	if x != nil {
+		return x.StartStation
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetDestinationStation() string {
+	if x != nil {
+		return x.DestinationStation
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetTrainNum() string {
+	if x != nil {
+		return x.TrainNum
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetSeat() string {
+	if x != nil {
+		return x.Seat
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetPrice() string {
+	if x != nil {
+		return x.Price
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetSeatCategory() string {
+	if x != nil {
+		return x.SeatCategory
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetInvoiceType() string {
+	if x != nil {
+		return x.InvoiceType
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetSerialNumber() string {
+	if x != nil {
+		return x.SerialNumber
+	}
+	return ""
+}
+
+func (x *TrainTicketInfo) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+// 轮船票识别 请求
+type ShipInvoiceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *ShipInvoiceOcrReq) Reset() {
+	*x = ShipInvoiceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[56]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ShipInvoiceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ShipInvoiceOcrReq) ProtoMessage() {}
+
+func (x *ShipInvoiceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[56]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ShipInvoiceOcrReq.ProtoReflect.Descriptor instead.
+func (*ShipInvoiceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{56}
+}
+
+func (x *ShipInvoiceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *ShipInvoiceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *ShipInvoiceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+// 轮船票识别 响应
+type ShipInvoiceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *ShipInvoiceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *ShipInvoiceOcrRsp) Reset() {
+	*x = ShipInvoiceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[57]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ShipInvoiceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ShipInvoiceOcrRsp) ProtoMessage() {}
+
+func (x *ShipInvoiceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[57]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ShipInvoiceOcrRsp.ProtoReflect.Descriptor instead.
+func (*ShipInvoiceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{57}
+}
+
+func (x *ShipInvoiceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *ShipInvoiceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *ShipInvoiceOcrRsp) GetData() *ShipInvoiceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 轮船票识别 响应
+type ShipInvoiceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ShipInvoiceInfos []*ShipInvoiceInfo `protobuf:"bytes,1,rep,name=ship_invoice_infos,json=shipInvoiceInfos,proto3" json:"ship_invoice_infos,omitempty"`
+	Angle            string             `protobuf:"bytes,2,opt,name=angle,proto3" json:"angle,omitempty"` //图片旋转角度（角度制），文本的水平方向为0°，顺时针为正，逆时针为负
+	RequestId        string             `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+}
+
+func (x *ShipInvoiceOcrRspData) Reset() {
+	*x = ShipInvoiceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[58]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ShipInvoiceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ShipInvoiceOcrRspData) ProtoMessage() {}
+
+func (x *ShipInvoiceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[58]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ShipInvoiceOcrRspData.ProtoReflect.Descriptor instead.
+func (*ShipInvoiceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{58}
+}
+
+func (x *ShipInvoiceOcrRspData) GetShipInvoiceInfos() []*ShipInvoiceInfo {
+	if x != nil {
+		return x.ShipInvoiceInfos
+	}
+	return nil
+}
+
+func (x *ShipInvoiceOcrRspData) GetAngle() string {
+	if x != nil {
+		return x.Angle
+	}
+	return ""
+}
+
+func (x *ShipInvoiceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+// 轮船票字段信息
+type ShipInvoiceInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Rect  *Rect  `protobuf:"bytes,3,opt,name=rect,proto3" json:"rect,omitempty"`
+}
+
+func (x *ShipInvoiceInfo) Reset() {
+	*x = ShipInvoiceInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[59]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ShipInvoiceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ShipInvoiceInfo) ProtoMessage() {}
+
+func (x *ShipInvoiceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[59]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ShipInvoiceInfo.ProtoReflect.Descriptor instead.
+func (*ShipInvoiceInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{59}
+}
+
+func (x *ShipInvoiceInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ShipInvoiceInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *ShipInvoiceInfo) GetRect() *Rect {
+	if x != nil {
+		return x.Rect
+	}
+	return nil
+}
+
+// 过路过桥费发票识别 请求
+type TollInvoiceOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *TollInvoiceOcrReq) Reset() {
+	*x = TollInvoiceOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[60]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TollInvoiceOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TollInvoiceOcrReq) ProtoMessage() {}
+
+func (x *TollInvoiceOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[60]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TollInvoiceOcrReq.ProtoReflect.Descriptor instead.
+func (*TollInvoiceOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *TollInvoiceOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *TollInvoiceOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *TollInvoiceOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+// 过路过桥费发票 响应
+type TollInvoiceOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *TollInvoiceOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *TollInvoiceOcrRsp) Reset() {
+	*x = TollInvoiceOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[61]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TollInvoiceOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TollInvoiceOcrRsp) ProtoMessage() {}
+
+func (x *TollInvoiceOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[61]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TollInvoiceOcrRsp.ProtoReflect.Descriptor instead.
+func (*TollInvoiceOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{61}
+}
+
+func (x *TollInvoiceOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *TollInvoiceOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *TollInvoiceOcrRsp) GetData() *TollInvoiceOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 过路过桥费发票 响应
+type TollInvoiceOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TollInvoiceInfos []*TollInvoiceInfo `protobuf:"bytes,1,rep,name=toll_invoice_infos,json=tollInvoiceInfos,proto3" json:"toll_invoice_infos,omitempty"`
+	Angle            string             `protobuf:"bytes,2,opt,name=angle,proto3" json:"angle,omitempty"` //图片旋转角度（角度制），文本的水平方向为0°，顺时针为正，逆时针为负
+	RequestId        string             `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+}
+
+func (x *TollInvoiceOcrRspData) Reset() {
+	*x = TollInvoiceOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[62]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TollInvoiceOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TollInvoiceOcrRspData) ProtoMessage() {}
+
+func (x *TollInvoiceOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[62]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TollInvoiceOcrRspData.ProtoReflect.Descriptor instead.
+func (*TollInvoiceOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{62}
+}
+
+func (x *TollInvoiceOcrRspData) GetTollInvoiceInfos() []*TollInvoiceInfo {
+	if x != nil {
+		return x.TollInvoiceInfos
+	}
+	return nil
+}
+
+func (x *TollInvoiceOcrRspData) GetAngle() string {
+	if x != nil {
+		return x.Angle
+	}
+	return ""
+}
+
+func (x *TollInvoiceOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+// 过路过桥费发票字段信息
+type TollInvoiceInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Rect  *Rect  `protobuf:"bytes,3,opt,name=rect,proto3" json:"rect,omitempty"`
+}
+
+func (x *TollInvoiceInfo) Reset() {
+	*x = TollInvoiceInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[63]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TollInvoiceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TollInvoiceInfo) ProtoMessage() {}
+
+func (x *TollInvoiceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[63]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TollInvoiceInfo.ProtoReflect.Descriptor instead.
+func (*TollInvoiceInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{63}
+}
+
+func (x *TollInvoiceInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *TollInvoiceInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *TollInvoiceInfo) GetRect() *Rect {
+	if x != nil {
+		return x.Rect
+	}
+	return nil
+}
+
+//运单识别识别 请求
+type WaybillOcrReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *WaybillOcrReq) Reset() {
+	*x = WaybillOcrReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[64]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WaybillOcrReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WaybillOcrReq) ProtoMessage() {}
+
+func (x *WaybillOcrReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[64]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WaybillOcrReq.ProtoReflect.Descriptor instead.
+func (*WaybillOcrReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{64}
+}
+
+func (x *WaybillOcrReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *WaybillOcrReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *WaybillOcrReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//运单识别识别 响应
+type WaybillOcrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32              `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string             `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *WaybillOcrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *WaybillOcrRsp) Reset() {
+	*x = WaybillOcrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[65]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WaybillOcrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WaybillOcrRsp) ProtoMessage() {}
+
+func (x *WaybillOcrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[65]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WaybillOcrRsp.ProtoReflect.Descriptor instead.
+func (*WaybillOcrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{65}
+}
+
+func (x *WaybillOcrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *WaybillOcrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *WaybillOcrRsp) GetData() *WaybillOcrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//运单识别识别 响应
+type WaybillOcrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TextDetections *TextWaybill `protobuf:"bytes,1,opt,name=text_detections,json=textDetections,proto3" json:"text_detections,omitempty"` //检测到的文本信息
+	RequestId      string       `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                //唯一请求 ID
+}
+
+func (x *WaybillOcrRspData) Reset() {
+	*x = WaybillOcrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[66]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WaybillOcrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WaybillOcrRspData) ProtoMessage() {}
+
+func (x *WaybillOcrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[66]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WaybillOcrRspData.ProtoReflect.Descriptor instead.
+func (*WaybillOcrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{66}
+}
+
+func (x *WaybillOcrRspData) GetTextDetections() *TextWaybill {
+	if x != nil {
+		return x.TextDetections
+	}
+	return nil
+}
+
+func (x *WaybillOcrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//运单识别结果
+type TextWaybill struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	RecName    *WaybillObj `protobuf:"bytes,1,opt,name=rec_name,json=recName,proto3" json:"rec_name,omitempty"`          // 收件人姓名
+	RecNum     *WaybillObj `protobuf:"bytes,2,opt,name=rec_num,json=recNum,proto3" json:"rec_num,omitempty"`             //收件人手机号
+	RecAddr    *WaybillObj `protobuf:"bytes,3,opt,name=rec_addr,json=recAddr,proto3" json:"rec_addr,omitempty"`          // 收件人地址
+	SenderName *WaybillObj `protobuf:"bytes,4,opt,name=sender_name,json=senderName,proto3" json:"sender_name,omitempty"` //寄件人姓名
+	SenderNum  *WaybillObj `protobuf:"bytes,5,opt,name=sender_num,json=senderNum,proto3" json:"sender_num,omitempty"`    // 寄件人手机号
+	SenderAddr *WaybillObj `protobuf:"bytes,6,opt,name=sender_addr,json=senderAddr,proto3" json:"sender_addr,omitempty"` //寄件人地址
+	WaybillNum *WaybillObj `protobuf:"bytes,7,opt,name=waybill_num,json=waybillNum,proto3" json:"waybill_num,omitempty"` // 运单号
+}
+
+func (x *TextWaybill) Reset() {
+	*x = TextWaybill{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[67]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextWaybill) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextWaybill) ProtoMessage() {}
+
+func (x *TextWaybill) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[67]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextWaybill.ProtoReflect.Descriptor instead.
+func (*TextWaybill) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{67}
+}
+
+func (x *TextWaybill) GetRecName() *WaybillObj {
+	if x != nil {
+		return x.RecName
+	}
+	return nil
+}
+
+func (x *TextWaybill) GetRecNum() *WaybillObj {
+	if x != nil {
+		return x.RecNum
+	}
+	return nil
+}
+
+func (x *TextWaybill) GetRecAddr() *WaybillObj {
+	if x != nil {
+		return x.RecAddr
+	}
+	return nil
+}
+
+func (x *TextWaybill) GetSenderName() *WaybillObj {
+	if x != nil {
+		return x.SenderName
+	}
+	return nil
+}
+
+func (x *TextWaybill) GetSenderNum() *WaybillObj {
+	if x != nil {
+		return x.SenderNum
+	}
+	return nil
+}
+
+func (x *TextWaybill) GetSenderAddr() *WaybillObj {
+	if x != nil {
+		return x.SenderAddr
+	}
+	return nil
+}
+
+func (x *TextWaybill) GetWaybillNum() *WaybillObj {
+	if x != nil {
+		return x.WaybillNum
+	}
+	return nil
+}
+
+//运单识别对象
+type WaybillObj struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Text string `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"` //识别出的文本行内容
+}
+
+func (x *WaybillObj) Reset() {
+	*x = WaybillObj{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[68]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WaybillObj) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WaybillObj) ProtoMessage() {}
+
+func (x *WaybillObj) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[68]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WaybillObj.ProtoReflect.Descriptor instead.
+func (*WaybillObj) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{68}
+}
+
+func (x *WaybillObj) GetText() string {
+	if x != nil {
+		return x.Text
+	}
+	return ""
+}
+
+//通用印刷体识别请求
+//图片的 ImageUrl、ImageBase64 必须提供一个，如果都提供，只使用 ImageUrl。
+type GeneralBasicOCRReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64   string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"`          //图片/PDF的 Base64 值。要求图片/PDF经Base64编码后不超过 7M，分辨率建议600*800以上，支持PNG、JPG、JPEG、BMP、PDF格式。
+	ImageUrl      string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`                   //图片/PDF的 Url 地址。要求图片/PDF经Base64编码后不超过 7M，分辨率建议600*800以上，支持PNG、JPG、JPEG、BMP、PDF格式。
+	LanguageType  string `protobuf:"bytes,3,opt,name=language_type,json=languageType,proto3" json:"language_type,omitempty"`       //识别语言类型。支持自动识别语言类型，同时支持自选语言种类，默认中英文混合(zh)，各种语言均支持与英文混合的文字识别。
+	IsPdf         bool   `protobuf:"varint,4,opt,name=is_pdf,json=isPdf,proto3" json:"is_pdf,omitempty"`                           //是否开启PDF识别，默认值为false，开启后可同时支持图片和PDF的识别。
+	PdfPageNumber uint32 `protobuf:"varint,5,opt,name=pdf_page_number,json=pdfPageNumber,proto3" json:"pdf_page_number,omitempty"` //需要识别的PDF页面的对应页码，仅支持PDF单页识别，当上传文件为PDF且IsPdf参数值为true时有效，默认值为1。
+	OpenOrgId     string `protobuf:"bytes,6,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *GeneralBasicOCRReq) Reset() {
+	*x = GeneralBasicOCRReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[69]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralBasicOCRReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralBasicOCRReq) ProtoMessage() {}
+
+func (x *GeneralBasicOCRReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[69]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralBasicOCRReq.ProtoReflect.Descriptor instead.
+func (*GeneralBasicOCRReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{69}
+}
+
+func (x *GeneralBasicOCRReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *GeneralBasicOCRReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *GeneralBasicOCRReq) GetLanguageType() string {
+	if x != nil {
+		return x.LanguageType
+	}
+	return ""
+}
+
+func (x *GeneralBasicOCRReq) GetIsPdf() bool {
+	if x != nil {
+		return x.IsPdf
+	}
+	return false
+}
+
+func (x *GeneralBasicOCRReq) GetPdfPageNumber() uint32 {
+	if x != nil {
+		return x.PdfPageNumber
+	}
+	return 0
+}
+
+func (x *GeneralBasicOCRReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//坐标
+type Coord struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	X int32 `protobuf:"zigzag32,1,opt,name=x,proto3" json:"x,omitempty"` //横坐标
+	Y int32 `protobuf:"zigzag32,2,opt,name=y,proto3" json:"y,omitempty"` //纵坐标
+}
+
+func (x *Coord) Reset() {
+	*x = Coord{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[70]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Coord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Coord) ProtoMessage() {}
+
+func (x *Coord) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[70]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Coord.ProtoReflect.Descriptor instead.
+func (*Coord) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{70}
+}
+
+func (x *Coord) GetX() int32 {
+	if x != nil {
+		return x.X
+	}
+	return 0
+}
+
+func (x *Coord) GetY() int32 {
+	if x != nil {
+		return x.Y
+	}
+	return 0
+}
+
+type ItemCoord struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	X      uint32 `protobuf:"varint,1,opt,name=x,proto3" json:"x,omitempty"`           //左上角x
+	Y      uint32 `protobuf:"varint,2,opt,name=y,proto3" json:"y,omitempty"`           //左上角y
+	Width  uint32 `protobuf:"varint,3,opt,name=width,proto3" json:"width,omitempty"`   //宽width
+	Height uint32 `protobuf:"varint,4,opt,name=height,proto3" json:"height,omitempty"` //高height
+}
+
+func (x *ItemCoord) Reset() {
+	*x = ItemCoord{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[71]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ItemCoord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ItemCoord) ProtoMessage() {}
+
+func (x *ItemCoord) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[71]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ItemCoord.ProtoReflect.Descriptor instead.
+func (*ItemCoord) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{71}
+}
+
+func (x *ItemCoord) GetX() uint32 {
+	if x != nil {
+		return x.X
+	}
+	return 0
+}
+
+func (x *ItemCoord) GetY() uint32 {
+	if x != nil {
+		return x.Y
+	}
+	return 0
+}
+
+func (x *ItemCoord) GetWidth() uint32 {
+	if x != nil {
+		return x.Width
+	}
+	return 0
+}
+
+func (x *ItemCoord) GetHeight() uint32 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+type TextDetection struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DetectedText string     `protobuf:"bytes,1,opt,name=detected_text,json=detectedText,proto3" json:"detected_text,omitempty"` //识别出的文本行内容
+	Confidence   uint32     `protobuf:"varint,2,opt,name=confidence,proto3" json:"confidence,omitempty"`                        // 置信度 0 ~100
+	Polygon      []*Coord   `protobuf:"bytes,3,rep,name=polygon,proto3" json:"polygon,omitempty"`                               //文本行坐标，以四个顶点坐标表示。注意：此字段可能返回 null，表示取不到有效值。
+	AdvancedInfo string     `protobuf:"bytes,4,opt,name=advanced_info,json=advancedInfo,proto3" json:"advanced_info,omitempty"` //此字段为扩展字段。GeneralBasicOcr接口返回段落信息Parag，包含ParagNo。
+	ItemPolygon  *ItemCoord `protobuf:"bytes,5,opt,name=item_polygon,json=itemPolygon,proto3" json:"item_polygon,omitempty"`    //文本行在旋转纠正之后的图像中的像素坐标，表示为（左上角x, 左上角y，宽width，高height）
+}
+
+func (x *TextDetection) Reset() {
+	*x = TextDetection{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[72]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextDetection) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextDetection) ProtoMessage() {}
+
+func (x *TextDetection) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[72]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextDetection.ProtoReflect.Descriptor instead.
+func (*TextDetection) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{72}
+}
+
+func (x *TextDetection) GetDetectedText() string {
+	if x != nil {
+		return x.DetectedText
+	}
+	return ""
+}
+
+func (x *TextDetection) GetConfidence() uint32 {
+	if x != nil {
+		return x.Confidence
+	}
+	return 0
+}
+
+func (x *TextDetection) GetPolygon() []*Coord {
+	if x != nil {
+		return x.Polygon
+	}
+	return nil
+}
+
+func (x *TextDetection) GetAdvancedInfo() string {
+	if x != nil {
+		return x.AdvancedInfo
+	}
+	return ""
+}
+
+func (x *TextDetection) GetItemPolygon() *ItemCoord {
+	if x != nil {
+		return x.ItemPolygon
+	}
+	return nil
+}
+
+//通用印刷体识别响应
+type GeneralBasicOCRRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                                      `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                                     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *GeneralBasicOCRRsp_GeneralBasicOCRRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *GeneralBasicOCRRsp) Reset() {
+	*x = GeneralBasicOCRRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[73]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralBasicOCRRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralBasicOCRRsp) ProtoMessage() {}
+
+func (x *GeneralBasicOCRRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[73]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralBasicOCRRsp.ProtoReflect.Descriptor instead.
+func (*GeneralBasicOCRRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{73}
+}
+
+func (x *GeneralBasicOCRRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *GeneralBasicOCRRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GeneralBasicOCRRsp) GetData() *GeneralBasicOCRRsp_GeneralBasicOCRRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//通用印刷体识别（高精度版）
+//图片的 ImageUrl、ImageBase64 必须提供一个，如果都提供，只使用 ImageUrl。
+type GeneralAccurateOCRReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片/PDF的 Base64 值。要求图片/PDF经Base64编码后不超过 7M，分辨率建议600*800以上，支持PNG、JPG、JPEG、BMP、PDF格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片/PDF的 Url 地址。要求图片/PDF经Base64编码后不超过 7M，分辨率建议600*800以上，支持PNG、JPG、JPEG、BMP、PDF格式。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *GeneralAccurateOCRReq) Reset() {
+	*x = GeneralAccurateOCRReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[74]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralAccurateOCRReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralAccurateOCRReq) ProtoMessage() {}
+
+func (x *GeneralAccurateOCRReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[74]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralAccurateOCRReq.ProtoReflect.Descriptor instead.
+func (*GeneralAccurateOCRReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{74}
+}
+
+func (x *GeneralAccurateOCRReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *GeneralAccurateOCRReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *GeneralAccurateOCRReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//通用印刷体识别 （高精度版）响应
+type GeneralAccurateOCRRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                                            `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                                           `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *GeneralAccurateOCRRsp_GeneralAccurateOCRRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *GeneralAccurateOCRRsp) Reset() {
+	*x = GeneralAccurateOCRRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[75]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralAccurateOCRRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralAccurateOCRRsp) ProtoMessage() {}
+
+func (x *GeneralAccurateOCRRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[75]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralAccurateOCRRsp.ProtoReflect.Descriptor instead.
+func (*GeneralAccurateOCRRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{75}
+}
+
+func (x *GeneralAccurateOCRRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *GeneralAccurateOCRRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GeneralAccurateOCRRsp) GetData() *GeneralAccurateOCRRsp_GeneralAccurateOCRRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//通用印刷体识别（精简版）
+type GeneralEfficientOCRReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片/PDF的 Base64 值。要求图片/PDF经Base64编码后不超过 7M，分辨率建议600*800以上，支持PNG、JPG、JPEG、BMP、PDF格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片/PDF的 Url 地址。要求图片/PDF经Base64编码后不超过 7M，分辨率建议600*800以上，支持PNG、JPG、JPEG、BMP、PDF格式。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *GeneralEfficientOCRReq) Reset() {
+	*x = GeneralEfficientOCRReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[76]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralEfficientOCRReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralEfficientOCRReq) ProtoMessage() {}
+
+func (x *GeneralEfficientOCRReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[76]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralEfficientOCRReq.ProtoReflect.Descriptor instead.
+func (*GeneralEfficientOCRReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{76}
+}
+
+func (x *GeneralEfficientOCRReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *GeneralEfficientOCRReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *GeneralEfficientOCRReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//通用印刷体识别 （精简版）响应
+type GeneralEfficientOCRRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                                              `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                                             `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *GeneralEfficientOCRRsp_GeneralEfficientOCRRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *GeneralEfficientOCRRsp) Reset() {
+	*x = GeneralEfficientOCRRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[77]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralEfficientOCRRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralEfficientOCRRsp) ProtoMessage() {}
+
+func (x *GeneralEfficientOCRRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[77]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralEfficientOCRRsp.ProtoReflect.Descriptor instead.
+func (*GeneralEfficientOCRRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{77}
+}
+
+func (x *GeneralEfficientOCRRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *GeneralEfficientOCRRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GeneralEfficientOCRRsp) GetData() *GeneralEfficientOCRRsp_GeneralEfficientOCRRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//通用印刷体识别（高速版）
+type GeneralFastOCRReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。支持的图片大小：所下载图片经Base64编码后不超过 3M。图片下载时间不超过 3 秒。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。支持的图片大小：所下载图片经 Base64 编码后不超过 3M。图片下载时间不超过 3 秒。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *GeneralFastOCRReq) Reset() {
+	*x = GeneralFastOCRReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[78]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralFastOCRReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralFastOCRReq) ProtoMessage() {}
+
+func (x *GeneralFastOCRReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[78]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralFastOCRReq.ProtoReflect.Descriptor instead.
+func (*GeneralFastOCRReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{78}
+}
+
+func (x *GeneralFastOCRReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *GeneralFastOCRReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *GeneralFastOCRReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//通用印刷体识别 （高速版）响应
+type GeneralFastOCRRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                                    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                                   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *GeneralFastOCRRsp_GeneralFastOCRRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *GeneralFastOCRRsp) Reset() {
+	*x = GeneralFastOCRRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[79]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralFastOCRRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralFastOCRRsp) ProtoMessage() {}
+
+func (x *GeneralFastOCRRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[79]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralFastOCRRsp.ProtoReflect.Descriptor instead.
+func (*GeneralFastOCRRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{79}
+}
+
+func (x *GeneralFastOCRRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *GeneralFastOCRRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GeneralFastOCRRsp) GetData() *GeneralFastOCRRsp_GeneralFastOCRRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//英文识别
+type EnglishOCRReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64      string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"`                   //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。支持的图片大小：所下载图片经Base64编码后不超过 3M。图片下载时间不超过 3 秒。
+	ImageUrl         string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`                            //图片的 Url 地址。 支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。支持的图片大小：所下载图片经 Base64 编码后不超过 3M。图片下载时间不超过 3 秒。
+	EnableCoordPoint bool   `protobuf:"varint,3,opt,name=enable_coord_point,json=enableCoordPoint,proto3" json:"enable_coord_point,omitempty"` //单词四点坐标开关，开启可返回图片中单词的四点坐标。该参数默认值为false
+	EnableCandWord   bool   `protobuf:"varint,4,opt,name=enable_cand_word,json=enableCandWord,proto3" json:"enable_cand_word,omitempty"`       //候选字开关，开启可返回识别时多个可能的候选字（每个候选字对应其置信度）。该参数默认值为false。
+	OpenOrgId        string `protobuf:"bytes,5,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *EnglishOCRReq) Reset() {
+	*x = EnglishOCRReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[80]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EnglishOCRReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnglishOCRReq) ProtoMessage() {}
+
+func (x *EnglishOCRReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[80]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnglishOCRReq.ProtoReflect.Descriptor instead.
+func (*EnglishOCRReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{80}
+}
+
+func (x *EnglishOCRReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *EnglishOCRReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *EnglishOCRReq) GetEnableCoordPoint() bool {
+	if x != nil {
+		return x.EnableCoordPoint
+	}
+	return false
+}
+
+func (x *EnglishOCRReq) GetEnableCandWord() bool {
+	if x != nil {
+		return x.EnableCandWord
+	}
+	return false
+}
+
+func (x *EnglishOCRReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//识别出来的单词信息包括单词（包括单词Character和单词置信度confidence）
+type Words struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Confidence uint32 `protobuf:"varint,1,opt,name=confidence,proto3" json:"confidence,omitempty"` // 置信度 0 ~100
+	Character  string `protobuf:"bytes,2,opt,name=character,proto3" json:"character,omitempty"`    // 候选字Character
+}
+
+func (x *Words) Reset() {
+	*x = Words{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[81]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Words) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Words) ProtoMessage() {}
+
+func (x *Words) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[81]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Words.ProtoReflect.Descriptor instead.
+func (*Words) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{81}
+}
+
+func (x *Words) GetConfidence() uint32 {
+	if x != nil {
+		return x.Confidence
+	}
+	return 0
+}
+
+func (x *Words) GetCharacter() string {
+	if x != nil {
+		return x.Character
+	}
+	return ""
+}
+
+//英文识别结果
+type TextDetectionEn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DetectedText   string                            `protobuf:"bytes,1,opt,name=detected_text,json=detectedText,proto3" json:"detected_text,omitempty"`         //识别出的文本行内容
+	Confidence     uint32                            `protobuf:"varint,2,opt,name=confidence,proto3" json:"confidence,omitempty"`                                // 置信度 0 ~100
+	Polygon        []*Coord                          `protobuf:"bytes,3,rep,name=polygon,proto3" json:"polygon,omitempty"`                                       //文本行坐标，以四个顶点坐标表示。注意：此字段可能返回 null，表示取不到有效值。
+	AdvancedInfo   string                            `protobuf:"bytes,4,opt,name=advanced_info,json=advancedInfo,proto3" json:"advanced_info,omitempty"`         //此字段为扩展字段。目前EnglishOCR接口返回内容为空。
+	WordCoordPoint []*TextDetectionEn_WordCoordPoint `protobuf:"bytes,5,rep,name=word_coord_point,json=wordCoordPoint,proto3" json:"word_coord_point,omitempty"` // 单词在原图中的四点坐标。
+	CandWord       []*TextDetectionEn_CandWord       `protobuf:"bytes,6,rep,name=cand_word,json=candWord,proto3" json:"cand_word,omitempty"`                     //候选字符集(包含候选字Character以及置信度Confidence)。
+	Words          []*Words                          `protobuf:"bytes,7,rep,name=words,proto3" json:"words,omitempty"`                                           //识别出来的单词信息（包括单词Character和单词置信度confidence）
+}
+
+func (x *TextDetectionEn) Reset() {
+	*x = TextDetectionEn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[82]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextDetectionEn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextDetectionEn) ProtoMessage() {}
+
+func (x *TextDetectionEn) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[82]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextDetectionEn.ProtoReflect.Descriptor instead.
+func (*TextDetectionEn) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{82}
+}
+
+func (x *TextDetectionEn) GetDetectedText() string {
+	if x != nil {
+		return x.DetectedText
+	}
+	return ""
+}
+
+func (x *TextDetectionEn) GetConfidence() uint32 {
+	if x != nil {
+		return x.Confidence
+	}
+	return 0
+}
+
+func (x *TextDetectionEn) GetPolygon() []*Coord {
+	if x != nil {
+		return x.Polygon
+	}
+	return nil
+}
+
+func (x *TextDetectionEn) GetAdvancedInfo() string {
+	if x != nil {
+		return x.AdvancedInfo
+	}
+	return ""
+}
+
+func (x *TextDetectionEn) GetWordCoordPoint() []*TextDetectionEn_WordCoordPoint {
+	if x != nil {
+		return x.WordCoordPoint
+	}
+	return nil
+}
+
+func (x *TextDetectionEn) GetCandWord() []*TextDetectionEn_CandWord {
+	if x != nil {
+		return x.CandWord
+	}
+	return nil
+}
+
+func (x *TextDetectionEn) GetWords() []*Words {
+	if x != nil {
+		return x.Words
+	}
+	return nil
+}
+
+//英文识别响应
+type EnglishOCRRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                            `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                           `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *EnglishOCRRsp_EnglishOCRRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *EnglishOCRRsp) Reset() {
+	*x = EnglishOCRRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[83]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EnglishOCRRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnglishOCRRsp) ProtoMessage() {}
+
+func (x *EnglishOCRRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[83]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnglishOCRRsp.ProtoReflect.Descriptor instead.
+func (*EnglishOCRRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{83}
+}
+
+func (x *EnglishOCRRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *EnglishOCRRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *EnglishOCRRsp) GetData() *EnglishOCRRsp_EnglishOCRRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//通用手写体识别
+type GeneralHandwritingOCRReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。支持的图片大小：所下载图片经Base64编码后不超过 3M。图片下载时间不超过 3 秒。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。支持的图片大小：所下载图片经 Base64 编码后不超过 3M。图片下载时间不超过 3 秒。
+	Scene       string `protobuf:"bytes,3,opt,name=scene,proto3" json:"scene,omitempty"`                                //场景字段，默认不用填写。可选值:only_hw 表示只输出手写体识别结果，过滤印刷体。
+	OpenOrgId   string `protobuf:"bytes,4,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *GeneralHandwritingOCRReq) Reset() {
+	*x = GeneralHandwritingOCRReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[84]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralHandwritingOCRReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralHandwritingOCRReq) ProtoMessage() {}
+
+func (x *GeneralHandwritingOCRReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[84]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralHandwritingOCRReq.ProtoReflect.Descriptor instead.
+func (*GeneralHandwritingOCRReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{84}
+}
+
+func (x *GeneralHandwritingOCRReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *GeneralHandwritingOCRReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *GeneralHandwritingOCRReq) GetScene() string {
+	if x != nil {
+		return x.Scene
+	}
+	return ""
+}
+
+func (x *GeneralHandwritingOCRReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
 
 //文本的坐标，以四个顶点坐标表示 注意：此字段可能返回 null，表示取不到有效值
 type Polygon struct {
@@ -35,7 +5787,7 @@ type Polygon struct {
 func (x *Polygon) Reset() {
 	*x = Polygon{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_fizzy_ocr_proto_msgTypes[0]
+		mi := &file_ticket_ocr_proto_msgTypes[85]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -48,7 +5800,7 @@ func (x *Polygon) String() string {
 func (*Polygon) ProtoMessage() {}
 
 func (x *Polygon) ProtoReflect() protoreflect.Message {
-	mi := &file_fizzy_ocr_proto_msgTypes[0]
+	mi := &file_ticket_ocr_proto_msgTypes[85]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61,7 +5813,7 @@ func (x *Polygon) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Polygon.ProtoReflect.Descriptor instead.
 func (*Polygon) Descriptor() ([]byte, []int) {
-	return file_fizzy_ocr_proto_rawDescGZIP(), []int{0}
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *Polygon) GetLeftTop() *Coord {
@@ -92,33 +5844,36 @@ func (x *Polygon) GetLeftBottom() *Coord {
 	return nil
 }
 
-//坐标点
-type Coord struct {
+//文字识别结果
+type TextGeneralHandwriting struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	X float32 `protobuf:"fixed32,1,opt,name=x,proto3" json:"x,omitempty"` //横坐标
-	Y float32 `protobuf:"fixed32,2,opt,name=y,proto3" json:"y,omitempty"` //纵坐标
+	DetectedText string     `protobuf:"bytes,1,opt,name=detected_text,json=detectedText,proto3" json:"detected_text,omitempty"` //识别出的文本行内容
+	Confidence   uint32     `protobuf:"varint,2,opt,name=confidence,proto3" json:"confidence,omitempty"`                        // 置信度 0 ~100
+	Polygon      []*Coord   `protobuf:"bytes,3,rep,name=polygon,proto3" json:"polygon,omitempty"`                               //文本行坐标，以四个顶点坐标表示
+	AdvancedInfo string     `protobuf:"bytes,4,opt,name=advanced_info,json=advancedInfo,proto3" json:"advanced_info,omitempty"` //此字段为扩展字段。 能返回文本行的段落信息，例如：{\"Parag\":{\"ParagNo\":2}}，其中ParagNo为段落行，从1开始。
+	WordPolygon  []*Polygon `protobuf:"bytes,5,rep,name=word_polygon,json=wordPolygon,proto3" json:"word_polygon,omitempty"`    //字的坐标数组，以四个顶点坐标表示。注意：此字段可能返回 null，表示取不到有效值。
 }
 
-func (x *Coord) Reset() {
-	*x = Coord{}
+func (x *TextGeneralHandwriting) Reset() {
+	*x = TextGeneralHandwriting{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_fizzy_ocr_proto_msgTypes[1]
+		mi := &file_ticket_ocr_proto_msgTypes[86]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *Coord) String() string {
+func (x *TextGeneralHandwriting) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Coord) ProtoMessage() {}
+func (*TextGeneralHandwriting) ProtoMessage() {}
 
-func (x *Coord) ProtoReflect() protoreflect.Message {
-	mi := &file_fizzy_ocr_proto_msgTypes[1]
+func (x *TextGeneralHandwriting) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[86]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -129,352 +5884,5431 @@ func (x *Coord) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Coord.ProtoReflect.Descriptor instead.
-func (*Coord) Descriptor() ([]byte, []int) {
-	return file_fizzy_ocr_proto_rawDescGZIP(), []int{1}
+// Deprecated: Use TextGeneralHandwriting.ProtoReflect.Descriptor instead.
+func (*TextGeneralHandwriting) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{86}
 }
 
-func (x *Coord) GetX() float32 {
+func (x *TextGeneralHandwriting) GetDetectedText() string {
 	if x != nil {
-		return x.X
-	}
-	return 0
-}
-
-func (x *Coord) GetY() float32 {
-	if x != nil {
-		return x.Y
-	}
-	return 0
-}
-
-//OCR识别请求体（支持的图片格式：PNG、JPG、JPEG、GIF 格式）
-type GeneralPrintOCRReq struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ImageUrl    string `protobuf:"bytes,1,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。
-	ImageBase64 string `protobuf:"bytes,2,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值
-}
-
-func (x *GeneralPrintOCRReq) Reset() {
-	*x = GeneralPrintOCRReq{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_fizzy_ocr_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GeneralPrintOCRReq) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GeneralPrintOCRReq) ProtoMessage() {}
-
-func (x *GeneralPrintOCRReq) ProtoReflect() protoreflect.Message {
-	mi := &file_fizzy_ocr_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GeneralPrintOCRReq.ProtoReflect.Descriptor instead.
-func (*GeneralPrintOCRReq) Descriptor() ([]byte, []int) {
-	return file_fizzy_ocr_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *GeneralPrintOCRReq) GetImageUrl() string {
-	if x != nil {
-		return x.ImageUrl
+		return x.DetectedText
 	}
 	return ""
 }
 
-func (x *GeneralPrintOCRReq) GetImageBase64() string {
+func (x *TextGeneralHandwriting) GetConfidence() uint32 {
 	if x != nil {
-		return x.ImageBase64
-	}
-	return ""
-}
-
-// OCR响应体
-type GeneralPrintOCRRsp struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Code    int32                   `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`      //状态码
-	Message string                  `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"` //响应信息
-	Data    *GeneralPrintOCRRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`       //响应数据
-}
-
-func (x *GeneralPrintOCRRsp) Reset() {
-	*x = GeneralPrintOCRRsp{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_fizzy_ocr_proto_msgTypes[3]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GeneralPrintOCRRsp) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GeneralPrintOCRRsp) ProtoMessage() {}
-
-func (x *GeneralPrintOCRRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_fizzy_ocr_proto_msgTypes[3]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GeneralPrintOCRRsp.ProtoReflect.Descriptor instead.
-func (*GeneralPrintOCRRsp) Descriptor() ([]byte, []int) {
-	return file_fizzy_ocr_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *GeneralPrintOCRRsp) GetCode() int32 {
-	if x != nil {
-		return x.Code
+		return x.Confidence
 	}
 	return 0
 }
 
-func (x *GeneralPrintOCRRsp) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-func (x *GeneralPrintOCRRsp) GetData() *GeneralPrintOCRRspData {
-	if x != nil {
-		return x.Data
-	}
-	return nil
-}
-
-// OCR识别数据集
-type GeneralPrintOCRRspData struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Item []*GeneralPrintOCRRspDataItem `protobuf:"bytes,1,rep,name=item,proto3" json:"item,omitempty"` //识别数据集
-}
-
-func (x *GeneralPrintOCRRspData) Reset() {
-	*x = GeneralPrintOCRRspData{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_fizzy_ocr_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GeneralPrintOCRRspData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GeneralPrintOCRRspData) ProtoMessage() {}
-
-func (x *GeneralPrintOCRRspData) ProtoReflect() protoreflect.Message {
-	mi := &file_fizzy_ocr_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GeneralPrintOCRRspData.ProtoReflect.Descriptor instead.
-func (*GeneralPrintOCRRspData) Descriptor() ([]byte, []int) {
-	return file_fizzy_ocr_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *GeneralPrintOCRRspData) GetItem() []*GeneralPrintOCRRspDataItem {
-	if x != nil {
-		return x.Item
-	}
-	return nil
-}
-
-// OCR识别内容
-type GeneralPrintOCRRspDataItem struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Polygon *Polygon `protobuf:"bytes,1,opt,name=Polygon,proto3" json:"Polygon,omitempty"` //坐标点位
-	Content string   `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"` //识别内容
-	Score   float32  `protobuf:"fixed32,3,opt,name=Score,proto3" json:"Score,omitempty"`   //置信度
-}
-
-func (x *GeneralPrintOCRRspDataItem) Reset() {
-	*x = GeneralPrintOCRRspDataItem{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_fizzy_ocr_proto_msgTypes[5]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GeneralPrintOCRRspDataItem) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GeneralPrintOCRRspDataItem) ProtoMessage() {}
-
-func (x *GeneralPrintOCRRspDataItem) ProtoReflect() protoreflect.Message {
-	mi := &file_fizzy_ocr_proto_msgTypes[5]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GeneralPrintOCRRspDataItem.ProtoReflect.Descriptor instead.
-func (*GeneralPrintOCRRspDataItem) Descriptor() ([]byte, []int) {
-	return file_fizzy_ocr_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *GeneralPrintOCRRspDataItem) GetPolygon() *Polygon {
+func (x *TextGeneralHandwriting) GetPolygon() []*Coord {
 	if x != nil {
 		return x.Polygon
 	}
 	return nil
 }
 
-func (x *GeneralPrintOCRRspDataItem) GetContent() string {
+func (x *TextGeneralHandwriting) GetAdvancedInfo() string {
 	if x != nil {
-		return x.Content
+		return x.AdvancedInfo
 	}
 	return ""
 }
 
-func (x *GeneralPrintOCRRspDataItem) GetScore() float32 {
+func (x *TextGeneralHandwriting) GetWordPolygon() []*Polygon {
 	if x != nil {
-		return x.Score
+		return x.WordPolygon
+	}
+	return nil
+}
+
+//通用手写体识别响应
+type GeneralHandwritingOCRRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                                                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                                                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *GeneralHandwritingOCRRsp) Reset() {
+	*x = GeneralHandwritingOCRRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[87]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralHandwritingOCRRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralHandwritingOCRRsp) ProtoMessage() {}
+
+func (x *GeneralHandwritingOCRRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[87]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralHandwritingOCRRsp.ProtoReflect.Descriptor instead.
+func (*GeneralHandwritingOCRRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{87}
+}
+
+func (x *GeneralHandwritingOCRRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
 	}
 	return 0
 }
 
-var File_fizzy_ocr_proto protoreflect.FileDescriptor
+func (x *GeneralHandwritingOCRRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
 
-var file_fizzy_ocr_proto_rawDesc = []byte{
-	0x0a, 0x0f, 0x66, 0x69, 0x7a, 0x7a, 0x79, 0x5f, 0x6f, 0x63, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x12, 0x0b, 0x66, 0x69, 0x7a, 0x7a, 0x79, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x22, 0xd5,
-	0x01, 0x0a, 0x07, 0x50, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x12, 0x2d, 0x0a, 0x08, 0x6c, 0x65,
-	0x66, 0x74, 0x5f, 0x74, 0x6f, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x66,
-	0x69, 0x7a, 0x7a, 0x79, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64,
-	0x52, 0x07, 0x6c, 0x65, 0x66, 0x74, 0x54, 0x6f, 0x70, 0x12, 0x2f, 0x0a, 0x09, 0x72, 0x69, 0x67,
-	0x68, 0x74, 0x5f, 0x74, 0x6f, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x66,
-	0x69, 0x7a, 0x7a, 0x79, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64,
-	0x52, 0x08, 0x72, 0x69, 0x67, 0x68, 0x74, 0x54, 0x6f, 0x70, 0x12, 0x35, 0x0a, 0x0c, 0x72, 0x69,
-	0x67, 0x68, 0x74, 0x5f, 0x62, 0x6f, 0x74, 0x74, 0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x12, 0x2e, 0x66, 0x69, 0x7a, 0x7a, 0x79, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x43,
-	0x6f, 0x6f, 0x72, 0x64, 0x52, 0x0b, 0x72, 0x69, 0x67, 0x68, 0x74, 0x42, 0x6f, 0x74, 0x74, 0x6f,
-	0x6d, 0x12, 0x33, 0x0a, 0x0b, 0x6c, 0x65, 0x66, 0x74, 0x5f, 0x62, 0x6f, 0x74, 0x74, 0x6f, 0x6d,
-	0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x66, 0x69, 0x7a, 0x7a, 0x79, 0x6f, 0x63,
-	0x72, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x52, 0x0a, 0x6c, 0x65, 0x66, 0x74,
-	0x42, 0x6f, 0x74, 0x74, 0x6f, 0x6d, 0x22, 0x23, 0x0a, 0x05, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x12,
-	0x0c, 0x0a, 0x01, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x01, 0x78, 0x12, 0x0c, 0x0a,
-	0x01, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x01, 0x79, 0x22, 0x54, 0x0a, 0x12, 0x47,
-	0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x50, 0x72, 0x69, 0x6e, 0x74, 0x4f, 0x43, 0x52, 0x52, 0x65,
-	0x71, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x21,
-	0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x02,
+func (x *GeneralHandwritingOCRRsp) GetData() *GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//快速文本检测
+type TextDetectReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。支持的图片大小：所下载图片经Base64编码后不超过 3M。图片下载时间不超过 3 秒。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。支持的图片格式：PNG、JPG、JPEG，暂不支持 GIF 格式。支持的图片大小：所下载图片经 Base64 编码后不超过 3M。图片下载时间不超过 3 秒。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *TextDetectReq) Reset() {
+	*x = TextDetectReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[88]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextDetectReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextDetectReq) ProtoMessage() {}
+
+func (x *TextDetectReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[88]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextDetectReq.ProtoReflect.Descriptor instead.
+func (*TextDetectReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{88}
+}
+
+func (x *TextDetectReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *TextDetectReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *TextDetectReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//快速文本检测响应
+type TextDetectRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                            `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                           `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *TextDetectRsp_TextDetectRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *TextDetectRsp) Reset() {
+	*x = TextDetectRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[89]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextDetectRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextDetectRsp) ProtoMessage() {}
+
+func (x *TextDetectRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[89]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextDetectRsp.ProtoReflect.Descriptor instead.
+func (*TextDetectRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{89}
+}
+
+func (x *TextDetectRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *TextDetectRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *TextDetectRsp) GetData() *TextDetectRsp_TextDetectRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//银行回单识别请求 调用百度api
+type BankReceiptRecognizeReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"`
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *BankReceiptRecognizeReq) Reset() {
+	*x = BankReceiptRecognizeReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[90]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BankReceiptRecognizeReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BankReceiptRecognizeReq) ProtoMessage() {}
+
+func (x *BankReceiptRecognizeReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[90]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BankReceiptRecognizeReq.ProtoReflect.Descriptor instead.
+func (*BankReceiptRecognizeReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{90}
+}
+
+func (x *BankReceiptRecognizeReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *BankReceiptRecognizeReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *BankReceiptRecognizeReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//银行回单识别响应
+type BankReceiptRecognizeRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                        `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                       `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *BankReceiptRecognizeRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *BankReceiptRecognizeRsp) Reset() {
+	*x = BankReceiptRecognizeRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[91]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BankReceiptRecognizeRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BankReceiptRecognizeRsp) ProtoMessage() {}
+
+func (x *BankReceiptRecognizeRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[91]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BankReceiptRecognizeRsp.ProtoReflect.Descriptor instead.
+func (*BankReceiptRecognizeRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{91}
+}
+
+func (x *BankReceiptRecognizeRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *BankReceiptRecognizeRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *BankReceiptRecognizeRsp) GetData() *BankReceiptRecognizeRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//银行回单识别响应数据
+type BankReceiptRecognizeRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TemplateSign       string               `protobuf:"bytes,1,opt,name=template_sign,json=templateSign,proto3" json:"template_sign,omitempty"`
+	TemplateName       string               `protobuf:"bytes,2,opt,name=template_name,json=templateName,proto3" json:"template_name,omitempty"`
+	Code               string               `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`                                                         //识别结果
+	Type               int32                `protobuf:"varint,4,opt,name=type,proto3" json:"type,omitempty"`                                                        //识别出的图片所属的票据类型
+	Rect               *Rect                `protobuf:"bytes,5,opt,name=rect,proto3" json:"rect,omitempty"`                                                         //识别出的图片在混贴票据图片中的位置信息
+	Angle              string               `protobuf:"bytes,6,opt,name=angle,proto3" json:"angle,omitempty"`                                                       //识别出的图片在混贴票据图片中的旋转角度
+	SingleInvoiceInfos []*SingleInvoiceInfo `protobuf:"bytes,7,rep,name=single_invoice_infos,json=singleInvoiceInfos,proto3" json:"single_invoice_infos,omitempty"` //识别到的内容
+	RequestId          string               `protobuf:"bytes,8,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                              //唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 request_id
+}
+
+func (x *BankReceiptRecognizeRspData) Reset() {
+	*x = BankReceiptRecognizeRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[92]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BankReceiptRecognizeRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BankReceiptRecognizeRspData) ProtoMessage() {}
+
+func (x *BankReceiptRecognizeRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[92]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BankReceiptRecognizeRspData.ProtoReflect.Descriptor instead.
+func (*BankReceiptRecognizeRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{92}
+}
+
+func (x *BankReceiptRecognizeRspData) GetTemplateSign() string {
+	if x != nil {
+		return x.TemplateSign
+	}
+	return ""
+}
+
+func (x *BankReceiptRecognizeRspData) GetTemplateName() string {
+	if x != nil {
+		return x.TemplateName
+	}
+	return ""
+}
+
+func (x *BankReceiptRecognizeRspData) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *BankReceiptRecognizeRspData) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *BankReceiptRecognizeRspData) GetRect() *Rect {
+	if x != nil {
+		return x.Rect
+	}
+	return nil
+}
+
+func (x *BankReceiptRecognizeRspData) GetAngle() string {
+	if x != nil {
+		return x.Angle
+	}
+	return ""
+}
+
+func (x *BankReceiptRecognizeRspData) GetSingleInvoiceInfos() []*SingleInvoiceInfo {
+	if x != nil {
+		return x.SingleInvoiceInfos
+	}
+	return nil
+}
+
+func (x *BankReceiptRecognizeRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//二维码/条形码识别结果信息
+type QrcodeResultsInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TypeName string   `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"` //类型（二维码、条形码）
+	Url      string   `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`                           //二维码/条形码包含的地址
+	Position *Polygon `protobuf:"bytes,3,opt,name=position,proto3" json:"position,omitempty"`                 //二维码/条形码坐标信息
+}
+
+func (x *QrcodeResultsInfo) Reset() {
+	*x = QrcodeResultsInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[93]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QrcodeResultsInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QrcodeResultsInfo) ProtoMessage() {}
+
+func (x *QrcodeResultsInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[93]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QrcodeResultsInfo.ProtoReflect.Descriptor instead.
+func (*QrcodeResultsInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{93}
+}
+
+func (x *QrcodeResultsInfo) GetTypeName() string {
+	if x != nil {
+		return x.TypeName
+	}
+	return ""
+}
+
+func (x *QrcodeResultsInfo) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *QrcodeResultsInfo) GetPosition() *Polygon {
+	if x != nil {
+		return x.Position
+	}
+	return nil
+}
+
+//图片大小
+type QrcodeImgSize struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Width  int32 `protobuf:"varint,1,opt,name=width,proto3" json:"width,omitempty"`   //宽
+	Height int32 `protobuf:"varint,2,opt,name=height,proto3" json:"height,omitempty"` //高
+}
+
+func (x *QrcodeImgSize) Reset() {
+	*x = QrcodeImgSize{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[94]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QrcodeImgSize) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QrcodeImgSize) ProtoMessage() {}
+
+func (x *QrcodeImgSize) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[94]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QrcodeImgSize.ProtoReflect.Descriptor instead.
+func (*QrcodeImgSize) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{94}
+}
+
+func (x *QrcodeImgSize) GetWidth() int32 {
+	if x != nil {
+		return x.Width
+	}
+	return 0
+}
+
+func (x *QrcodeImgSize) GetHeight() int32 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+//二维码识别请求 调用腾讯api
+//图片的 ImageUrl、ImageBase64 必须提供一个，如果都提供，只使用 ImageUrl。
+type QRCodeReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。要求图片经Base64编码后不超过 3M，支持PNG、JPG、JPEG格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。要求图片经Base64编码后不超过 3M，支持PNG、JPG、JPEG格式。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *QRCodeReq) Reset() {
+	*x = QRCodeReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[95]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QRCodeReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QRCodeReq) ProtoMessage() {}
+
+func (x *QRCodeReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[95]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QRCodeReq.ProtoReflect.Descriptor instead.
+func (*QRCodeReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{95}
+}
+
+func (x *QRCodeReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *QRCodeReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *QRCodeReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//二维码识别响应数据
+type QRCodeRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *QRCodeRsp_QRCodeRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *QRCodeRsp) Reset() {
+	*x = QRCodeRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[96]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QRCodeRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QRCodeRsp) ProtoMessage() {}
+
+func (x *QRCodeRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[96]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QRCodeRsp.ProtoReflect.Descriptor instead.
+func (*QRCodeRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{96}
+}
+
+func (x *QRCodeRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *QRCodeRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *QRCodeRsp) GetData() *QRCodeRsp_QRCodeRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//银行卡识别请求
+//图片的 ImageUrl、ImageBase64 必须提供一个，如果都提供，只使用 ImageUrl。
+type BankCardReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。要求图片经Base64编码后不超过 3M，支持PNG、JPG、JPEG格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。要求图片经Base64编码后不超过 3M，支持PNG、JPG、JPEG格式。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *BankCardReq) Reset() {
+	*x = BankCardReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[97]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BankCardReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BankCardReq) ProtoMessage() {}
+
+func (x *BankCardReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[97]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BankCardReq.ProtoReflect.Descriptor instead.
+func (*BankCardReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{97}
+}
+
+func (x *BankCardReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *BankCardReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *BankCardReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+//银行卡识别响应
+type BankCardRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32            `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string           `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *BankCardRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *BankCardRsp) Reset() {
+	*x = BankCardRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[98]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BankCardRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BankCardRsp) ProtoMessage() {}
+
+func (x *BankCardRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[98]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BankCardRsp.ProtoReflect.Descriptor instead.
+func (*BankCardRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{98}
+}
+
+func (x *BankCardRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *BankCardRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *BankCardRsp) GetData() *BankCardRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type BankCardRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CardNo    string `protobuf:"bytes,1,opt,name=card_no,json=cardNo,proto3" json:"card_no,omitempty"`          //卡号
+	BankInfo  string `protobuf:"bytes,2,opt,name=bank_info,json=bankInfo,proto3" json:"bank_info,omitempty"`    //银行信息
+	ValidDate string `protobuf:"bytes,3,opt,name=valid_date,json=validDate,proto3" json:"valid_date,omitempty"` //有效期, 格式如: MM/yyyy
+	CardType  string `protobuf:"bytes,4,opt,name=card_type,json=cardType,proto3" json:"card_type,omitempty"`    //卡类型
+	RequestId string `protobuf:"bytes,5,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"` //唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 request_id
+}
+
+func (x *BankCardRspData) Reset() {
+	*x = BankCardRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[99]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BankCardRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BankCardRspData) ProtoMessage() {}
+
+func (x *BankCardRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[99]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BankCardRspData.ProtoReflect.Descriptor instead.
+func (*BankCardRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{99}
+}
+
+func (x *BankCardRspData) GetCardNo() string {
+	if x != nil {
+		return x.CardNo
+	}
+	return ""
+}
+
+func (x *BankCardRspData) GetBankInfo() string {
+	if x != nil {
+		return x.BankInfo
+	}
+	return ""
+}
+
+func (x *BankCardRspData) GetValidDate() string {
+	if x != nil {
+		return x.ValidDate
+	}
+	return ""
+}
+
+func (x *BankCardRspData) GetCardType() string {
+	if x != nil {
+		return x.CardType
+	}
+	return ""
+}
+
+func (x *BankCardRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type EnterpriseLicenseReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。要求图片经Base64编码后不超过 3M，支持PNG、JPG、JPEG格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。要求图片经Base64编码后不超过 3M，支持PNG、JPG、JPEG格式。
+	OpenOrgId   string `protobuf:"bytes,3,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *EnterpriseLicenseReq) Reset() {
+	*x = EnterpriseLicenseReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[100]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EnterpriseLicenseReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnterpriseLicenseReq) ProtoMessage() {}
+
+func (x *EnterpriseLicenseReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[100]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnterpriseLicenseReq.ProtoReflect.Descriptor instead.
+func (*EnterpriseLicenseReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{100}
+}
+
+func (x *EnterpriseLicenseReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *EnterpriseLicenseReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *EnterpriseLicenseReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+type EnterpriseLicenseRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                     `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *EnterpriseLicenseRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *EnterpriseLicenseRsp) Reset() {
+	*x = EnterpriseLicenseRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[101]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EnterpriseLicenseRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnterpriseLicenseRsp) ProtoMessage() {}
+
+func (x *EnterpriseLicenseRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[101]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnterpriseLicenseRsp.ProtoReflect.Descriptor instead.
+func (*EnterpriseLicenseRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{101}
+}
+
+func (x *EnterpriseLicenseRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *EnterpriseLicenseRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *EnterpriseLicenseRsp) GetData() *EnterpriseLicenseRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type EnterpriseLicenseRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	EnterpriseLicenseInfos []*EnterpriseLicenseInfo `protobuf:"bytes,1,rep,name=enterprise_license_infos,json=enterpriseLicenseInfos,proto3" json:"enterprise_license_infos,omitempty"` // 企业证照识别结果
+	Angel                  float64                  `protobuf:"fixed64,2,opt,name=angel,proto3" json:"angel,omitempty"`                                                                 // 图片旋转角度（角度制），文本的水平方向为0°，顺时针为正，逆时针为负。
+	RequestId              string                   `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                                          // 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+}
+
+func (x *EnterpriseLicenseRspData) Reset() {
+	*x = EnterpriseLicenseRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[102]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EnterpriseLicenseRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnterpriseLicenseRspData) ProtoMessage() {}
+
+func (x *EnterpriseLicenseRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[102]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnterpriseLicenseRspData.ProtoReflect.Descriptor instead.
+func (*EnterpriseLicenseRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{102}
+}
+
+func (x *EnterpriseLicenseRspData) GetEnterpriseLicenseInfos() []*EnterpriseLicenseInfo {
+	if x != nil {
+		return x.EnterpriseLicenseInfos
+	}
+	return nil
+}
+
+func (x *EnterpriseLicenseRspData) GetAngel() float64 {
+	if x != nil {
+		return x.Angel
+	}
+	return 0
+}
+
+func (x *EnterpriseLicenseRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type EnterpriseLicenseInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`   //识别出的字段名称（关键字），不同证件类型可能不同，证件类型包含企业登记证书、许可证书、企业执照、三证合一类证书；
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"` //识别出的字段名称对应的值，也就是字段Name对应的字符串结果。
+}
+
+func (x *EnterpriseLicenseInfo) Reset() {
+	*x = EnterpriseLicenseInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[103]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EnterpriseLicenseInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnterpriseLicenseInfo) ProtoMessage() {}
+
+func (x *EnterpriseLicenseInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[103]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnterpriseLicenseInfo.ProtoReflect.Descriptor instead.
+func (*EnterpriseLicenseInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{103}
+}
+
+func (x *EnterpriseLicenseInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *EnterpriseLicenseInfo) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+type VehicleLicenseReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageBase64 string `protobuf:"bytes,1,opt,name=image_base64,json=imageBase64,proto3" json:"image_base64,omitempty"` //图片的 Base64 值。要求图片经Base64编码后不超过 3M，支持PNG、JPG、JPEG格式。
+	ImageUrl    string `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`          //图片的 Url 地址。要求图片经Base64编码后不超过 3M，支持PNG、JPG、JPEG格式。
+	CardSide    string `protobuf:"bytes,3,opt,name=card_side,json=cardSide,proto3" json:"card_side,omitempty"`          //FRONT 为行驶证主页正面（有红色印章的一面）,BACK 为行驶证副页正面（有号码号牌的一面）默认值为：FRONT。
+	OpenOrgId   string `protobuf:"bytes,4,opt,name=open_org_id,json=openOrgId,proto3" json:"open_org_id,omitempty"`
+}
+
+func (x *VehicleLicenseReq) Reset() {
+	*x = VehicleLicenseReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[104]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VehicleLicenseReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VehicleLicenseReq) ProtoMessage() {}
+
+func (x *VehicleLicenseReq) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[104]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VehicleLicenseReq.ProtoReflect.Descriptor instead.
+func (*VehicleLicenseReq) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{104}
+}
+
+func (x *VehicleLicenseReq) GetImageBase64() string {
+	if x != nil {
+		return x.ImageBase64
+	}
+	return ""
+}
+
+func (x *VehicleLicenseReq) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *VehicleLicenseReq) GetCardSide() string {
+	if x != nil {
+		return x.CardSide
+	}
+	return ""
+}
+
+func (x *VehicleLicenseReq) GetOpenOrgId() string {
+	if x != nil {
+		return x.OpenOrgId
+	}
+	return ""
+}
+
+type VehicleLicenseRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *VehicleLicenseRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *VehicleLicenseRsp) Reset() {
+	*x = VehicleLicenseRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[105]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VehicleLicenseRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VehicleLicenseRsp) ProtoMessage() {}
+
+func (x *VehicleLicenseRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[105]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VehicleLicenseRsp.ProtoReflect.Descriptor instead.
+func (*VehicleLicenseRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{105}
+}
+
+func (x *VehicleLicenseRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *VehicleLicenseRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *VehicleLicenseRsp) GetData() *VehicleLicenseRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type VehicleLicenseRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	FrontInfo *TextVehicleFront `protobuf:"bytes,1,opt,name=front_info,json=frontInfo,proto3" json:"front_info,omitempty"` //行驶证主页正面的识别结果，CardSide 为 FRONT。注意：此字段可能返回 null，表示取不到有效值。
+	BankInfo  *TextVehicleBack  `protobuf:"bytes,2,opt,name=bank_info,json=bankInfo,proto3" json:"bank_info,omitempty"`    //行驶证副页正面的识别结果，CardSide 为 BACK。注意：此字段可能返回 null，表示取不到有效值。
+	//告警码 告警码信息                          告警码说明
+	//-9102  WARN_DRIVER_LICENSE_COPY_CARD      复印件告警
+	//-9103  WARN_DRIVER_LICENSE_SCREENED_CARD  翻拍件告警
+	//-9106  WARN_DRIVER_LICENSE_PS_CARD        PS告警
+	//注：告警信息可以同时存在多个
+	RecognizeWarnCode []int64  `protobuf:"varint,3,rep,packed,name=recognize_warn_code,json=recognizeWarnCode,proto3" json:"recognize_warn_code,omitempty"` //告警码
+	RecognizeWarnMsg  []string `protobuf:"bytes,4,rep,name=recognize_warn_msg,json=recognizeWarnMsg,proto3" json:"recognize_warn_msg,omitempty"`            //告警码说明
+	RequestId         string   `protobuf:"bytes,5,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                                   // 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+}
+
+func (x *VehicleLicenseRspData) Reset() {
+	*x = VehicleLicenseRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[106]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VehicleLicenseRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VehicleLicenseRspData) ProtoMessage() {}
+
+func (x *VehicleLicenseRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[106]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VehicleLicenseRspData.ProtoReflect.Descriptor instead.
+func (*VehicleLicenseRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{106}
+}
+
+func (x *VehicleLicenseRspData) GetFrontInfo() *TextVehicleFront {
+	if x != nil {
+		return x.FrontInfo
+	}
+	return nil
+}
+
+func (x *VehicleLicenseRspData) GetBankInfo() *TextVehicleBack {
+	if x != nil {
+		return x.BankInfo
+	}
+	return nil
+}
+
+func (x *VehicleLicenseRspData) GetRecognizeWarnCode() []int64 {
+	if x != nil {
+		return x.RecognizeWarnCode
+	}
+	return nil
+}
+
+func (x *VehicleLicenseRspData) GetRecognizeWarnMsg() []string {
+	if x != nil {
+		return x.RecognizeWarnMsg
+	}
+	return nil
+}
+
+func (x *VehicleLicenseRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type TextVehicleFront struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PlateNo      string `protobuf:"bytes,1,opt,name=plate_no,json=plateNo,proto3" json:"plate_no,omitempty"`                //号牌号码
+	VehicleType  string `protobuf:"bytes,2,opt,name=vehicle_type,json=vehicleType,proto3" json:"vehicle_type,omitempty"`    //车辆类型
+	Owner        string `protobuf:"bytes,3,opt,name=owner,proto3" json:"owner,omitempty"`                                   //所有人
+	Address      string `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`                               //住址
+	UseCharacter string `protobuf:"bytes,5,opt,name=use_character,json=useCharacter,proto3" json:"use_character,omitempty"` //使用性质
+	Model        string `protobuf:"bytes,6,opt,name=model,proto3" json:"model,omitempty"`                                   //品牌型号
+	Vin          string `protobuf:"bytes,7,opt,name=vin,proto3" json:"vin,omitempty"`                                       //车辆识别代号
+	EngineNo     string `protobuf:"bytes,8,opt,name=engine_no,json=engineNo,proto3" json:"engine_no,omitempty"`             //发动机号码
+	RegisterDate string `protobuf:"bytes,9,opt,name=register_date,json=registerDate,proto3" json:"register_date,omitempty"` //注册日期
+	IssueDate    string `protobuf:"bytes,10,opt,name=issue_date,json=issueDate,proto3" json:"issue_date,omitempty"`         //发证日期
+	Seal         string `protobuf:"bytes,11,opt,name=seal,proto3" json:"seal,omitempty"`                                    //印章
+}
+
+func (x *TextVehicleFront) Reset() {
+	*x = TextVehicleFront{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[107]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextVehicleFront) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextVehicleFront) ProtoMessage() {}
+
+func (x *TextVehicleFront) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[107]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextVehicleFront.ProtoReflect.Descriptor instead.
+func (*TextVehicleFront) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{107}
+}
+
+func (x *TextVehicleFront) GetPlateNo() string {
+	if x != nil {
+		return x.PlateNo
+	}
+	return ""
+}
+
+func (x *TextVehicleFront) GetVehicleType() string {
+	if x != nil {
+		return x.VehicleType
+	}
+	return ""
+}
+
+func (x *TextVehicleFront) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
+func (x *TextVehicleFront) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *TextVehicleFront) GetUseCharacter() string {
+	if x != nil {
+		return x.UseCharacter
+	}
+	return ""
+}
+
+func (x *TextVehicleFront) GetModel() string {
+	if x != nil {
+		return x.Model
+	}
+	return ""
+}
+
+func (x *TextVehicleFront) GetVin() string {
+	if x != nil {
+		return x.Vin
+	}
+	return ""
+}
+
+func (x *TextVehicleFront) GetEngineNo() string {
+	if x != nil {
+		return x.EngineNo
+	}
+	return ""
+}
+
+func (x *TextVehicleFront) GetRegisterDate() string {
+	if x != nil {
+		return x.RegisterDate
+	}
+	return ""
+}
+
+func (x *TextVehicleFront) GetIssueDate() string {
+	if x != nil {
+		return x.IssueDate
+	}
+	return ""
+}
+
+func (x *TextVehicleFront) GetSeal() string {
+	if x != nil {
+		return x.Seal
+	}
+	return ""
+}
+
+type TextVehicleBack struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PlateNo        string `protobuf:"bytes,1,opt,name=plate_no,json=plateNo,proto3" json:"plate_no,omitempty"`                         //号牌号码
+	FileNo         string `protobuf:"bytes,2,opt,name=file_no,json=fileNo,proto3" json:"file_no,omitempty"`                            //档案编号
+	AllowNum       string `protobuf:"bytes,3,opt,name=allow_num,json=allowNum,proto3" json:"allow_num,omitempty"`                      //核定人数
+	TotalMass      string `protobuf:"bytes,4,opt,name=total_mass,json=totalMass,proto3" json:"total_mass,omitempty"`                   //总质量
+	CurbWeight     string `protobuf:"bytes,5,opt,name=curb_weight,json=curbWeight,proto3" json:"curb_weight,omitempty"`                //整备质量
+	LoadQuality    string `protobuf:"bytes,6,opt,name=load_quality,json=loadQuality,proto3" json:"load_quality,omitempty"`             //核定载质量
+	ExternalSize   string `protobuf:"bytes,7,opt,name=external_size,json=externalSize,proto3" json:"external_size,omitempty"`          //外廓尺寸
+	Marks          string `protobuf:"bytes,8,opt,name=marks,proto3" json:"marks,omitempty"`                                            //备注
+	Record         string `protobuf:"bytes,9,opt,name=record,proto3" json:"record,omitempty"`                                          //检验记录
+	TotalQuasiMass string `protobuf:"bytes,10,opt,name=total_quasi_mass,json=totalQuasiMass,proto3" json:"total_quasi_mass,omitempty"` //准牵引总质量
+}
+
+func (x *TextVehicleBack) Reset() {
+	*x = TextVehicleBack{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[108]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextVehicleBack) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextVehicleBack) ProtoMessage() {}
+
+func (x *TextVehicleBack) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[108]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextVehicleBack.ProtoReflect.Descriptor instead.
+func (*TextVehicleBack) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{108}
+}
+
+func (x *TextVehicleBack) GetPlateNo() string {
+	if x != nil {
+		return x.PlateNo
+	}
+	return ""
+}
+
+func (x *TextVehicleBack) GetFileNo() string {
+	if x != nil {
+		return x.FileNo
+	}
+	return ""
+}
+
+func (x *TextVehicleBack) GetAllowNum() string {
+	if x != nil {
+		return x.AllowNum
+	}
+	return ""
+}
+
+func (x *TextVehicleBack) GetTotalMass() string {
+	if x != nil {
+		return x.TotalMass
+	}
+	return ""
+}
+
+func (x *TextVehicleBack) GetCurbWeight() string {
+	if x != nil {
+		return x.CurbWeight
+	}
+	return ""
+}
+
+func (x *TextVehicleBack) GetLoadQuality() string {
+	if x != nil {
+		return x.LoadQuality
+	}
+	return ""
+}
+
+func (x *TextVehicleBack) GetExternalSize() string {
+	if x != nil {
+		return x.ExternalSize
+	}
+	return ""
+}
+
+func (x *TextVehicleBack) GetMarks() string {
+	if x != nil {
+		return x.Marks
+	}
+	return ""
+}
+
+func (x *TextVehicleBack) GetRecord() string {
+	if x != nil {
+		return x.Record
+	}
+	return ""
+}
+
+func (x *TextVehicleBack) GetTotalQuasiMass() string {
+	if x != nil {
+		return x.TotalQuasiMass
+	}
+	return ""
+}
+
+//混贴票据识别 响应
+type MixedInvoiceOcrStrRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32                      `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string                     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data    *MixedInvoiceOcrStrRspData `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *MixedInvoiceOcrStrRsp) Reset() {
+	*x = MixedInvoiceOcrStrRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[109]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MixedInvoiceOcrStrRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MixedInvoiceOcrStrRsp) ProtoMessage() {}
+
+func (x *MixedInvoiceOcrStrRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[109]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MixedInvoiceOcrStrRsp.ProtoReflect.Descriptor instead.
+func (*MixedInvoiceOcrStrRsp) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{109}
+}
+
+func (x *MixedInvoiceOcrStrRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *MixedInvoiceOcrStrRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *MixedInvoiceOcrStrRsp) GetData() *MixedInvoiceOcrStrRspData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+//混贴票据识别 响应
+type MixedInvoiceOcrStrRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Total           int32              `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`                                           //成功识别票据数量
+	TimeCost        string             `protobuf:"bytes,2,opt,name=time_cost,json=timeCost,proto3" json:"time_cost,omitempty"`                      //识别花费的时长(单位:毫秒)
+	IdentifyResults []*TicketStrResult `protobuf:"bytes,3,rep,name=identify_results,json=identifyResults,proto3" json:"identify_results,omitempty"` //混贴票据识别结果
+	Timestamp       int64              `protobuf:"varint,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`                                   //响应时间戳
+	RequestId       string             `protobuf:"bytes,5,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                   //唯一请求 ID
+}
+
+func (x *MixedInvoiceOcrStrRspData) Reset() {
+	*x = MixedInvoiceOcrStrRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[110]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MixedInvoiceOcrStrRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MixedInvoiceOcrStrRspData) ProtoMessage() {}
+
+func (x *MixedInvoiceOcrStrRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[110]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MixedInvoiceOcrStrRspData.ProtoReflect.Descriptor instead.
+func (*MixedInvoiceOcrStrRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{110}
+}
+
+func (x *MixedInvoiceOcrStrRspData) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *MixedInvoiceOcrStrRspData) GetTimeCost() string {
+	if x != nil {
+		return x.TimeCost
+	}
+	return ""
+}
+
+func (x *MixedInvoiceOcrStrRspData) GetIdentifyResults() []*TicketStrResult {
+	if x != nil {
+		return x.IdentifyResults
+	}
+	return nil
+}
+
+func (x *MixedInvoiceOcrStrRspData) GetTimestamp() int64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
+}
+
+func (x *MixedInvoiceOcrStrRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+//混贴票据单张发票识别信息
+type TicketStrResult struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Type        string            `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`                //识别出的图片所属的票据类型
+	Orientation int32             `protobuf:"varint,2,opt,name=orientation,proto3" json:"orientation,omitempty"` //识别出的图片在混贴票据图片中的旋转角度
+	Region      []int32           `protobuf:"varint,4,rep,packed,name=region,proto3" json:"region,omitempty"`
+	ImageSize   []int32           `protobuf:"varint,5,rep,packed,name=image_size,json=imageSize,proto3" json:"image_size,omitempty"` //图片像素大小
+	Page        int32             `protobuf:"varint,6,opt,name=page,proto3" json:"page,omitempty"`
+	Details     *TicketStrContent `protobuf:"bytes,7,opt,name=details,proto3" json:"details,omitempty"` //识别到的内容
+	Extra       *TicketStrExtra   `protobuf:"bytes,8,opt,name=extra,proto3" json:"extra,omitempty"`     //附加内容
+}
+
+func (x *TicketStrResult) Reset() {
+	*x = TicketStrResult{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[111]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TicketStrResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TicketStrResult) ProtoMessage() {}
+
+func (x *TicketStrResult) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[111]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TicketStrResult.ProtoReflect.Descriptor instead.
+func (*TicketStrResult) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{111}
+}
+
+func (x *TicketStrResult) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *TicketStrResult) GetOrientation() int32 {
+	if x != nil {
+		return x.Orientation
+	}
+	return 0
+}
+
+func (x *TicketStrResult) GetRegion() []int32 {
+	if x != nil {
+		return x.Region
+	}
+	return nil
+}
+
+func (x *TicketStrResult) GetImageSize() []int32 {
+	if x != nil {
+		return x.ImageSize
+	}
+	return nil
+}
+
+func (x *TicketStrResult) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *TicketStrResult) GetDetails() *TicketStrContent {
+	if x != nil {
+		return x.Details
+	}
+	return nil
+}
+
+func (x *TicketStrResult) GetExtra() *TicketStrExtra {
+	if x != nil {
+		return x.Extra
+	}
+	return nil
+}
+
+//混贴票据中单张发票的内容
+type TicketStrContent struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	//通用字段
+	Code              string       `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`                                                       //印刷发票代码
+	Number            string       `protobuf:"bytes,2,opt,name=number,proto3" json:"number,omitempty"`                                                   //(发票类：印刷发票号码；航空运输电子客票行程单：电子客票号码)
+	CodeConfirm       string       `protobuf:"bytes,3,opt,name=code_confirm,json=codeConfirm,proto3" json:"code_confirm,omitempty"`                      //机打发票代码
+	NumberConfirm     string       `protobuf:"bytes,4,opt,name=number_confirm,json=numberConfirm,proto3" json:"number_confirm,omitempty"`                //机打发票号码
+	Date              string       `protobuf:"bytes,5,opt,name=date,proto3" json:"date,omitempty"`                                                       //开票日期
+	PretaxAmount      string       `protobuf:"bytes,6,opt,name=pretax_amount,json=pretaxAmount,proto3" json:"pretax_amount,omitempty"`                   //税前金额
+	Total             string       `protobuf:"bytes,7,opt,name=total,proto3" json:"total,omitempty"`                                                     //价税合计（小写）
+	TotalCn           string       `protobuf:"bytes,8,opt,name=total_cn,json=totalCn,proto3" json:"total_cn,omitempty"`                                  //价税合计（大写）
+	Tax               string       `protobuf:"bytes,9,opt,name=tax,proto3" json:"tax,omitempty"`                                                         //税额
+	CheckCode         string       `protobuf:"bytes,10,opt,name=check_code,json=checkCode,proto3" json:"check_code,omitempty"`                           //(发票类：校验码；航空运输电子客票行程单：验证码)
+	MachineCode       string       `protobuf:"bytes,11,opt,name=machine_code,json=machineCode,proto3" json:"machine_code,omitempty"`                     //机器编号
+	Seller            string       `protobuf:"bytes,12,opt,name=seller,proto3" json:"seller,omitempty"`                                                  //销售方名称
+	SellerTaxId       string       `protobuf:"bytes,13,opt,name=seller_tax_id,json=sellerTaxId,proto3" json:"seller_tax_id,omitempty"`                   //销售方纳税人识别号
+	SellerAddrTel     string       `protobuf:"bytes,14,opt,name=seller_addr_tel,json=sellerAddrTel,proto3" json:"seller_addr_tel,omitempty"`             //销售方地址、账号
+	SellerBankAccount string       `protobuf:"bytes,15,opt,name=seller_bank_account,json=sellerBankAccount,proto3" json:"seller_bank_account,omitempty"` //销售方银行账号
+	Buyer             string       `protobuf:"bytes,16,opt,name=buyer,proto3" json:"buyer,omitempty"`                                                    //购买方方名称
+	BuyerId           string       `protobuf:"bytes,17,opt,name=buyer_id,json=buyerId,proto3" json:"buyer_id,omitempty"`                                 //买方单位代码/个人身份证号(二手车销售统一发票、机动车销售统一发票)
+	BuyerTaxId        string       `protobuf:"bytes,18,opt,name=buyer_tax_id,json=buyerTaxId,proto3" json:"buyer_tax_id,omitempty"`                      //购买方纳税人识别号
+	BuyerBankAccount  string       `protobuf:"bytes,19,opt,name=buyer_bank_account,json=buyerBankAccount,proto3" json:"buyer_bank_account,omitempty"`    //购买方银行账号
+	BuyerAddrTel      string       `protobuf:"bytes,20,opt,name=buyer_addr_tel,json=buyerAddrTel,proto3" json:"buyer_addr_tel,omitempty"`                //购买方地址、账号
+	CompanySeal       string       `protobuf:"bytes,21,opt,name=company_seal,json=companySeal,proto3" json:"company_seal,omitempty"`                     //是否有公司印章（0
+	FormType          string       `protobuf:"bytes,22,opt,name=form_type,json=formType,proto3" json:"form_type,omitempty"`                              //发票是第几联
+	FormName          string       `protobuf:"bytes,23,opt,name=form_name,json=formName,proto3" json:"form_name,omitempty"`                              //发票联次
+	Kind              string       `protobuf:"bytes,24,opt,name=kind,proto3" json:"kind,omitempty"`                                                      // 发票消费类型(交通、服务、用车)
+	Ciphertext        string       `protobuf:"bytes,25,opt,name=ciphertext,proto3" json:"ciphertext,omitempty"`                                          //密码区
+	TravelTax         string       `protobuf:"bytes,26,opt,name=travel_tax,json=travelTax,proto3" json:"travel_tax,omitempty"`                           //车船税
+	Receiptor         string       `protobuf:"bytes,27,opt,name=receiptor,proto3" json:"receiptor,omitempty"`                                            //收款人
+	Reviewer          string       `protobuf:"bytes,28,opt,name=reviewer,proto3" json:"reviewer,omitempty"`                                              //复核
+	Issuer            string       `protobuf:"bytes,29,opt,name=issuer,proto3" json:"issuer,omitempty"`                                                  //开票人
+	Province          string       `protobuf:"bytes,30,opt,name=province,proto3" json:"province,omitempty"`                                              //省
+	City              string       `protobuf:"bytes,31,opt,name=city,proto3" json:"city,omitempty"`                                                      //市
+	ServiceName       string       `protobuf:"bytes,32,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`                     //服务类型
+	Remark            string       `protobuf:"bytes,33,opt,name=remark,proto3" json:"remark,omitempty"`                                                  // 备注
+	ItemNames         string       `protobuf:"bytes,34,opt,name=item_names,json=itemNames,proto3" json:"item_names,omitempty"`                           //品名，每个以逗号隔开
+	AgentMark         string       `protobuf:"bytes,35,opt,name=agent_mark,json=agentMark,proto3" json:"agent_mark,omitempty"`                           //是否代开
+	AcquisitionMark   string       `protobuf:"bytes,36,opt,name=acquisition_mark,json=acquisitionMark,proto3" json:"acquisition_mark,omitempty"`         //是否收购
+	BlockChain        string       `protobuf:"bytes,37,opt,name=block_chain,json=blockChain,proto3" json:"block_chain,omitempty"`                        //区块链标记
+	ElectronicMark    string       `protobuf:"bytes,38,opt,name=electronic_mark,json=electronicMark,proto3" json:"electronic_mark,omitempty"`            //是否为电子增票
+	TransitMark       string       `protobuf:"bytes,39,opt,name=transit_mark,json=transitMark,proto3" json:"transit_mark,omitempty"`                     //通行费标志
+	OilMark           string       `protobuf:"bytes,40,opt,name=oil_mark,json=oilMark,proto3" json:"oil_mark,omitempty"`                                 //成品油标志
+	VehicleMark       string       `protobuf:"bytes,41,opt,name=vehicle_mark,json=vehicleMark,proto3" json:"vehicle_mark,omitempty"`                     //机动车标志
+	Title             string       `protobuf:"bytes,42,opt,name=title,proto3" json:"title,omitempty"`                                                    //标题
+	Time              string       `protobuf:"bytes,43,opt,name=time,proto3" json:"time,omitempty"`                                                      //时间
+	Category          string       `protobuf:"bytes,44,opt,name=category,proto3" json:"category,omitempty"`                                              //种类，oil 表示是加油票
+	Name              string       `protobuf:"bytes,45,opt,name=name,proto3" json:"name,omitempty"`                                                      //乘客姓名(客运汽车、火车票、船票)
+	UserId            string       `protobuf:"bytes,46,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                    //身份证号(客运汽车、火车票、航空运输电子客票行程单)
+	StationGeton      string       `protobuf:"bytes,47,opt,name=station_geton,json=stationGeton,proto3" json:"station_geton,omitempty"`                  //上车车站(客运汽车、火车票、船票)
+	StationGetoff     string       `protobuf:"bytes,48,opt,name=station_getoff,json=stationGetoff,proto3" json:"station_getoff,omitempty"`               //下车车站(客运汽车、火车票、船票)
+	LicensePlate      string       `protobuf:"bytes,49,opt,name=license_plate,json=licensePlate,proto3" json:"license_plate,omitempty"`                  //车牌号(出租车、二手车销售统一发票)
+	Phone             string       `protobuf:"bytes,50,opt,name=phone,proto3" json:"phone,omitempty"`                                                    //(机动车销售统一发票：销货单位电话；滴滴出行行程单：行程人手机号）
+	Mileage           string       `protobuf:"bytes,51,opt,name=mileage,proto3" json:"mileage,omitempty"`                                                //里程(出租车、船票)
+	CurrencyCode      string       `protobuf:"bytes,52,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`                  //币种(小票、船票)【使用 ISO 4217 Currency Codes 标准】
+	CarCode           string       `protobuf:"bytes,53,opt,name=car_code,json=carCode,proto3" json:"car_code,omitempty"`                                 //车架号/车辆识别代码(机动车销售统一发票、二手车销售统一发票)
+	CarModel          string       `protobuf:"bytes,54,opt,name=car_model,json=carModel,proto3" json:"car_model,omitempty"`                              //厂牌型号(机动车销售统一发票、二手车销售统一发票)
+	Items             []*GoodsInfo `protobuf:"bytes,55,rep,name=items,proto3" json:"items,omitempty"`                                                    //货物详情
+	//出租车
+	TimeGeton  string `protobuf:"bytes,56,opt,name=time_geton,json=timeGeton,proto3" json:"time_geton,omitempty"`    //上车时间
+	TimeGetoff string `protobuf:"bytes,57,opt,name=time_getoff,json=timeGetoff,proto3" json:"time_getoff,omitempty"` //下车时间
+	Place      string `protobuf:"bytes,58,opt,name=place,proto3" json:"place,omitempty"`                             //发票所在地
+	//火车票
+	TrainNumber   string `protobuf:"bytes,59,opt,name=train_number,json=trainNumber,proto3" json:"train_number,omitempty"`         //车次
+	Seat          string `protobuf:"bytes,60,opt,name=seat,proto3" json:"seat,omitempty"`                                          //座位类型
+	SerialNumber  string `protobuf:"bytes,61,opt,name=serial_number,json=serialNumber,proto3" json:"serial_number,omitempty"`      //序列号
+	GateNumber    string `protobuf:"bytes,62,opt,name=gate_number,json=gateNumber,proto3" json:"gate_number,omitempty"`            //检票口
+	SeatNumber    string `protobuf:"bytes,63,opt,name=seat_number,json=seatNumber,proto3" json:"seat_number,omitempty"`            //座位号
+	PickUpAddress string `protobuf:"bytes,64,opt,name=pick_up_address,json=pickUpAddress,proto3" json:"pick_up_address,omitempty"` //取票地址
+	//过路费
+	Entrance    string `protobuf:"bytes,65,opt,name=entrance,proto3" json:"entrance,omitempty"`                          //入口
+	Exit        string `protobuf:"bytes,66,opt,name=exit,proto3" json:"exit,omitempty"`                                  //出口
+	HighwayFlag string `protobuf:"bytes,67,opt,name=highway_flag,json=highwayFlag,proto3" json:"highway_flag,omitempty"` //高速标志（0：没有； 1： 有）
+	//航空运输电子客票行程单
+	UserName            string        `protobuf:"bytes,68,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`                                    //乘机人姓名
+	Agentcode           string        `protobuf:"bytes,69,opt,name=agentcode,proto3" json:"agentcode,omitempty"`                                                  //销售单位代号
+	IssueBy             string        `protobuf:"bytes,70,opt,name=issue_by,json=issueBy,proto3" json:"issue_by,omitempty"`                                       //填开单位
+	Fare                string        `protobuf:"bytes,71,opt,name=fare,proto3" json:"fare,omitempty"`                                                            //票价
+	FuelSurcharge       string        `protobuf:"bytes,72,opt,name=fuel_surcharge,json=fuelSurcharge,proto3" json:"fuel_surcharge,omitempty"`                     //燃油附加费
+	CaacDevelopmentFund string        `protobuf:"bytes,73,opt,name=caac_development_fund,json=caacDevelopmentFund,proto3" json:"caac_development_fund,omitempty"` //民航发展基金
+	Insurance           string        `protobuf:"bytes,74,opt,name=insurance,proto3" json:"insurance,omitempty"`                                                  //保险费
+	InternationalFlag   string        `protobuf:"bytes,75,opt,name=international_flag,json=internationalFlag,proto3" json:"international_flag,omitempty"`         //国内国际标签
+	PrintNumber         string        `protobuf:"bytes,76,opt,name=print_number,json=printNumber,proto3" json:"print_number,omitempty"`                           //印刷序号
+	Endorsement         string        `protobuf:"bytes,77,opt,name=endorsement,proto3" json:"endorsement,omitempty"`                                              //签注
+	Flights             []*FlightInfo `protobuf:"bytes,78,rep,name=flights,proto3" json:"flights,omitempty"`                                                      //航班信息
+	//二手车销售统一发票
+	CompanyName        string `protobuf:"bytes,79,opt,name=company_name,json=companyName,proto3" json:"company_name,omitempty"`                        //二手车市场
+	CompanyTaxId       string `protobuf:"bytes,80,opt,name=company_tax_id,json=companyTaxId,proto3" json:"company_tax_id,omitempty"`                   //二手车市场纳税人识别号
+	CompanyBankAccount string `protobuf:"bytes,81,opt,name=company_bank_account,json=companyBankAccount,proto3" json:"company_bank_account,omitempty"` //二手车市场开户银行、账号
+	CompanyPhone       string `protobuf:"bytes,82,opt,name=company_phone,json=companyPhone,proto3" json:"company_phone,omitempty"`                     //二手车市场电话
+	CompanyAddress     string `protobuf:"bytes,83,opt,name=company_address,json=companyAddress,proto3" json:"company_address,omitempty"`               //二手车市场地址
+	RegistrationNumber string `protobuf:"bytes,84,opt,name=registration_number,json=registrationNumber,proto3" json:"registration_number,omitempty"`   //登记证号
+	MachineId          string `protobuf:"bytes,85,opt,name=machine_id,json=machineId,proto3" json:"machine_id,omitempty"`                              //机器编号
+	SellerId           string `protobuf:"bytes,86,opt,name=seller_id,json=sellerId,proto3" json:"seller_id,omitempty"`                                 // 卖方单位代码/个人身份证号
+	SellerAddress      string `protobuf:"bytes,87,opt,name=seller_address,json=sellerAddress,proto3" json:"seller_address,omitempty"`                  //卖方单位/个人住址
+	BuyerAddress       string `protobuf:"bytes,88,opt,name=buyer_address,json=buyerAddress,proto3" json:"buyer_address,omitempty"`                     //买方单位/个人住址
+	//机动车销售统一发票
+	MachineNumber      string `protobuf:"bytes,89,opt,name=machine_number,json=machineNumber,proto3" json:"machine_number,omitempty"`                  //机打号码
+	Address            string `protobuf:"bytes,90,opt,name=address,proto3" json:"address,omitempty"`                                                   //销货单位地址
+	Account            string `protobuf:"bytes,91,opt,name=account,proto3" json:"account,omitempty"`                                                   //销货单位账号
+	TaxAuthoritiesCode string `protobuf:"bytes,92,opt,name=tax_authorities_code,json=taxAuthoritiesCode,proto3" json:"tax_authorities_code,omitempty"` //主管税务机关代码
+	CarEngineCode      string `protobuf:"bytes,93,opt,name=car_engine_code,json=carEngineCode,proto3" json:"car_engine_code,omitempty"`                //发动机号码
+	CertificateNumber  string `protobuf:"bytes,94,opt,name=certificate_number,json=certificateNumber,proto3" json:"certificate_number,omitempty"`      //合格证号
+	TaxRate            string `protobuf:"bytes,95,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`                                    //税率
+	CarType            string `protobuf:"bytes,96,opt,name=car_type,json=carType,proto3" json:"car_type,omitempty"`                                    //车辆类型
+	Tonnage            string `protobuf:"bytes,97,opt,name=tonnage,proto3" json:"tonnage,omitempty"`                                                   //吨位
+	TaxNum             string `protobuf:"bytes,98,opt,name=tax_num,json=taxNum,proto3" json:"tax_num,omitempty"`                                       //完税凭证号码
+	MaxPeopleNum       string `protobuf:"bytes,99,opt,name=max_people_num,json=maxPeopleNum,proto3" json:"max_people_num,omitempty"`                   //人数
+	Origin             string `protobuf:"bytes,100,opt,name=origin,proto3" json:"origin,omitempty"`                                                    //产地
+	//小票
+	StoreName string `protobuf:"bytes,101,opt,name=store_name,json=storeName,proto3" json:"store_name,omitempty"` //店名
+	Subtotal  string `protobuf:"bytes,102,opt,name=subtotal,proto3" json:"subtotal,omitempty"`                    //税前金额
+	Discount  string `protobuf:"bytes,103,opt,name=discount,proto3" json:"discount,omitempty"`                    //折扣
+	Tips      string `protobuf:"bytes,104,opt,name=tips,proto3" json:"tips,omitempty"`                            //小费
+	Type      string `protobuf:"bytes,105,opt,name=type,proto3" json:"type,omitempty"`                            //消费类型
+	// 滴滴出行行程单
+	DateStart string `protobuf:"bytes,106,opt,name=date_start,json=dateStart,proto3" json:"date_start,omitempty"` //行程开始时间
+	DateEnd   string `protobuf:"bytes,107,opt,name=date_end,json=dateEnd,proto3" json:"date_end,omitempty"`       //行程结束时间
+	// 完税证明
+	TaxAuthorities string `protobuf:"bytes,108,opt,name=tax_authorities,json=taxAuthorities,proto3" json:"tax_authorities,omitempty"` //主管税务机关
+}
+
+func (x *TicketStrContent) Reset() {
+	*x = TicketStrContent{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[112]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TicketStrContent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TicketStrContent) ProtoMessage() {}
+
+func (x *TicketStrContent) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[112]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TicketStrContent.ProtoReflect.Descriptor instead.
+func (*TicketStrContent) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{112}
+}
+
+func (x *TicketStrContent) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetNumber() string {
+	if x != nil {
+		return x.Number
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCodeConfirm() string {
+	if x != nil {
+		return x.CodeConfirm
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetNumberConfirm() string {
+	if x != nil {
+		return x.NumberConfirm
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetPretaxAmount() string {
+	if x != nil {
+		return x.PretaxAmount
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTotal() string {
+	if x != nil {
+		return x.Total
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTotalCn() string {
+	if x != nil {
+		return x.TotalCn
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTax() string {
+	if x != nil {
+		return x.Tax
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCheckCode() string {
+	if x != nil {
+		return x.CheckCode
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetMachineCode() string {
+	if x != nil {
+		return x.MachineCode
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetSeller() string {
+	if x != nil {
+		return x.Seller
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetSellerTaxId() string {
+	if x != nil {
+		return x.SellerTaxId
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetSellerAddrTel() string {
+	if x != nil {
+		return x.SellerAddrTel
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetSellerBankAccount() string {
+	if x != nil {
+		return x.SellerBankAccount
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetBuyer() string {
+	if x != nil {
+		return x.Buyer
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetBuyerId() string {
+	if x != nil {
+		return x.BuyerId
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetBuyerTaxId() string {
+	if x != nil {
+		return x.BuyerTaxId
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetBuyerBankAccount() string {
+	if x != nil {
+		return x.BuyerBankAccount
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetBuyerAddrTel() string {
+	if x != nil {
+		return x.BuyerAddrTel
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCompanySeal() string {
+	if x != nil {
+		return x.CompanySeal
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetFormType() string {
+	if x != nil {
+		return x.FormType
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetFormName() string {
+	if x != nil {
+		return x.FormName
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetKind() string {
+	if x != nil {
+		return x.Kind
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCiphertext() string {
+	if x != nil {
+		return x.Ciphertext
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTravelTax() string {
+	if x != nil {
+		return x.TravelTax
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetReceiptor() string {
+	if x != nil {
+		return x.Receiptor
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetReviewer() string {
+	if x != nil {
+		return x.Reviewer
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetIssuer() string {
+	if x != nil {
+		return x.Issuer
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetProvince() string {
+	if x != nil {
+		return x.Province
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCity() string {
+	if x != nil {
+		return x.City
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetServiceName() string {
+	if x != nil {
+		return x.ServiceName
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetRemark() string {
+	if x != nil {
+		return x.Remark
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetItemNames() string {
+	if x != nil {
+		return x.ItemNames
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetAgentMark() string {
+	if x != nil {
+		return x.AgentMark
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetAcquisitionMark() string {
+	if x != nil {
+		return x.AcquisitionMark
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetBlockChain() string {
+	if x != nil {
+		return x.BlockChain
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetElectronicMark() string {
+	if x != nil {
+		return x.ElectronicMark
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTransitMark() string {
+	if x != nil {
+		return x.TransitMark
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetOilMark() string {
+	if x != nil {
+		return x.OilMark
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetVehicleMark() string {
+	if x != nil {
+		return x.VehicleMark
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTime() string {
+	if x != nil {
+		return x.Time
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetStationGeton() string {
+	if x != nil {
+		return x.StationGeton
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetStationGetoff() string {
+	if x != nil {
+		return x.StationGetoff
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetLicensePlate() string {
+	if x != nil {
+		return x.LicensePlate
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetMileage() string {
+	if x != nil {
+		return x.Mileage
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCurrencyCode() string {
+	if x != nil {
+		return x.CurrencyCode
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCarCode() string {
+	if x != nil {
+		return x.CarCode
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCarModel() string {
+	if x != nil {
+		return x.CarModel
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetItems() []*GoodsInfo {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *TicketStrContent) GetTimeGeton() string {
+	if x != nil {
+		return x.TimeGeton
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTimeGetoff() string {
+	if x != nil {
+		return x.TimeGetoff
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetPlace() string {
+	if x != nil {
+		return x.Place
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTrainNumber() string {
+	if x != nil {
+		return x.TrainNumber
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetSeat() string {
+	if x != nil {
+		return x.Seat
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetSerialNumber() string {
+	if x != nil {
+		return x.SerialNumber
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetGateNumber() string {
+	if x != nil {
+		return x.GateNumber
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetSeatNumber() string {
+	if x != nil {
+		return x.SeatNumber
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetPickUpAddress() string {
+	if x != nil {
+		return x.PickUpAddress
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetEntrance() string {
+	if x != nil {
+		return x.Entrance
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetExit() string {
+	if x != nil {
+		return x.Exit
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetHighwayFlag() string {
+	if x != nil {
+		return x.HighwayFlag
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetUserName() string {
+	if x != nil {
+		return x.UserName
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetAgentcode() string {
+	if x != nil {
+		return x.Agentcode
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetIssueBy() string {
+	if x != nil {
+		return x.IssueBy
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetFare() string {
+	if x != nil {
+		return x.Fare
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetFuelSurcharge() string {
+	if x != nil {
+		return x.FuelSurcharge
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCaacDevelopmentFund() string {
+	if x != nil {
+		return x.CaacDevelopmentFund
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetInsurance() string {
+	if x != nil {
+		return x.Insurance
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetInternationalFlag() string {
+	if x != nil {
+		return x.InternationalFlag
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetPrintNumber() string {
+	if x != nil {
+		return x.PrintNumber
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetEndorsement() string {
+	if x != nil {
+		return x.Endorsement
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetFlights() []*FlightInfo {
+	if x != nil {
+		return x.Flights
+	}
+	return nil
+}
+
+func (x *TicketStrContent) GetCompanyName() string {
+	if x != nil {
+		return x.CompanyName
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCompanyTaxId() string {
+	if x != nil {
+		return x.CompanyTaxId
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCompanyBankAccount() string {
+	if x != nil {
+		return x.CompanyBankAccount
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCompanyPhone() string {
+	if x != nil {
+		return x.CompanyPhone
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCompanyAddress() string {
+	if x != nil {
+		return x.CompanyAddress
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetRegistrationNumber() string {
+	if x != nil {
+		return x.RegistrationNumber
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetMachineId() string {
+	if x != nil {
+		return x.MachineId
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetSellerId() string {
+	if x != nil {
+		return x.SellerId
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetSellerAddress() string {
+	if x != nil {
+		return x.SellerAddress
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetBuyerAddress() string {
+	if x != nil {
+		return x.BuyerAddress
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetMachineNumber() string {
+	if x != nil {
+		return x.MachineNumber
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetAccount() string {
+	if x != nil {
+		return x.Account
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTaxAuthoritiesCode() string {
+	if x != nil {
+		return x.TaxAuthoritiesCode
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCarEngineCode() string {
+	if x != nil {
+		return x.CarEngineCode
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCertificateNumber() string {
+	if x != nil {
+		return x.CertificateNumber
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTaxRate() string {
+	if x != nil {
+		return x.TaxRate
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetCarType() string {
+	if x != nil {
+		return x.CarType
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTonnage() string {
+	if x != nil {
+		return x.Tonnage
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTaxNum() string {
+	if x != nil {
+		return x.TaxNum
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetMaxPeopleNum() string {
+	if x != nil {
+		return x.MaxPeopleNum
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetStoreName() string {
+	if x != nil {
+		return x.StoreName
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetSubtotal() string {
+	if x != nil {
+		return x.Subtotal
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetDiscount() string {
+	if x != nil {
+		return x.Discount
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTips() string {
+	if x != nil {
+		return x.Tips
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetDateStart() string {
+	if x != nil {
+		return x.DateStart
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetDateEnd() string {
+	if x != nil {
+		return x.DateEnd
+	}
+	return ""
+}
+
+func (x *TicketStrContent) GetTaxAuthorities() string {
+	if x != nil {
+		return x.TaxAuthorities
+	}
+	return ""
+}
+
+//商品货物详情
+type GoodsInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	//通用字段
+	Name          string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`                      //货物或应税劳务、服务名称
+	Specification string `protobuf:"bytes,2,opt,name=specification,proto3" json:"specification,omitempty"`    //规格型号
+	Unit          string `protobuf:"bytes,3,opt,name=unit,proto3" json:"unit,omitempty"`                      //单位
+	Quantity      string `protobuf:"bytes,4,opt,name=quantity,proto3" json:"quantity,omitempty"`              //数量
+	Price         string `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`                    //单价
+	Total         string `protobuf:"bytes,6,opt,name=total,proto3" json:"total,omitempty"`                    //金额
+	TaxRate       string `protobuf:"bytes,7,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"` //税率
+	Tax           string `protobuf:"bytes,8,opt,name=tax,proto3" json:"tax,omitempty"`                        //税额
+	//滴滴出行行程单
+	CarType   string `protobuf:"bytes,9,opt,name=car_type,json=carType,proto3" json:"car_type,omitempty"`        //车型
+	TimeGeton string `protobuf:"bytes,10,opt,name=time_geton,json=timeGeton,proto3" json:"time_geton,omitempty"` //上车时间
+	City      string `protobuf:"bytes,11,opt,name=city,proto3" json:"city,omitempty"`                            //城市
+	Mileage   string `protobuf:"bytes,14,opt,name=mileage,proto3" json:"mileage,omitempty"`                      //里程(公里)
+	//收费公路通行费增值税电子普通发票
+	LicensePlate string `protobuf:"bytes,15,opt,name=license_plate,json=licensePlate,proto3" json:"license_plate,omitempty"` //车牌号
+	VehicleType  string `protobuf:"bytes,16,opt,name=vehicle_type,json=vehicleType,proto3" json:"vehicle_type,omitempty"`    //类型
+	StartDate    string `protobuf:"bytes,17,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`          //通行日期起
+	EndDate      string `protobuf:"bytes,18,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`                //通行日期止
+}
+
+func (x *GoodsInfo) Reset() {
+	*x = GoodsInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[113]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GoodsInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GoodsInfo) ProtoMessage() {}
+
+func (x *GoodsInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[113]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GoodsInfo.ProtoReflect.Descriptor instead.
+func (*GoodsInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{113}
+}
+
+func (x *GoodsInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetSpecification() string {
+	if x != nil {
+		return x.Specification
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetUnit() string {
+	if x != nil {
+		return x.Unit
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetQuantity() string {
+	if x != nil {
+		return x.Quantity
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetPrice() string {
+	if x != nil {
+		return x.Price
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetTotal() string {
+	if x != nil {
+		return x.Total
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetTaxRate() string {
+	if x != nil {
+		return x.TaxRate
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetTax() string {
+	if x != nil {
+		return x.Tax
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetCarType() string {
+	if x != nil {
+		return x.CarType
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetTimeGeton() string {
+	if x != nil {
+		return x.TimeGeton
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetCity() string {
+	if x != nil {
+		return x.City
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetMileage() string {
+	if x != nil {
+		return x.Mileage
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetLicensePlate() string {
+	if x != nil {
+		return x.LicensePlate
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetVehicleType() string {
+	if x != nil {
+		return x.VehicleType
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetStartDate() string {
+	if x != nil {
+		return x.StartDate
+	}
+	return ""
+}
+
+func (x *GoodsInfo) GetEndDate() string {
+	if x != nil {
+		return x.EndDate
+	}
+	return ""
+}
+
+//航班信息
+type FlightInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	From           string `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`                                              //出发站
+	To             string `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`                                                  //到达站
+	ClassName      string `protobuf:"bytes,3,opt,name=class_name,json=className,proto3" json:"class_name,omitempty"`                   //舱位等级
+	FlightNumber   string `protobuf:"bytes,4,opt,name=flight_number,json=flightNumber,proto3" json:"flight_number,omitempty"`          //航班号
+	Date           string `protobuf:"bytes,5,opt,name=date,proto3" json:"date,omitempty"`                                              //乘机日期
+	Time           string `protobuf:"bytes,6,opt,name=time,proto3" json:"time,omitempty"`                                              //乘机时间
+	Seat           string `protobuf:"bytes,7,opt,name=seat,proto3" json:"seat,omitempty"`                                              //座位等级
+	Carrier        string `protobuf:"bytes,8,opt,name=carrier,proto3" json:"carrier,omitempty"`                                        //承运人
+	Allow          string `protobuf:"bytes,9,opt,name=allow,proto3" json:"allow,omitempty"`                                            //免费行李
+	FareBasis      string `protobuf:"bytes,10,opt,name=fare_basis,json=fareBasis,proto3" json:"fare_basis,omitempty"`                  //客票级别
+	NotValidBefore string `protobuf:"bytes,11,opt,name=not_valid_before,json=notValidBefore,proto3" json:"not_valid_before,omitempty"` //客票生效日期
+	NotValidAfter  string `protobuf:"bytes,12,opt,name=not_valid_after,json=notValidAfter,proto3" json:"not_valid_after,omitempty"`    //有效截至日期
+}
+
+func (x *FlightInfo) Reset() {
+	*x = FlightInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[114]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FlightInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FlightInfo) ProtoMessage() {}
+
+func (x *FlightInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[114]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FlightInfo.ProtoReflect.Descriptor instead.
+func (*FlightInfo) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{114}
+}
+
+func (x *FlightInfo) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetClassName() string {
+	if x != nil {
+		return x.ClassName
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetFlightNumber() string {
+	if x != nil {
+		return x.FlightNumber
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetTime() string {
+	if x != nil {
+		return x.Time
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetSeat() string {
+	if x != nil {
+		return x.Seat
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetCarrier() string {
+	if x != nil {
+		return x.Carrier
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetAllow() string {
+	if x != nil {
+		return x.Allow
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetFareBasis() string {
+	if x != nil {
+		return x.FareBasis
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetNotValidBefore() string {
+	if x != nil {
+		return x.NotValidBefore
+	}
+	return ""
+}
+
+func (x *FlightInfo) GetNotValidAfter() string {
+	if x != nil {
+		return x.NotValidAfter
+	}
+	return ""
+}
+
+type TicketStrExtra struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	//增值税
+	CheckCodeCandidates []string `protobuf:"bytes,1,rep,name=check_code_candidates,json=checkCodeCandidates,proto3" json:"check_code_candidates,omitempty"` //校验码备选
+	CheckCodeLastSix    []string `protobuf:"bytes,2,rep,name=check_code_last_six,json=checkCodeLastSix,proto3" json:"check_code_last_six,omitempty"`        //校验码后六位备选
+	NumberOrderError    []string `protobuf:"bytes,3,rep,name=number_order_error,json=numberOrderError,proto3" json:"number_order_error,omitempty"`          //发票号码备选(如发现可能错号等情况)
+	//二维码或者条码
+	Qrcode  []string `protobuf:"bytes,4,rep,name=qrcode,proto3" json:"qrcode,omitempty"`   //二维码
+	Barcode []string `protobuf:"bytes,5,rep,name=barcode,proto3" json:"barcode,omitempty"` //条形码
+}
+
+func (x *TicketStrExtra) Reset() {
+	*x = TicketStrExtra{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[115]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TicketStrExtra) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TicketStrExtra) ProtoMessage() {}
+
+func (x *TicketStrExtra) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[115]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TicketStrExtra.ProtoReflect.Descriptor instead.
+func (*TicketStrExtra) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{115}
+}
+
+func (x *TicketStrExtra) GetCheckCodeCandidates() []string {
+	if x != nil {
+		return x.CheckCodeCandidates
+	}
+	return nil
+}
+
+func (x *TicketStrExtra) GetCheckCodeLastSix() []string {
+	if x != nil {
+		return x.CheckCodeLastSix
+	}
+	return nil
+}
+
+func (x *TicketStrExtra) GetNumberOrderError() []string {
+	if x != nil {
+		return x.NumberOrderError
+	}
+	return nil
+}
+
+func (x *TicketStrExtra) GetQrcode() []string {
+	if x != nil {
+		return x.Qrcode
+	}
+	return nil
+}
+
+func (x *TicketStrExtra) GetBarcode() []string {
+	if x != nil {
+		return x.Barcode
+	}
+	return nil
+}
+
+type GeneralBasicOCRRsp_GeneralBasicOCRRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TextDetections []*TextDetection `protobuf:"bytes,1,rep,name=text_detections,json=textDetections,proto3" json:"text_detections,omitempty"` // 检测到的文本信息，包括文本行内容、置信度、文本行坐标以及文本行旋转纠正后的坐标，具体内容请点击左侧链接。
+	Language       string           `protobuf:"bytes,2,opt,name=language,proto3" json:"language,omitempty"`                                   // 检测到的语言类型。
+	Angel          float64          `protobuf:"fixed64,3,opt,name=angel,proto3" json:"angel,omitempty"`                                       // 图片旋转角度（角度制），文本的水平方向为0°；顺时针为正，逆时针为负。
+	PdfPageSize    uint32           `protobuf:"varint,4,opt,name=pdf_page_size,json=pdfPageSize,proto3" json:"pdf_page_size,omitempty"`       //图片为PDF时，返回PDF的总页数，默认为0
+	RequestId      string           `protobuf:"bytes,5,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                //唯一请求 ID
+}
+
+func (x *GeneralBasicOCRRsp_GeneralBasicOCRRspData) Reset() {
+	*x = GeneralBasicOCRRsp_GeneralBasicOCRRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[116]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralBasicOCRRsp_GeneralBasicOCRRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralBasicOCRRsp_GeneralBasicOCRRspData) ProtoMessage() {}
+
+func (x *GeneralBasicOCRRsp_GeneralBasicOCRRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[116]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralBasicOCRRsp_GeneralBasicOCRRspData.ProtoReflect.Descriptor instead.
+func (*GeneralBasicOCRRsp_GeneralBasicOCRRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{73, 0}
+}
+
+func (x *GeneralBasicOCRRsp_GeneralBasicOCRRspData) GetTextDetections() []*TextDetection {
+	if x != nil {
+		return x.TextDetections
+	}
+	return nil
+}
+
+func (x *GeneralBasicOCRRsp_GeneralBasicOCRRspData) GetLanguage() string {
+	if x != nil {
+		return x.Language
+	}
+	return ""
+}
+
+func (x *GeneralBasicOCRRsp_GeneralBasicOCRRspData) GetAngel() float64 {
+	if x != nil {
+		return x.Angel
+	}
+	return 0
+}
+
+func (x *GeneralBasicOCRRsp_GeneralBasicOCRRspData) GetPdfPageSize() uint32 {
+	if x != nil {
+		return x.PdfPageSize
+	}
+	return 0
+}
+
+func (x *GeneralBasicOCRRsp_GeneralBasicOCRRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type GeneralAccurateOCRRsp_GeneralAccurateOCRRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TextDetections []*TextDetection `protobuf:"bytes,1,rep,name=text_detections,json=textDetections,proto3" json:"text_detections,omitempty"` // 检测到的文本信息，包括文本行内容、置信度、文本行坐标以及文本行旋转纠正后的坐标，具体内容请点击左侧链接。
+	Angel          float64          `protobuf:"fixed64,2,opt,name=angel,proto3" json:"angel,omitempty"`                                       // 图片旋转角度（角度制），文本的水平方向为0°；顺时针为正，逆时针为负。
+	RequestId      string           `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                //唯一请求 ID
+}
+
+func (x *GeneralAccurateOCRRsp_GeneralAccurateOCRRspData) Reset() {
+	*x = GeneralAccurateOCRRsp_GeneralAccurateOCRRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[117]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralAccurateOCRRsp_GeneralAccurateOCRRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralAccurateOCRRsp_GeneralAccurateOCRRspData) ProtoMessage() {}
+
+func (x *GeneralAccurateOCRRsp_GeneralAccurateOCRRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[117]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralAccurateOCRRsp_GeneralAccurateOCRRspData.ProtoReflect.Descriptor instead.
+func (*GeneralAccurateOCRRsp_GeneralAccurateOCRRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{75, 0}
+}
+
+func (x *GeneralAccurateOCRRsp_GeneralAccurateOCRRspData) GetTextDetections() []*TextDetection {
+	if x != nil {
+		return x.TextDetections
+	}
+	return nil
+}
+
+func (x *GeneralAccurateOCRRsp_GeneralAccurateOCRRspData) GetAngel() float64 {
+	if x != nil {
+		return x.Angel
+	}
+	return 0
+}
+
+func (x *GeneralAccurateOCRRsp_GeneralAccurateOCRRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type GeneralEfficientOCRRsp_GeneralEfficientOCRRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TextDetections []*TextDetection `protobuf:"bytes,1,rep,name=text_detections,json=textDetections,proto3" json:"text_detections,omitempty"` // 检测到的文本信息，包括文本行内容、置信度、文本行坐标以及文本行旋转纠正后的坐标，具体内容请点击左侧链接。
+	Angel          float64          `protobuf:"fixed64,2,opt,name=angel,proto3" json:"angel,omitempty"`                                       // 图片旋转角度（角度制），文本的水平方向为0°；顺时针为正，逆时针为负。
+	RequestId      string           `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                //唯一请求 ID
+}
+
+func (x *GeneralEfficientOCRRsp_GeneralEfficientOCRRspData) Reset() {
+	*x = GeneralEfficientOCRRsp_GeneralEfficientOCRRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[118]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralEfficientOCRRsp_GeneralEfficientOCRRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralEfficientOCRRsp_GeneralEfficientOCRRspData) ProtoMessage() {}
+
+func (x *GeneralEfficientOCRRsp_GeneralEfficientOCRRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[118]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralEfficientOCRRsp_GeneralEfficientOCRRspData.ProtoReflect.Descriptor instead.
+func (*GeneralEfficientOCRRsp_GeneralEfficientOCRRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{77, 0}
+}
+
+func (x *GeneralEfficientOCRRsp_GeneralEfficientOCRRspData) GetTextDetections() []*TextDetection {
+	if x != nil {
+		return x.TextDetections
+	}
+	return nil
+}
+
+func (x *GeneralEfficientOCRRsp_GeneralEfficientOCRRspData) GetAngel() float64 {
+	if x != nil {
+		return x.Angel
+	}
+	return 0
+}
+
+func (x *GeneralEfficientOCRRsp_GeneralEfficientOCRRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type GeneralFastOCRRsp_GeneralFastOCRRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TextDetections []*TextDetection `protobuf:"bytes,1,rep,name=text_detections,json=textDetections,proto3" json:"text_detections,omitempty"` // 检测到的文本信息，包括文本行内容、置信度、文本行坐标以及文本行旋转纠正后的坐标，具体内容请点击左侧链接。
+	Language       string           `protobuf:"bytes,2,opt,name=language,proto3" json:"language,omitempty"`                                   // 检测到的语言类型。zh - 中英混合，jap - 日文，kor - 韩文
+	Angel          float64          `protobuf:"fixed64,3,opt,name=angel,proto3" json:"angel,omitempty"`                                       // 图片旋转角度（角度制），文本的水平方向为0°；顺时针为正，逆时针为负。
+	RequestId      string           `protobuf:"bytes,4,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                //唯一请求 ID
+}
+
+func (x *GeneralFastOCRRsp_GeneralFastOCRRspData) Reset() {
+	*x = GeneralFastOCRRsp_GeneralFastOCRRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[119]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralFastOCRRsp_GeneralFastOCRRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralFastOCRRsp_GeneralFastOCRRspData) ProtoMessage() {}
+
+func (x *GeneralFastOCRRsp_GeneralFastOCRRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[119]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralFastOCRRsp_GeneralFastOCRRspData.ProtoReflect.Descriptor instead.
+func (*GeneralFastOCRRsp_GeneralFastOCRRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{79, 0}
+}
+
+func (x *GeneralFastOCRRsp_GeneralFastOCRRspData) GetTextDetections() []*TextDetection {
+	if x != nil {
+		return x.TextDetections
+	}
+	return nil
+}
+
+func (x *GeneralFastOCRRsp_GeneralFastOCRRspData) GetLanguage() string {
+	if x != nil {
+		return x.Language
+	}
+	return ""
+}
+
+func (x *GeneralFastOCRRsp_GeneralFastOCRRspData) GetAngel() float64 {
+	if x != nil {
+		return x.Angel
+	}
+	return 0
+}
+
+func (x *GeneralFastOCRRsp_GeneralFastOCRRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type TextDetectionEn_WordCoordPoint struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Polygon []*Coord `protobuf:"bytes,1,rep,name=polygon,proto3" json:"polygon,omitempty"` //英文OCR识别出的每个单词在原图中的四点坐标。
+}
+
+func (x *TextDetectionEn_WordCoordPoint) Reset() {
+	*x = TextDetectionEn_WordCoordPoint{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[120]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextDetectionEn_WordCoordPoint) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextDetectionEn_WordCoordPoint) ProtoMessage() {}
+
+func (x *TextDetectionEn_WordCoordPoint) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[120]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextDetectionEn_WordCoordPoint.ProtoReflect.Descriptor instead.
+func (*TextDetectionEn_WordCoordPoint) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{82, 0}
+}
+
+func (x *TextDetectionEn_WordCoordPoint) GetPolygon() []*Coord {
+	if x != nil {
+		return x.Polygon
+	}
+	return nil
+}
+
+type TextDetectionEn_CandWord struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	WordCoordinate []*Words `protobuf:"bytes,1,rep,name=word_coordinate,json=wordCoordinate,proto3" json:"word_coordinate,omitempty"` //英文OCR识别出的每个单词在原图中的四点坐标
+}
+
+func (x *TextDetectionEn_CandWord) Reset() {
+	*x = TextDetectionEn_CandWord{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[121]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextDetectionEn_CandWord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextDetectionEn_CandWord) ProtoMessage() {}
+
+func (x *TextDetectionEn_CandWord) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[121]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextDetectionEn_CandWord.ProtoReflect.Descriptor instead.
+func (*TextDetectionEn_CandWord) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{82, 1}
+}
+
+func (x *TextDetectionEn_CandWord) GetWordCoordinate() []*Words {
+	if x != nil {
+		return x.WordCoordinate
+	}
+	return nil
+}
+
+type EnglishOCRRsp_EnglishOCRRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TextDetections []*TextDetectionEn `protobuf:"bytes,1,rep,name=text_detections,json=textDetections,proto3" json:"text_detections,omitempty"` // 检测到的文本信息。
+	RequestId      string             `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                //唯一请求 ID
+}
+
+func (x *EnglishOCRRsp_EnglishOCRRspData) Reset() {
+	*x = EnglishOCRRsp_EnglishOCRRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[122]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EnglishOCRRsp_EnglishOCRRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnglishOCRRsp_EnglishOCRRspData) ProtoMessage() {}
+
+func (x *EnglishOCRRsp_EnglishOCRRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[122]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnglishOCRRsp_EnglishOCRRspData.ProtoReflect.Descriptor instead.
+func (*EnglishOCRRsp_EnglishOCRRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{83, 0}
+}
+
+func (x *EnglishOCRRsp_EnglishOCRRspData) GetTextDetections() []*TextDetectionEn {
+	if x != nil {
+		return x.TextDetections
+	}
+	return nil
+}
+
+func (x *EnglishOCRRsp_EnglishOCRRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TextDetections []*TextGeneralHandwriting `protobuf:"bytes,1,rep,name=text_detections,json=textDetections,proto3" json:"text_detections,omitempty"` // 检测到的文本信息。
+	RequestId      string                    `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                //唯一请求 ID
+}
+
+func (x *GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData) Reset() {
+	*x = GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[123]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData) ProtoMessage() {}
+
+func (x *GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[123]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData.ProtoReflect.Descriptor instead.
+func (*GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{87, 0}
+}
+
+func (x *GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData) GetTextDetections() []*TextGeneralHandwriting {
+	if x != nil {
+		return x.TextDetections
+	}
+	return nil
+}
+
+func (x *GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type TextDetectRsp_TextDetectRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	HasText   bool   `protobuf:"varint,1,opt,name=has_text,json=hasText,proto3" json:"has_text,omitempty"`      //图片中是否包含文字
+	RequestId string `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"` //唯一请求 ID
+}
+
+func (x *TextDetectRsp_TextDetectRspData) Reset() {
+	*x = TextDetectRsp_TextDetectRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[124]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TextDetectRsp_TextDetectRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextDetectRsp_TextDetectRspData) ProtoMessage() {}
+
+func (x *TextDetectRsp_TextDetectRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[124]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextDetectRsp_TextDetectRspData.ProtoReflect.Descriptor instead.
+func (*TextDetectRsp_TextDetectRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{89, 0}
+}
+
+func (x *TextDetectRsp_TextDetectRspData) GetHasText() bool {
+	if x != nil {
+		return x.HasText
+	}
+	return false
+}
+
+func (x *TextDetectRsp_TextDetectRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type QRCodeRsp_QRCodeRspData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	QrcodeResultsInfo []*QrcodeResultsInfo `protobuf:"bytes,1,rep,name=qrcode_results_info,json=qrcodeResultsInfo,proto3" json:"qrcode_results_info,omitempty"` //二维码/条形码识别结果信息，
+	ImgSize           *QrcodeImgSize       `protobuf:"bytes,2,opt,name=img_size,json=imgSize,proto3" json:"img_size,omitempty"`                                 //图片大小
+	RequestId         string               `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`                           //唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 request_id
+}
+
+func (x *QRCodeRsp_QRCodeRspData) Reset() {
+	*x = QRCodeRsp_QRCodeRspData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ticket_ocr_proto_msgTypes[125]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QRCodeRsp_QRCodeRspData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QRCodeRsp_QRCodeRspData) ProtoMessage() {}
+
+func (x *QRCodeRsp_QRCodeRspData) ProtoReflect() protoreflect.Message {
+	mi := &file_ticket_ocr_proto_msgTypes[125]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QRCodeRsp_QRCodeRspData.ProtoReflect.Descriptor instead.
+func (*QRCodeRsp_QRCodeRspData) Descriptor() ([]byte, []int) {
+	return file_ticket_ocr_proto_rawDescGZIP(), []int{96, 0}
+}
+
+func (x *QRCodeRsp_QRCodeRspData) GetQrcodeResultsInfo() []*QrcodeResultsInfo {
+	if x != nil {
+		return x.QrcodeResultsInfo
+	}
+	return nil
+}
+
+func (x *QRCodeRsp_QRCodeRspData) GetImgSize() *QrcodeImgSize {
+	if x != nil {
+		return x.ImgSize
+	}
+	return nil
+}
+
+func (x *QRCodeRsp_QRCodeRspData) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+var File_ticket_ocr_proto protoreflect.FileDescriptor
+
+var file_ticket_ocr_proto_rawDesc = []byte{
+	0x0a, 0x10, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x6f, 0x63, 0x72, 0x2e, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x12, 0x0c, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69,
+	0x22, 0x72, 0x0a, 0x10, 0x56, 0x61, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63,
+	0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61,
+	0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67,
+	0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67,
+	0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67,
+	0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f,
+	0x72, 0x67, 0x49, 0x64, 0x22, 0x78, 0x0a, 0x10, 0x56, 0x61, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07,
+	0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d,
+	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x36, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72,
+	0x61, 0x70, 0x69, 0x2e, 0x56, 0x61, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63,
+	0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xb3,
+	0x01, 0x0a, 0x14, 0x56, 0x61, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72,
+	0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x48, 0x0a, 0x11, 0x76, 0x61, 0x74, 0x5f, 0x69,
+	0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70,
+	0x69, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x56, 0x61, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65,
+	0x52, 0x0f, 0x76, 0x61, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f,
+	0x73, 0x12, 0x32, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x1c, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x56, 0x61, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x05,
+	0x69, 0x74, 0x65, 0x6d, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x49, 0x64, 0x22, 0x3a, 0x0a, 0x0e, 0x54, 0x65, 0x78, 0x74, 0x56, 0x61, 0x74, 0x49,
+	0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x22, 0x88, 0x02, 0x0a, 0x0e, 0x56, 0x61, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49,
+	0x74, 0x65, 0x6d, 0x12, 0x17, 0x0a, 0x07, 0x6c, 0x69, 0x6e, 0x65, 0x5f, 0x6e, 0x6f, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6c, 0x69, 0x6e, 0x65, 0x4e, 0x6f, 0x12, 0x12, 0x0a, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x12, 0x12, 0x0a, 0x04, 0x73, 0x70, 0x65, 0x63, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x73, 0x70, 0x65, 0x63, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x6e, 0x69, 0x74, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x75, 0x6e, 0x69, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x71, 0x75, 0x61, 0x6e,
+	0x74, 0x69, 0x74, 0x79, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x71, 0x75, 0x61, 0x6e,
+	0x74, 0x69, 0x74, 0x79, 0x12, 0x1d, 0x0a, 0x0a, 0x75, 0x6e, 0x69, 0x74, 0x5f, 0x70, 0x72, 0x69,
+	0x63, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x75, 0x6e, 0x69, 0x74, 0x50, 0x72,
+	0x69, 0x63, 0x65, 0x12, 0x2c, 0x0a, 0x12, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x5f, 0x77, 0x69,
+	0x74, 0x68, 0x6f, 0x75, 0x74, 0x5f, 0x74, 0x61, 0x78, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x10, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x57, 0x69, 0x74, 0x68, 0x6f, 0x75, 0x74, 0x54, 0x61,
+	0x78, 0x12, 0x19, 0x0a, 0x08, 0x74, 0x61, 0x78, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x08, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x74, 0x61, 0x78, 0x52, 0x61, 0x74, 0x65, 0x12, 0x1d, 0x0a, 0x0a,
+	0x74, 0x61, 0x78, 0x5f, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x74, 0x61, 0x78, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x71, 0x0a, 0x0f, 0x46,
+	0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c, 0x4f, 0x63, 0x72, 0x52, 0x65, 0x71, 0x12, 0x21,
+	0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36,
-	0x34, 0x22, 0x7b, 0x0a, 0x12, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x50, 0x72, 0x69, 0x6e,
-	0x74, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18,
+	0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e,
+	0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x76,
+	0x0a, 0x0f, 0x46, 0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c, 0x4f, 0x63, 0x72, 0x52, 0x73,
+	0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12,
+	0x35, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e,
+	0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x46, 0x69, 0x6e,
+	0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61,
+	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x7b, 0x0a, 0x13, 0x46, 0x69, 0x6e, 0x61, 0x6e, 0x42,
+	0x69, 0x6c, 0x6c, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x45, 0x0a,
+	0x10, 0x66, 0x69, 0x6e, 0x61, 0x6e, 0x5f, 0x62, 0x69, 0x6c, 0x6c, 0x5f, 0x69, 0x6e, 0x66, 0x6f,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x46, 0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c,
+	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x0e, 0x66, 0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c, 0x49,
+	0x6e, 0x66, 0x6f, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f,
+	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x49, 0x64, 0x22, 0x39, 0x0a, 0x0d, 0x46, 0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c,
+	0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x76,
+	0x0a, 0x14, 0x56, 0x61, 0x74, 0x52, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65,
+	0x4f, 0x63, 0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f,
+	0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61,
+	0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f,
+	0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65,
+	0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x80, 0x01, 0x0a, 0x14, 0x56, 0x61, 0x74, 0x52, 0x6f,
+	0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x12,
+	0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x3a, 0x0a,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x74, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x56, 0x61, 0x74, 0x52, 0x6f,
+	0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44,
+	0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xa6, 0x01, 0x0a, 0x18, 0x56, 0x61,
+	0x74, 0x52, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52,
+	0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x55, 0x0a, 0x16, 0x76, 0x61, 0x74, 0x5f, 0x72, 0x6f,
+	0x6c, 0x6c, 0x5f, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f,
+	0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x56, 0x61, 0x74, 0x52, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76,
+	0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x13, 0x76, 0x61, 0x74, 0x52, 0x6f, 0x6c,
+	0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x14, 0x0a,
+	0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x6e,
+	0x67, 0x6c, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69,
+	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x49, 0x64, 0x22, 0x66, 0x0a, 0x12, 0x56, 0x61, 0x74, 0x52, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76,
+	0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x12, 0x26, 0x0a, 0x04, 0x72, 0x65, 0x63, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x12, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x52, 0x65, 0x63, 0x74, 0x52, 0x04, 0x72, 0x65, 0x63, 0x74, 0x22, 0x50, 0x0a, 0x04, 0x52, 0x65,
+	0x63, 0x74, 0x12, 0x0c, 0x0a, 0x01, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x01, 0x78,
+	0x12, 0x0c, 0x0a, 0x01, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x01, 0x79, 0x12, 0x14,
+	0x0a, 0x05, 0x77, 0x69, 0x64, 0x74, 0x68, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x77,
+	0x69, 0x64, 0x74, 0x68, 0x12, 0x16, 0x0a, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x22, 0x8a, 0x01, 0x0a,
+	0x12, 0x4d, 0x69, 0x78, 0x65, 0x64, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72,
+	0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73,
+	0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f,
+	0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x55, 0x72, 0x6c, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x79, 0x70, 0x65, 0x73, 0x18, 0x03, 0x20, 0x03,
+	0x28, 0x05, 0x52, 0x05, 0x74, 0x79, 0x70, 0x65, 0x73, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65,
+	0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
+	0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x7c, 0x0a, 0x12, 0x4d, 0x69, 0x78,
+	0x65, 0x64, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x12,
+	0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x38, 0x0a,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x74, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x4d, 0x69, 0x78, 0x65, 0x64,
+	0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x9d, 0x01, 0x0a, 0x16, 0x4d, 0x69, 0x78, 0x65,
+	0x64, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61,
+	0x74, 0x61, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x4e, 0x0a, 0x13, 0x6d, 0x69, 0x78, 0x65,
+	0x64, 0x5f, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18,
+	0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63,
+	0x72, 0x61, 0x70, 0x69, 0x2e, 0x4d, 0x69, 0x78, 0x65, 0x64, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63,
+	0x65, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x11, 0x6d, 0x69, 0x78, 0x65, 0x64, 0x49, 0x6e, 0x76, 0x6f,
+	0x69, 0x63, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0xcb, 0x01, 0x0a, 0x10, 0x4d, 0x69, 0x78, 0x65,
+	0x64, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04,
+	0x74, 0x79, 0x70, 0x65, 0x12, 0x26, 0x0a, 0x04, 0x72, 0x65, 0x63, 0x74, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x12, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70,
+	0x69, 0x2e, 0x52, 0x65, 0x63, 0x74, 0x52, 0x04, 0x72, 0x65, 0x63, 0x74, 0x12, 0x14, 0x0a, 0x05,
+	0x61, 0x6e, 0x67, 0x6c, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x6e, 0x67,
+	0x6c, 0x65, 0x12, 0x51, 0x0a, 0x14, 0x73, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x5f, 0x69, 0x6e, 0x76,
+	0x6f, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x1f, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x12, 0x73, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65,
+	0x49, 0x6e, 0x66, 0x6f, 0x73, 0x22, 0x3d, 0x0a, 0x11, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49,
+	0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14,
+	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x22, 0x9a, 0x01, 0x0a, 0x15, 0x4d, 0x69, 0x78, 0x65, 0x64, 0x49, 0x6e,
+	0x76, 0x6f, 0x69, 0x63, 0x65, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x52, 0x65, 0x71, 0x12, 0x21,
+	0x0a, 0x0c, 0x72, 0x65, 0x74, 0x75, 0x72, 0x6e, 0x5f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x72, 0x65, 0x74, 0x75, 0x72, 0x6e, 0x49, 0x6d, 0x61, 0x67,
+	0x65, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36,
+	0x34, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61,
+	0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72,
+	0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72,
+	0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49,
+	0x64, 0x22, 0x82, 0x01, 0x0a, 0x15, 0x4d, 0x69, 0x78, 0x65, 0x64, 0x49, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x3b, 0x0a, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x4d, 0x69, 0x78, 0x65, 0x64, 0x49, 0x6e, 0x76, 0x6f,
+	0x69, 0x63, 0x65, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61,
+	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x8d, 0x01, 0x0a, 0x19, 0x4d, 0x69, 0x78, 0x65, 0x64,
+	0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x52, 0x73, 0x70,
+	0x44, 0x61, 0x74, 0x61, 0x12, 0x51, 0x0a, 0x14, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f,
+	0x64, 0x65, 0x74, 0x65, 0x63, 0x74, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70,
+	0x69, 0x2e, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x49,
+	0x6e, 0x66, 0x6f, 0x52, 0x12, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x44, 0x65, 0x74, 0x65,
+	0x63, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x7b, 0x0a, 0x11, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63,
+	0x65, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x14, 0x0a, 0x05, 0x61,
+	0x6e, 0x67, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x6e, 0x67, 0x6c,
+	0x65, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x26, 0x0a, 0x04, 0x72, 0x65, 0x63, 0x74, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61,
+	0x70, 0x69, 0x2e, 0x52, 0x65, 0x63, 0x74, 0x52, 0x04, 0x72, 0x65, 0x63, 0x74, 0x12, 0x14, 0x0a,
+	0x05, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x22, 0x76, 0x0a, 0x14, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x47, 0x65,
+	0x6e, 0x65, 0x72, 0x61, 0x6c, 0x4f, 0x63, 0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69,
+	0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b,
+	0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f,
+	0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x80, 0x01, 0x0a, 0x14,
+	0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x4f, 0x63,
+	0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x12, 0x3a, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x26, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x4f, 0x63,
+	0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xa5,
+	0x01, 0x0a, 0x18, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61,
+	0x6c, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x54, 0x0a, 0x15, 0x69,
+	0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x5f, 0x69,
+	0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63,
+	0x65, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x13, 0x69, 0x6e,
+	0x76, 0x6f, 0x69, 0x63, 0x65, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x49, 0x6e, 0x66, 0x6f,
+	0x73, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x66, 0x0a, 0x12, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63,
+	0x65, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x26, 0x0a, 0x04, 0x72, 0x65, 0x63, 0x74, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72,
+	0x61, 0x70, 0x69, 0x2e, 0x52, 0x65, 0x63, 0x74, 0x52, 0x04, 0x72, 0x65, 0x63, 0x74, 0x22, 0x75,
+	0x0a, 0x13, 0x44, 0x75, 0x74, 0x79, 0x50, 0x61, 0x69, 0x64, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x4f,
+	0x63, 0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62,
+	0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61,
+	0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67,
+	0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61,
+	0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72,
+	0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e,
+	0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x7e, 0x0a, 0x13, 0x44, 0x75, 0x74, 0x79, 0x50, 0x61, 0x69,
+	0x64, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x39, 0x0a, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65,
+	0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x75, 0x74, 0x79, 0x50, 0x61, 0x69, 0x64,
+	0x50, 0x72, 0x6f, 0x6f, 0x66, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xa2, 0x01, 0x0a, 0x17, 0x44, 0x75, 0x74, 0x79, 0x50, 0x61,
+	0x69, 0x64, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74,
+	0x61, 0x12, 0x52, 0x0a, 0x15, 0x64, 0x75, 0x74, 0x79, 0x5f, 0x70, 0x61, 0x69, 0x64, 0x5f, 0x70,
+	0x72, 0x6f, 0x6f, 0x66, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x1f, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x44, 0x75, 0x74, 0x79, 0x50, 0x61, 0x69, 0x64, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x12, 0x64, 0x75, 0x74, 0x79, 0x50, 0x61, 0x69, 0x64, 0x50, 0x72, 0x6f, 0x6f, 0x66,
+	0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x72,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x65, 0x0a, 0x11, 0x44, 0x75,
+	0x74, 0x79, 0x50, 0x61, 0x69, 0x64, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x49, 0x6e, 0x66, 0x6f, 0x12,
+	0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x26, 0x0a, 0x04, 0x72, 0x65, 0x63,
+	0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x65, 0x63, 0x74, 0x52, 0x04, 0x72, 0x65, 0x63,
+	0x74, 0x22, 0x73, 0x0a, 0x11, 0x54, 0x61, 0x78, 0x69, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65,
+	0x4f, 0x63, 0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f,
+	0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61,
+	0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f,
+	0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65,
+	0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x7a, 0x0a, 0x11, 0x54, 0x61, 0x78, 0x69, 0x49, 0x6e,
+	0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x37, 0x0a, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x61, 0x78, 0x69, 0x49, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x22, 0x92, 0x03, 0x0a, 0x15, 0x54, 0x61, 0x78, 0x69, 0x49, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x1f, 0x0a, 0x0b,
+	0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0a, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4e, 0x75, 0x6d, 0x12, 0x21, 0x0a,
+	0x0c, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x43, 0x6f, 0x64, 0x65,
+	0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x64, 0x61, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x61, 0x72, 0x65, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x66, 0x61, 0x72, 0x65, 0x12, 0x1e, 0x0a, 0x0b, 0x67, 0x65, 0x74, 0x5f,
+	0x6f, 0x6e, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x67,
+	0x65, 0x74, 0x4f, 0x6e, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0c, 0x67, 0x65, 0x74, 0x5f,
+	0x6f, 0x66, 0x66, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a,
+	0x67, 0x65, 0x74, 0x4f, 0x66, 0x66, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x69,
+	0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x64, 0x69,
+	0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x62,
+	0x65, 0x72, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x4e,
+	0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65,
+	0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6e, 0x76,
+	0x6f, 0x69, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x76,
+	0x69, 0x6e, 0x63, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x76,
+	0x69, 0x6e, 0x63, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x69, 0x74, 0x79, 0x18, 0x0c, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x63, 0x69, 0x74, 0x79, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x74, 0x0a, 0x12, 0x51, 0x75, 0x6f, 0x74, 0x61,
+	0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a,
+	0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34,
+	0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a,
+	0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x7c, 0x0a,
+	0x12, 0x51, 0x75, 0x6f, 0x74, 0x61, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72,
+	0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x65, 0x12, 0x38, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x24, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x51,
+	0x75, 0x6f, 0x74, 0x61, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73,
+	0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x9a, 0x02, 0x0a, 0x16,
+	0x51, 0x75, 0x6f, 0x74, 0x61, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52,
+	0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63,
+	0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x69, 0x6e, 0x76,
+	0x6f, 0x69, 0x63, 0x65, 0x4e, 0x75, 0x6d, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69,
+	0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x72, 0x61,
+	0x74, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x72, 0x61, 0x74, 0x65, 0x12, 0x19,
+	0x0a, 0x08, 0x72, 0x61, 0x74, 0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x72, 0x61, 0x74, 0x65, 0x4e, 0x75, 0x6d, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6e, 0x76,
+	0x6f, 0x69, 0x63, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0b, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1a, 0x0a, 0x08,
+	0x70, 0x72, 0x6f, 0x76, 0x69, 0x6e, 0x63, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
+	0x70, 0x72, 0x6f, 0x76, 0x69, 0x6e, 0x63, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x69, 0x74, 0x79,
+	0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x69, 0x74, 0x79, 0x12, 0x1b, 0x0a, 0x09,
+	0x68, 0x61, 0x73, 0x5f, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x68, 0x61, 0x73, 0x53, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x72, 0x0a, 0x10, 0x43, 0x61, 0x72, 0x49,
+	0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c,
+	0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12,
+	0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b,
+	0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x78, 0x0a, 0x10,
+	0x43, 0x61, 0x72, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70,
+	0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x36,
+	0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x61, 0x72, 0x49,
+	0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61,
+	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x7f, 0x0a, 0x14, 0x43, 0x61, 0x72, 0x49, 0x6e, 0x76,
+	0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x48,
+	0x0a, 0x11, 0x63, 0x61, 0x72, 0x5f, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x6e,
+	0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x74, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x61, 0x72, 0x49, 0x6e, 0x76, 0x6f,
+	0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x0f, 0x63, 0x61, 0x72, 0x49, 0x6e, 0x76, 0x6f,
+	0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x3a, 0x0a, 0x0e, 0x43, 0x61, 0x72, 0x49, 0x6e,
+	0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x22, 0x76, 0x0a, 0x14, 0x46, 0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c,
+	0x53, 0x6c, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69,
+	0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b,
+	0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f,
+	0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x80, 0x01, 0x0a, 0x14,
+	0x46, 0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c, 0x53, 0x6c, 0x69, 0x63, 0x65, 0x4f, 0x63,
+	0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x12, 0x3a, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x26, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x46, 0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c, 0x53, 0x6c, 0x69, 0x63, 0x65, 0x4f, 0x63,
+	0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x90,
+	0x01, 0x0a, 0x18, 0x46, 0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c, 0x53, 0x6c, 0x69, 0x63,
+	0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x55, 0x0a, 0x16, 0x66,
+	0x69, 0x6e, 0x61, 0x6e, 0x5f, 0x62, 0x69, 0x6c, 0x6c, 0x5f, 0x73, 0x6c, 0x69, 0x63, 0x65, 0x5f,
+	0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x74, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x46, 0x69, 0x6e, 0x61, 0x6e,
+	0x42, 0x69, 0x6c, 0x6c, 0x53, 0x6c, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x13, 0x66,
+	0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c, 0x53, 0x6c, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66,
+	0x6f, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49,
+	0x64, 0x22, 0x3e, 0x0a, 0x12, 0x46, 0x69, 0x6e, 0x61, 0x6e, 0x42, 0x69, 0x6c, 0x6c, 0x53, 0x6c,
+	0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x22, 0x75, 0x0a, 0x13, 0x46, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67,
+	0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b,
+	0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69,
+	0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
+	0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e,
+	0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f,
+	0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x7e, 0x0a, 0x13, 0x46, 0x6c, 0x69, 0x67,
+	0x68, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x12,
+	0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x39, 0x0a,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x74, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x46, 0x6c, 0x69, 0x67, 0x68,
+	0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61,
+	0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x8b, 0x01, 0x0a, 0x17, 0x46, 0x6c, 0x69,
+	0x67, 0x68, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70,
+	0x44, 0x61, 0x74, 0x61, 0x12, 0x51, 0x0a, 0x14, 0x66, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x5f, 0x69,
+	0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70,
+	0x69, 0x2e, 0x46, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49,
+	0x6e, 0x66, 0x6f, 0x52, 0x12, 0x66, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x49, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x3d, 0x0a, 0x11, 0x46, 0x6c, 0x69, 0x67, 0x68, 0x74,
+	0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12,
+	0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x72, 0x0a, 0x10, 0x42, 0x75, 0x73, 0x49, 0x6e, 0x76, 0x6f,
+	0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61,
+	0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09,
+	0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65,
+	0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
+	0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x78, 0x0a, 0x10, 0x42, 0x75, 0x73,
+	0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a,
+	0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64,
+	0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x36, 0x0a, 0x04, 0x64,
+	0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x74, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x42, 0x75, 0x73, 0x49, 0x6e, 0x76, 0x6f,
+	0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64,
+	0x61, 0x74, 0x61, 0x22, 0x95, 0x01, 0x0a, 0x14, 0x42, 0x75, 0x73, 0x49, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x48, 0x0a, 0x11,
+	0x62, 0x75, 0x73, 0x5f, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x6e, 0x66, 0x6f,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x42, 0x75, 0x73, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63,
+	0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x0f, 0x62, 0x75, 0x73, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63,
+	0x65, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x12, 0x1d, 0x0a, 0x0a,
+	0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x62, 0x0a, 0x0e, 0x42,
+	0x75, 0x73, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x26, 0x0a, 0x04, 0x72, 0x65, 0x63, 0x74, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63,
+	0x72, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x65, 0x63, 0x74, 0x52, 0x04, 0x72, 0x65, 0x63, 0x74, 0x22,
+	0x73, 0x0a, 0x11, 0x54, 0x72, 0x61, 0x69, 0x6e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x4f, 0x63,
+	0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61,
+	0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67,
+	0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67,
+	0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67,
+	0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f,
+	0x72, 0x67, 0x49, 0x64, 0x22, 0x74, 0x0a, 0x11, 0x54, 0x72, 0x61, 0x69, 0x6e, 0x54, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a,
+	0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x31, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63,
+	0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x72, 0x61, 0x69, 0x6e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x90, 0x03, 0x0a, 0x0f, 0x54,
+	0x72, 0x61, 0x69, 0x6e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x1d,
+	0x0a, 0x0a, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x4e, 0x75, 0x6d, 0x12, 0x23, 0x0a,
+	0x0d, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x74, 0x61, 0x72, 0x74, 0x53, 0x74, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x2f, 0x0a, 0x13, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x12, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x74, 0x72, 0x61, 0x69, 0x6e,
+	0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x74, 0x72, 0x61, 0x69,
+	0x6e, 0x4e, 0x75, 0x6d, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x65, 0x61, 0x74, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x73, 0x65, 0x61, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05,
+	0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x72, 0x69,
+	0x63, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x65, 0x61, 0x74, 0x5f, 0x63, 0x61, 0x74, 0x65, 0x67,
+	0x6f, 0x72, 0x79, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x65, 0x61, 0x74, 0x43,
+	0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x0a, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69,
+	0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x65,
+	0x72, 0x69, 0x61, 0x6c, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x0c, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0c, 0x73, 0x65, 0x72, 0x69, 0x61, 0x6c, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12,
+	0x1c, 0x0a, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x18, 0x0d, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x73, 0x0a,
+	0x11, 0x53, 0x68, 0x69, 0x70, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52,
+	0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65,
+	0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42,
+	0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75,
+	0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55,
+	0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69,
+	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67,
+	0x49, 0x64, 0x22, 0x7a, 0x0a, 0x11, 0x53, 0x68, 0x69, 0x70, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63,
+	0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d,
 	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65,
 	0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x37, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x66, 0x69, 0x7a, 0x7a, 0x79, 0x6f, 0x63, 0x72, 0x61, 0x70,
-	0x69, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x50, 0x72, 0x69, 0x6e, 0x74, 0x4f, 0x43,
-	0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x55,
-	0x0a, 0x16, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x50, 0x72, 0x69, 0x6e, 0x74, 0x4f, 0x43,
-	0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x3b, 0x0a, 0x04, 0x69, 0x74, 0x65, 0x6d,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x66, 0x69, 0x7a, 0x7a, 0x79, 0x6f, 0x63,
-	0x72, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x50, 0x72, 0x69, 0x6e,
-	0x74, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x49, 0x74, 0x65, 0x6d, 0x52,
-	0x04, 0x69, 0x74, 0x65, 0x6d, 0x22, 0x7c, 0x0a, 0x1a, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c,
-	0x50, 0x72, 0x69, 0x6e, 0x74, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x49,
-	0x74, 0x65, 0x6d, 0x12, 0x2e, 0x0a, 0x07, 0x50, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x66, 0x69, 0x7a, 0x7a, 0x79, 0x6f, 0x63, 0x72, 0x61,
-	0x70, 0x69, 0x2e, 0x50, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x52, 0x07, 0x50, 0x6f, 0x6c, 0x79,
-	0x67, 0x6f, 0x6e, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x12, 0x14, 0x0a,
-	0x05, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x53, 0x63,
-	0x6f, 0x72, 0x65, 0x42, 0x10, 0x5a, 0x0e, 0x2e, 0x2f, 0x3b, 0x66, 0x69, 0x7a, 0x7a, 0x79, 0x6f,
-	0x63, 0x72, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61,
+	0x70, 0x69, 0x2e, 0x53, 0x68, 0x69, 0x70, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63,
+	0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x99,
+	0x01, 0x0a, 0x15, 0x53, 0x68, 0x69, 0x70, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63,
+	0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x4b, 0x0a, 0x12, 0x73, 0x68, 0x69, 0x70,
+	0x5f, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72,
+	0x61, 0x70, 0x69, 0x2e, 0x53, 0x68, 0x69, 0x70, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49,
+	0x6e, 0x66, 0x6f, 0x52, 0x10, 0x73, 0x68, 0x69, 0x70, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65,
+	0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x72,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x63, 0x0a, 0x0f, 0x53, 0x68,
+	0x69, 0x70, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x26, 0x0a, 0x04, 0x72, 0x65, 0x63, 0x74, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63,
+	0x72, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x65, 0x63, 0x74, 0x52, 0x04, 0x72, 0x65, 0x63, 0x74, 0x22,
+	0x73, 0x0a, 0x11, 0x54, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63,
+	0x72, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61,
+	0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67,
+	0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67,
+	0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67,
+	0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f,
+	0x72, 0x67, 0x49, 0x64, 0x22, 0x7a, 0x0a, 0x11, 0x54, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f,
+	0x69, 0x63, 0x65, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a,
+	0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x37, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63,
+	0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65,
+	0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61,
+	0x22, 0x99, 0x01, 0x0a, 0x15, 0x54, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65,
+	0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x4b, 0x0a, 0x12, 0x74, 0x6f,
+	0x6c, 0x6c, 0x5f, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f,
+	0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63,
+	0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x10, 0x74, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x12, 0x1d, 0x0a,
+	0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x63, 0x0a, 0x0f,
+	0x54, 0x6f, 0x6c, 0x6c, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12,
+	0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x26, 0x0a, 0x04, 0x72, 0x65, 0x63,
+	0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x65, 0x63, 0x74, 0x52, 0x04, 0x72, 0x65, 0x63,
+	0x74, 0x22, 0x6f, 0x0a, 0x0d, 0x57, 0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x4f, 0x63, 0x72, 0x52,
+	0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65,
+	0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42,
+	0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75,
+	0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55,
+	0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69,
+	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67,
+	0x49, 0x64, 0x22, 0x72, 0x0a, 0x0d, 0x57, 0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x4f, 0x63, 0x72,
+	0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x65, 0x12, 0x33, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1f, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x57,
+	0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61,
+	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x76, 0x0a, 0x11, 0x57, 0x61, 0x79, 0x62, 0x69, 0x6c,
+	0x6c, 0x4f, 0x63, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x42, 0x0a, 0x0f, 0x74,
+	0x65, 0x78, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72,
+	0x61, 0x70, 0x69, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x57, 0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x52,
+	0x0e, 0x74, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12,
+	0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x94,
+	0x03, 0x0a, 0x0b, 0x54, 0x65, 0x78, 0x74, 0x57, 0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x12, 0x33,
+	0x0a, 0x08, 0x72, 0x65, 0x63, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x18, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x57, 0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x4f, 0x62, 0x6a, 0x52, 0x07, 0x72, 0x65, 0x63, 0x4e,
+	0x61, 0x6d, 0x65, 0x12, 0x31, 0x0a, 0x07, 0x72, 0x65, 0x63, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72,
+	0x61, 0x70, 0x69, 0x2e, 0x57, 0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x4f, 0x62, 0x6a, 0x52, 0x06,
+	0x72, 0x65, 0x63, 0x4e, 0x75, 0x6d, 0x12, 0x33, 0x0a, 0x08, 0x72, 0x65, 0x63, 0x5f, 0x61, 0x64,
+	0x64, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65,
+	0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x57, 0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x4f,
+	0x62, 0x6a, 0x52, 0x07, 0x72, 0x65, 0x63, 0x41, 0x64, 0x64, 0x72, 0x12, 0x39, 0x0a, 0x0b, 0x73,
+	0x65, 0x6e, 0x64, 0x65, 0x72, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x18, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x57, 0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x4f, 0x62, 0x6a, 0x52, 0x0a, 0x73, 0x65, 0x6e, 0x64,
+	0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x37, 0x0a, 0x0a, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72,
+	0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x57, 0x61, 0x79, 0x62, 0x69, 0x6c,
+	0x6c, 0x4f, 0x62, 0x6a, 0x52, 0x09, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x4e, 0x75, 0x6d, 0x12,
+	0x39, 0x0a, 0x0b, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72,
+	0x61, 0x70, 0x69, 0x2e, 0x57, 0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x4f, 0x62, 0x6a, 0x52, 0x0a,
+	0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x12, 0x39, 0x0a, 0x0b, 0x77, 0x61,
+	0x79, 0x62, 0x69, 0x6c, 0x6c, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x18, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x57,
+	0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c, 0x4f, 0x62, 0x6a, 0x52, 0x0a, 0x77, 0x61, 0x79, 0x62, 0x69,
+	0x6c, 0x6c, 0x4e, 0x75, 0x6d, 0x22, 0x20, 0x0a, 0x0a, 0x57, 0x61, 0x79, 0x62, 0x69, 0x6c, 0x6c,
+	0x4f, 0x62, 0x6a, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x65, 0x78, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x74, 0x65, 0x78, 0x74, 0x22, 0xd8, 0x01, 0x0a, 0x12, 0x47, 0x65, 0x6e, 0x65,
+	0x72, 0x61, 0x6c, 0x42, 0x61, 0x73, 0x69, 0x63, 0x4f, 0x43, 0x52, 0x52, 0x65, 0x71, 0x12, 0x21,
+	0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36,
+	0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x23,
+	0x0a, 0x0d, 0x6c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x54,
+	0x79, 0x70, 0x65, 0x12, 0x15, 0x0a, 0x06, 0x69, 0x73, 0x5f, 0x70, 0x64, 0x66, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x08, 0x52, 0x05, 0x69, 0x73, 0x50, 0x64, 0x66, 0x12, 0x26, 0x0a, 0x0f, 0x70, 0x64,
+	0x66, 0x5f, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x0d, 0x52, 0x0d, 0x70, 0x64, 0x66, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x62,
+	0x65, 0x72, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69,
+	0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67,
+	0x49, 0x64, 0x22, 0x23, 0x0a, 0x05, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x12, 0x0c, 0x0a, 0x01, 0x78,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x11, 0x52, 0x01, 0x78, 0x12, 0x0c, 0x0a, 0x01, 0x79, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x11, 0x52, 0x01, 0x79, 0x22, 0x55, 0x0a, 0x09, 0x49, 0x74, 0x65, 0x6d, 0x43,
+	0x6f, 0x6f, 0x72, 0x64, 0x12, 0x0c, 0x0a, 0x01, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52,
+	0x01, 0x78, 0x12, 0x0c, 0x0a, 0x01, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x01, 0x79,
+	0x12, 0x14, 0x0a, 0x05, 0x77, 0x69, 0x64, 0x74, 0x68, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0d, 0x52,
+	0x05, 0x77, 0x69, 0x64, 0x74, 0x68, 0x12, 0x16, 0x0a, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x22, 0xe4,
+	0x01, 0x0a, 0x0d, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x12, 0x23, 0x0a, 0x0d, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74, 0x65, 0x64, 0x5f, 0x74, 0x65, 0x78,
+	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74, 0x65,
+	0x64, 0x54, 0x65, 0x78, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x64, 0x65,
+	0x6e, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x66, 0x69,
+	0x64, 0x65, 0x6e, 0x63, 0x65, 0x12, 0x2d, 0x0a, 0x07, 0x70, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e,
+	0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f,
+	0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x52, 0x07, 0x70, 0x6f, 0x6c,
+	0x79, 0x67, 0x6f, 0x6e, 0x12, 0x23, 0x0a, 0x0d, 0x61, 0x64, 0x76, 0x61, 0x6e, 0x63, 0x65, 0x64,
+	0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x61, 0x64, 0x76,
+	0x61, 0x6e, 0x63, 0x65, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x3a, 0x0a, 0x0c, 0x69, 0x74, 0x65,
+	0x6d, 0x5f, 0x70, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x17, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x49,
+	0x74, 0x65, 0x6d, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x52, 0x0b, 0x69, 0x74, 0x65, 0x6d, 0x50, 0x6f,
+	0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x22, 0xe5, 0x02, 0x0a, 0x12, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61,
+	0x6c, 0x42, 0x61, 0x73, 0x69, 0x63, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x4b, 0x0a, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x37, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65,
+	0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x42,
+	0x61, 0x73, 0x69, 0x63, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72,
+	0x61, 0x6c, 0x42, 0x61, 0x73, 0x69, 0x63, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x1a, 0xd3, 0x01, 0x0a, 0x16, 0x47, 0x65, 0x6e, 0x65,
+	0x72, 0x61, 0x6c, 0x42, 0x61, 0x73, 0x69, 0x63, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61,
+	0x74, 0x61, 0x12, 0x44, 0x0a, 0x0f, 0x74, 0x65, 0x78, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x65, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x74, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x44,
+	0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0e, 0x74, 0x65, 0x78, 0x74, 0x44, 0x65,
+	0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x6c, 0x61, 0x6e, 0x67,
+	0x75, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x61, 0x6e, 0x67,
+	0x75, 0x61, 0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6e, 0x67, 0x65, 0x6c, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x05, 0x61, 0x6e, 0x67, 0x65, 0x6c, 0x12, 0x22, 0x0a, 0x0d, 0x70, 0x64,
+	0x66, 0x5f, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x0d, 0x52, 0x0b, 0x70, 0x64, 0x66, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x1d,
+	0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x77, 0x0a,
+	0x15, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x41, 0x63, 0x63, 0x75, 0x72, 0x61, 0x74, 0x65,
+	0x4f, 0x43, 0x52, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f,
+	0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61,
+	0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f,
+	0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65,
+	0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0xb1, 0x02, 0x0a, 0x15, 0x47, 0x65, 0x6e, 0x65, 0x72,
+	0x61, 0x6c, 0x41, 0x63, 0x63, 0x75, 0x72, 0x61, 0x74, 0x65, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70,
+	0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x51,
+	0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3d, 0x2e, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x6e, 0x65,
+	0x72, 0x61, 0x6c, 0x41, 0x63, 0x63, 0x75, 0x72, 0x61, 0x74, 0x65, 0x4f, 0x43, 0x52, 0x52, 0x73,
+	0x70, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x41, 0x63, 0x63, 0x75, 0x72, 0x61, 0x74,
+	0x65, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x1a, 0x96, 0x01, 0x0a, 0x19, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x41, 0x63, 0x63,
+	0x75, 0x72, 0x61, 0x74, 0x65, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12,
+	0x44, 0x0a, 0x0f, 0x74, 0x65, 0x78, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65,
+	0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0e, 0x74, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6e, 0x67, 0x65, 0x6c, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x61, 0x6e, 0x67, 0x65, 0x6c, 0x12, 0x1d, 0x0a, 0x0a, 0x72,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x78, 0x0a, 0x16, 0x47, 0x65,
+	0x6e, 0x65, 0x72, 0x61, 0x6c, 0x45, 0x66, 0x66, 0x69, 0x63, 0x69, 0x65, 0x6e, 0x74, 0x4f, 0x43,
+	0x52, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61,
+	0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67,
+	0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67,
+	0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67,
+	0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f,
+	0x72, 0x67, 0x49, 0x64, 0x22, 0xb5, 0x02, 0x0a, 0x16, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c,
+	0x45, 0x66, 0x66, 0x69, 0x63, 0x69, 0x65, 0x6e, 0x74, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x12,
+	0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x53, 0x0a,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3f, 0x2e, 0x74, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72,
+	0x61, 0x6c, 0x45, 0x66, 0x66, 0x69, 0x63, 0x69, 0x65, 0x6e, 0x74, 0x4f, 0x43, 0x52, 0x52, 0x73,
+	0x70, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x45, 0x66, 0x66, 0x69, 0x63, 0x69, 0x65,
+	0x6e, 0x74, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x1a, 0x97, 0x01, 0x0a, 0x1a, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x45, 0x66,
+	0x66, 0x69, 0x63, 0x69, 0x65, 0x6e, 0x74, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74,
+	0x61, 0x12, 0x44, 0x0a, 0x0f, 0x74, 0x65, 0x78, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65,
+	0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0e, 0x74, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74,
+	0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6e, 0x67, 0x65, 0x6c,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x61, 0x6e, 0x67, 0x65, 0x6c, 0x12, 0x1d, 0x0a,
+	0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x73, 0x0a, 0x11,
+	0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x46, 0x61, 0x73, 0x74, 0x4f, 0x43, 0x52, 0x52, 0x65,
+	0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36,
+	0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61,
+	0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72,
+	0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72,
+	0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49,
+	0x64, 0x22, 0xbd, 0x02, 0x0a, 0x11, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x46, 0x61, 0x73,
+	0x74, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d,
+	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65,
+	0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x49, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x35, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61,
+	0x70, 0x69, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x46, 0x61, 0x73, 0x74, 0x4f, 0x43,
+	0x52, 0x52, 0x73, 0x70, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x46, 0x61, 0x73, 0x74,
+	0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61,
+	0x1a, 0xae, 0x01, 0x0a, 0x15, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x46, 0x61, 0x73, 0x74,
+	0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x44, 0x0a, 0x0f, 0x74, 0x65,
+	0x78, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61,
+	0x70, 0x69, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x52, 0x0e, 0x74, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73,
+	0x12, 0x1a, 0x0a, 0x08, 0x6c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x6c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x12, 0x14, 0x0a, 0x05,
+	0x61, 0x6e, 0x67, 0x65, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x61, 0x6e, 0x67,
+	0x65, 0x6c, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49,
+	0x64, 0x22, 0xc7, 0x01, 0x0a, 0x0d, 0x45, 0x6e, 0x67, 0x6c, 0x69, 0x73, 0x68, 0x4f, 0x43, 0x52,
+	0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73,
+	0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f,
+	0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x55, 0x72, 0x6c, 0x12, 0x2c, 0x0a, 0x12, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x63, 0x6f,
+	0x6f, 0x72, 0x64, 0x5f, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x10, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x50, 0x6f, 0x69, 0x6e,
+	0x74, 0x12, 0x28, 0x0a, 0x10, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x63, 0x61, 0x6e, 0x64,
+	0x5f, 0x77, 0x6f, 0x72, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0e, 0x65, 0x6e, 0x61,
+	0x62, 0x6c, 0x65, 0x43, 0x61, 0x6e, 0x64, 0x57, 0x6f, 0x72, 0x64, 0x12, 0x1e, 0x0a, 0x0b, 0x6f,
+	0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x45, 0x0a, 0x05, 0x57,
+	0x6f, 0x72, 0x64, 0x73, 0x12, 0x1e, 0x0a, 0x0a, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x64, 0x65, 0x6e,
+	0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x64,
+	0x65, 0x6e, 0x63, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x68, 0x61, 0x72, 0x61, 0x63, 0x74, 0x65,
+	0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63, 0x68, 0x61, 0x72, 0x61, 0x63, 0x74,
+	0x65, 0x72, 0x22, 0xfd, 0x03, 0x0a, 0x0f, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x45, 0x6e, 0x12, 0x23, 0x0a, 0x0d, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74,
+	0x65, 0x64, 0x5f, 0x74, 0x65, 0x78, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x64,
+	0x65, 0x74, 0x65, 0x63, 0x74, 0x65, 0x64, 0x54, 0x65, 0x78, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x63,
+	0x6f, 0x6e, 0x66, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52,
+	0x0a, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x12, 0x2d, 0x0a, 0x07, 0x70,
+	0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6f, 0x72,
+	0x64, 0x52, 0x07, 0x70, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x12, 0x23, 0x0a, 0x0d, 0x61, 0x64,
+	0x76, 0x61, 0x6e, 0x63, 0x65, 0x64, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0c, 0x61, 0x64, 0x76, 0x61, 0x6e, 0x63, 0x65, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x12,
+	0x56, 0x0a, 0x10, 0x77, 0x6f, 0x72, 0x64, 0x5f, 0x63, 0x6f, 0x6f, 0x72, 0x64, 0x5f, 0x70, 0x6f,
+	0x69, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2c, 0x2e, 0x74, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74,
+	0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x6e, 0x2e, 0x57, 0x6f, 0x72, 0x64, 0x43, 0x6f, 0x6f,
+	0x72, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x52, 0x0e, 0x77, 0x6f, 0x72, 0x64, 0x43, 0x6f, 0x6f,
+	0x72, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x12, 0x43, 0x0a, 0x09, 0x63, 0x61, 0x6e, 0x64, 0x5f,
+	0x77, 0x6f, 0x72, 0x64, 0x18, 0x06, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65,
+	0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x6e, 0x2e, 0x43, 0x61, 0x6e, 0x64, 0x57, 0x6f,
+	0x72, 0x64, 0x52, 0x08, 0x63, 0x61, 0x6e, 0x64, 0x57, 0x6f, 0x72, 0x64, 0x12, 0x29, 0x0a, 0x05,
+	0x77, 0x6f, 0x72, 0x64, 0x73, 0x18, 0x07, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x74, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x57, 0x6f, 0x72, 0x64, 0x73,
+	0x52, 0x05, 0x77, 0x6f, 0x72, 0x64, 0x73, 0x1a, 0x3f, 0x0a, 0x0e, 0x57, 0x6f, 0x72, 0x64, 0x43,
+	0x6f, 0x6f, 0x72, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x12, 0x2d, 0x0a, 0x07, 0x70, 0x6f, 0x6c,
+	0x79, 0x67, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x52,
+	0x07, 0x70, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x1a, 0x48, 0x0a, 0x08, 0x43, 0x61, 0x6e, 0x64,
+	0x57, 0x6f, 0x72, 0x64, 0x12, 0x3c, 0x0a, 0x0f, 0x77, 0x6f, 0x72, 0x64, 0x5f, 0x63, 0x6f, 0x6f,
+	0x72, 0x64, 0x69, 0x6e, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e,
+	0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x57, 0x6f, 0x72,
+	0x64, 0x73, 0x52, 0x0e, 0x77, 0x6f, 0x72, 0x64, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x69, 0x6e, 0x61,
+	0x74, 0x65, 0x22, 0xfc, 0x01, 0x0a, 0x0d, 0x45, 0x6e, 0x67, 0x6c, 0x69, 0x73, 0x68, 0x4f, 0x43,
+	0x52, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x12, 0x41, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x2d, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x45, 0x6e, 0x67, 0x6c, 0x69, 0x73, 0x68, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x2e, 0x45, 0x6e,
+	0x67, 0x6c, 0x69, 0x73, 0x68, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x1a, 0x7a, 0x0a, 0x11, 0x45, 0x6e, 0x67, 0x6c, 0x69, 0x73, 0x68,
+	0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x46, 0x0a, 0x0f, 0x74, 0x65,
+	0x78, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61,
+	0x70, 0x69, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x45, 0x6e, 0x52, 0x0e, 0x74, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49,
+	0x64, 0x22, 0x90, 0x01, 0x0a, 0x18, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x48, 0x61, 0x6e,
+	0x64, 0x77, 0x72, 0x69, 0x74, 0x69, 0x6e, 0x67, 0x4f, 0x43, 0x52, 0x52, 0x65, 0x71, 0x12, 0x21,
+	0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36,
+	0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x14,
+	0x0a, 0x05, 0x73, 0x63, 0x65, 0x6e, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73,
+	0x63, 0x65, 0x6e, 0x65, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67,
+	0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f,
+	0x72, 0x67, 0x49, 0x64, 0x22, 0xd9, 0x01, 0x0a, 0x07, 0x50, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e,
+	0x12, 0x2e, 0x0a, 0x08, 0x6c, 0x65, 0x66, 0x74, 0x5f, 0x74, 0x6f, 0x70, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x13, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70,
+	0x69, 0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x52, 0x07, 0x6c, 0x65, 0x66, 0x74, 0x54, 0x6f, 0x70,
+	0x12, 0x30, 0x0a, 0x09, 0x72, 0x69, 0x67, 0x68, 0x74, 0x5f, 0x74, 0x6f, 0x70, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61,
+	0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x52, 0x08, 0x72, 0x69, 0x67, 0x68, 0x74, 0x54,
+	0x6f, 0x70, 0x12, 0x36, 0x0a, 0x0c, 0x72, 0x69, 0x67, 0x68, 0x74, 0x5f, 0x62, 0x6f, 0x74, 0x74,
+	0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65,
+	0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x52, 0x0b, 0x72,
+	0x69, 0x67, 0x68, 0x74, 0x42, 0x6f, 0x74, 0x74, 0x6f, 0x6d, 0x12, 0x34, 0x0a, 0x0b, 0x6c, 0x65,
+	0x66, 0x74, 0x5f, 0x62, 0x6f, 0x74, 0x74, 0x6f, 0x6d, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x13, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x43,
+	0x6f, 0x6f, 0x72, 0x64, 0x52, 0x0a, 0x6c, 0x65, 0x66, 0x74, 0x42, 0x6f, 0x74, 0x74, 0x6f, 0x6d,
+	0x22, 0xeb, 0x01, 0x0a, 0x16, 0x54, 0x65, 0x78, 0x74, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c,
+	0x48, 0x61, 0x6e, 0x64, 0x77, 0x72, 0x69, 0x74, 0x69, 0x6e, 0x67, 0x12, 0x23, 0x0a, 0x0d, 0x64,
+	0x65, 0x74, 0x65, 0x63, 0x74, 0x65, 0x64, 0x5f, 0x74, 0x65, 0x78, 0x74, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0c, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74, 0x65, 0x64, 0x54, 0x65, 0x78, 0x74,
+	0x12, 0x1e, 0x0a, 0x0a, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0d, 0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65,
+	0x12, 0x2d, 0x0a, 0x07, 0x70, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x13, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69,
+	0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x52, 0x07, 0x70, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x12,
+	0x23, 0x0a, 0x0d, 0x61, 0x64, 0x76, 0x61, 0x6e, 0x63, 0x65, 0x64, 0x5f, 0x69, 0x6e, 0x66, 0x6f,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x61, 0x64, 0x76, 0x61, 0x6e, 0x63, 0x65, 0x64,
+	0x49, 0x6e, 0x66, 0x6f, 0x12, 0x38, 0x0a, 0x0c, 0x77, 0x6f, 0x72, 0x64, 0x5f, 0x70, 0x6f, 0x6c,
+	0x79, 0x67, 0x6f, 0x6e, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6f, 0x6c, 0x79, 0x67, 0x6f,
+	0x6e, 0x52, 0x0b, 0x77, 0x6f, 0x72, 0x64, 0x50, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x22, 0xb0,
+	0x02, 0x0a, 0x18, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x48, 0x61, 0x6e, 0x64, 0x77, 0x72,
+	0x69, 0x74, 0x69, 0x6e, 0x67, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x57, 0x0a, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x43, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x48, 0x61,
+	0x6e, 0x64, 0x77, 0x72, 0x69, 0x74, 0x69, 0x6e, 0x67, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x2e,
+	0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x48, 0x61, 0x6e, 0x64, 0x77, 0x72, 0x69, 0x74, 0x69,
+	0x6e, 0x67, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x1a, 0x8c, 0x01, 0x0a, 0x1c, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x48, 0x61,
+	0x6e, 0x64, 0x77, 0x72, 0x69, 0x74, 0x69, 0x6e, 0x67, 0x4f, 0x43, 0x52, 0x52, 0x73, 0x70, 0x44,
+	0x61, 0x74, 0x61, 0x12, 0x4d, 0x0a, 0x0f, 0x74, 0x65, 0x78, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x65,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x65, 0x78, 0x74,
+	0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x48, 0x61, 0x6e, 0x64, 0x77, 0x72, 0x69, 0x74, 0x69,
+	0x6e, 0x67, 0x52, 0x0e, 0x74, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49,
+	0x64, 0x22, 0x6f, 0x0a, 0x0d, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x52,
+	0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65,
+	0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42,
+	0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75,
+	0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55,
+	0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69,
+	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67,
+	0x49, 0x64, 0x22, 0xcf, 0x01, 0x0a, 0x0d, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63,
+	0x74, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x12, 0x41, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x2d, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x54, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x52, 0x73, 0x70, 0x2e, 0x54, 0x65,
+	0x78, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x1a, 0x4d, 0x0a, 0x11, 0x54, 0x65, 0x78, 0x74, 0x44, 0x65, 0x74,
+	0x65, 0x63, 0x74, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x19, 0x0a, 0x08, 0x68, 0x61,
+	0x73, 0x5f, 0x74, 0x65, 0x78, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x68, 0x61,
+	0x73, 0x54, 0x65, 0x78, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x49, 0x64, 0x22, 0x79, 0x0a, 0x17, 0x42, 0x61, 0x6e, 0x6b, 0x52, 0x65, 0x63, 0x65,
+	0x69, 0x70, 0x74, 0x52, 0x65, 0x63, 0x6f, 0x67, 0x6e, 0x69, 0x7a, 0x65, 0x52, 0x65, 0x71, 0x12,
+	0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65,
+	0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12,
+	0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22,
+	0x86, 0x01, 0x0a, 0x17, 0x42, 0x61, 0x6e, 0x6b, 0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x52,
+	0x65, 0x63, 0x6f, 0x67, 0x6e, 0x69, 0x7a, 0x65, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x3d, 0x0a, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x29, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x42, 0x61, 0x6e, 0x6b, 0x52, 0x65, 0x63, 0x65, 0x69,
+	0x70, 0x74, 0x52, 0x65, 0x63, 0x6f, 0x67, 0x6e, 0x69, 0x7a, 0x65, 0x52, 0x73, 0x70, 0x44, 0x61,
+	0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xbf, 0x02, 0x0a, 0x1b, 0x42, 0x61, 0x6e,
+	0x6b, 0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x52, 0x65, 0x63, 0x6f, 0x67, 0x6e, 0x69, 0x7a,
+	0x65, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x23, 0x0a, 0x0d, 0x74, 0x65, 0x6d, 0x70,
+	0x6c, 0x61, 0x74, 0x65, 0x5f, 0x73, 0x69, 0x67, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0c, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x53, 0x69, 0x67, 0x6e, 0x12, 0x23, 0x0a,
+	0x0d, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x4e, 0x61,
+	0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x26, 0x0a, 0x04, 0x72, 0x65,
+	0x63, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65,
+	0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x65, 0x63, 0x74, 0x52, 0x04, 0x72, 0x65,
+	0x63, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x61, 0x6e, 0x67, 0x6c, 0x65, 0x12, 0x51, 0x0a, 0x14, 0x73, 0x69, 0x6e, 0x67,
+	0x6c, 0x65, 0x5f, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x73,
+	0x18, 0x07, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f,
+	0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49, 0x6e, 0x76, 0x6f,
+	0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x12, 0x73, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49,
+	0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x72,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x75, 0x0a, 0x11, 0x51, 0x72,
+	0x63, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x12,
+	0x1b, 0x0a, 0x09, 0x74, 0x79, 0x70, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x74, 0x79, 0x70, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x10, 0x0a, 0x03,
+	0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x75, 0x72, 0x6c, 0x12, 0x31,
+	0x0a, 0x08, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x15, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e,
+	0x50, 0x6f, 0x6c, 0x79, 0x67, 0x6f, 0x6e, 0x52, 0x08, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f,
+	0x6e, 0x22, 0x3d, 0x0a, 0x0d, 0x51, 0x72, 0x63, 0x6f, 0x64, 0x65, 0x49, 0x6d, 0x67, 0x53, 0x69,
+	0x7a, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x77, 0x69, 0x64, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x05, 0x77, 0x69, 0x64, 0x74, 0x68, 0x12, 0x16, 0x0a, 0x06, 0x68, 0x65, 0x69, 0x67,
+	0x68, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74,
+	0x22, 0x6b, 0x0a, 0x09, 0x51, 0x52, 0x43, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a,
+	0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34,
+	0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a,
+	0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0xae, 0x02,
+	0x0a, 0x09, 0x51, 0x52, 0x43, 0x6f, 0x64, 0x65, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x39, 0x0a, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x51, 0x52, 0x43, 0x6f, 0x64, 0x65, 0x52, 0x73, 0x70,
+	0x2e, 0x51, 0x52, 0x43, 0x6f, 0x64, 0x65, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04,
+	0x64, 0x61, 0x74, 0x61, 0x1a, 0xb7, 0x01, 0x0a, 0x0d, 0x51, 0x52, 0x43, 0x6f, 0x64, 0x65, 0x52,
+	0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x4f, 0x0a, 0x13, 0x71, 0x72, 0x63, 0x6f, 0x64, 0x65,
+	0x5f, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x73, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61,
+	0x70, 0x69, 0x2e, 0x51, 0x72, 0x63, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x73,
+	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x11, 0x71, 0x72, 0x63, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x36, 0x0a, 0x08, 0x69, 0x6d, 0x67, 0x5f, 0x73,
+	0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x74, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x51, 0x72, 0x63, 0x6f, 0x64, 0x65, 0x49,
+	0x6d, 0x67, 0x53, 0x69, 0x7a, 0x65, 0x52, 0x07, 0x69, 0x6d, 0x67, 0x53, 0x69, 0x7a, 0x65, 0x12,
+	0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x6d,
+	0x0a, 0x0b, 0x42, 0x61, 0x6e, 0x6b, 0x43, 0x61, 0x72, 0x64, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a,
+	0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34,
+	0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a,
+	0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x6e, 0x0a,
+	0x0b, 0x42, 0x61, 0x6e, 0x6b, 0x43, 0x61, 0x72, 0x64, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x31, 0x0a, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65,
+	0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x42, 0x61, 0x6e, 0x6b, 0x43, 0x61, 0x72, 0x64,
+	0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xa2, 0x01,
+	0x0a, 0x0f, 0x42, 0x61, 0x6e, 0x6b, 0x43, 0x61, 0x72, 0x64, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74,
+	0x61, 0x12, 0x17, 0x0a, 0x07, 0x63, 0x61, 0x72, 0x64, 0x5f, 0x6e, 0x6f, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x63, 0x61, 0x72, 0x64, 0x4e, 0x6f, 0x12, 0x1b, 0x0a, 0x09, 0x62, 0x61,
+	0x6e, 0x6b, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x62,
+	0x61, 0x6e, 0x6b, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x1d, 0x0a, 0x0a, 0x76, 0x61, 0x6c, 0x69, 0x64,
+	0x5f, 0x64, 0x61, 0x74, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x76, 0x61, 0x6c,
+	0x69, 0x64, 0x44, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x63, 0x61, 0x72, 0x64, 0x5f, 0x74,
+	0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x61, 0x72, 0x64, 0x54,
+	0x79, 0x70, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69,
+	0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x49, 0x64, 0x22, 0x76, 0x0a, 0x14, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x70, 0x72, 0x69, 0x73, 0x65,
+	0x4c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0b, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a,
+	0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70,
+	0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x22, 0x80, 0x01, 0x0a, 0x14, 0x45,
+	0x6e, 0x74, 0x65, 0x72, 0x70, 0x72, 0x69, 0x73, 0x65, 0x4c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65,
+	0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x65, 0x12, 0x3a, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x26, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x45,
+	0x6e, 0x74, 0x65, 0x72, 0x70, 0x72, 0x69, 0x73, 0x65, 0x4c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65,
+	0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xae, 0x01,
+	0x0a, 0x18, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x70, 0x72, 0x69, 0x73, 0x65, 0x4c, 0x69, 0x63, 0x65,
+	0x6e, 0x73, 0x65, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x5d, 0x0a, 0x18, 0x65, 0x6e,
+	0x74, 0x65, 0x72, 0x70, 0x72, 0x69, 0x73, 0x65, 0x5f, 0x6c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65,
+	0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x45, 0x6e, 0x74, 0x65,
+	0x72, 0x70, 0x72, 0x69, 0x73, 0x65, 0x4c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x16, 0x65, 0x6e, 0x74, 0x65, 0x72, 0x70, 0x72, 0x69, 0x73, 0x65, 0x4c, 0x69, 0x63,
+	0x65, 0x6e, 0x73, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6e, 0x67,
+	0x65, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x61, 0x6e, 0x67, 0x65, 0x6c, 0x12,
+	0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x41,
+	0x0a, 0x15, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x70, 0x72, 0x69, 0x73, 0x65, 0x4c, 0x69, 0x63, 0x65,
+	0x6e, 0x73, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x22, 0x90, 0x01, 0x0a, 0x11, 0x56, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x4c, 0x69, 0x63,
+	0x65, 0x6e, 0x73, 0x65, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x5f, 0x62, 0x61, 0x73, 0x65, 0x36, 0x34, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x69,
+	0x6d, 0x61, 0x67, 0x65, 0x42, 0x61, 0x73, 0x65, 0x36, 0x34, 0x12, 0x1b, 0x0a, 0x09, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69,
+	0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x1b, 0x0a, 0x09, 0x63, 0x61, 0x72, 0x64, 0x5f,
+	0x73, 0x69, 0x64, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x61, 0x72, 0x64,
+	0x53, 0x69, 0x64, 0x65, 0x12, 0x1e, 0x0a, 0x0b, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x6f, 0x72, 0x67,
+	0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x4f,
+	0x72, 0x67, 0x49, 0x64, 0x22, 0x7a, 0x0a, 0x11, 0x56, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x4c,
+	0x69, 0x63, 0x65, 0x6e, 0x73, 0x65, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a,
+	0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x37, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63,
+	0x72, 0x61, 0x70, 0x69, 0x2e, 0x56, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x4c, 0x69, 0x63, 0x65,
+	0x6e, 0x73, 0x65, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61,
+	0x22, 0x8f, 0x02, 0x0a, 0x15, 0x56, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x4c, 0x69, 0x63, 0x65,
+	0x6e, 0x73, 0x65, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x3d, 0x0a, 0x0a, 0x66, 0x72,
+	0x6f, 0x6e, 0x74, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e,
+	0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x65,
+	0x78, 0x74, 0x56, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x46, 0x72, 0x6f, 0x6e, 0x74, 0x52, 0x09,
+	0x66, 0x72, 0x6f, 0x6e, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x3a, 0x0a, 0x09, 0x62, 0x61, 0x6e,
+	0x6b, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x65, 0x78, 0x74,
+	0x56, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x42, 0x61, 0x63, 0x6b, 0x52, 0x08, 0x62, 0x61, 0x6e,
+	0x6b, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x2e, 0x0a, 0x13, 0x72, 0x65, 0x63, 0x6f, 0x67, 0x6e, 0x69,
+	0x7a, 0x65, 0x5f, 0x77, 0x61, 0x72, 0x6e, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x03, 0x20, 0x03,
+	0x28, 0x03, 0x52, 0x11, 0x72, 0x65, 0x63, 0x6f, 0x67, 0x6e, 0x69, 0x7a, 0x65, 0x57, 0x61, 0x72,
+	0x6e, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x2c, 0x0a, 0x12, 0x72, 0x65, 0x63, 0x6f, 0x67, 0x6e, 0x69,
+	0x7a, 0x65, 0x5f, 0x77, 0x61, 0x72, 0x6e, 0x5f, 0x6d, 0x73, 0x67, 0x18, 0x04, 0x20, 0x03, 0x28,
+	0x09, 0x52, 0x10, 0x72, 0x65, 0x63, 0x6f, 0x67, 0x6e, 0x69, 0x7a, 0x65, 0x57, 0x61, 0x72, 0x6e,
+	0x4d, 0x73, 0x67, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69,
+	0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x49, 0x64, 0x22, 0xc2, 0x02, 0x0a, 0x10, 0x54, 0x65, 0x78, 0x74, 0x56, 0x65, 0x68, 0x69, 0x63,
+	0x6c, 0x65, 0x46, 0x72, 0x6f, 0x6e, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x70, 0x6c, 0x61, 0x74, 0x65,
+	0x5f, 0x6e, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x70, 0x6c, 0x61, 0x74, 0x65,
+	0x4e, 0x6f, 0x12, 0x21, 0x0a, 0x0c, 0x76, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x5f, 0x74, 0x79,
+	0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x76, 0x65, 0x68, 0x69, 0x63, 0x6c,
+	0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x61,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x23, 0x0a, 0x0d, 0x75, 0x73, 0x65, 0x5f, 0x63, 0x68, 0x61,
+	0x72, 0x61, 0x63, 0x74, 0x65, 0x72, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x75, 0x73,
+	0x65, 0x43, 0x68, 0x61, 0x72, 0x61, 0x63, 0x74, 0x65, 0x72, 0x12, 0x14, 0x0a, 0x05, 0x6d, 0x6f,
+	0x64, 0x65, 0x6c, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6d, 0x6f, 0x64, 0x65, 0x6c,
+	0x12, 0x10, 0x0a, 0x03, 0x76, 0x69, 0x6e, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x76,
+	0x69, 0x6e, 0x12, 0x1b, 0x0a, 0x09, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x5f, 0x6e, 0x6f, 0x18,
+	0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x4e, 0x6f, 0x12,
+	0x23, 0x0a, 0x0d, 0x72, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x5f, 0x64, 0x61, 0x74, 0x65,
+	0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x72, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72,
+	0x44, 0x61, 0x74, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x69, 0x73, 0x73, 0x75, 0x65, 0x5f, 0x64, 0x61,
+	0x74, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x69, 0x73, 0x73, 0x75, 0x65, 0x44,
+	0x61, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x65, 0x61, 0x6c, 0x18, 0x0b, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x73, 0x65, 0x61, 0x6c, 0x22, 0xc2, 0x02, 0x0a, 0x0f, 0x54, 0x65, 0x78, 0x74,
+	0x56, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x42, 0x61, 0x63, 0x6b, 0x12, 0x19, 0x0a, 0x08, 0x70,
+	0x6c, 0x61, 0x74, 0x65, 0x5f, 0x6e, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x70,
+	0x6c, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x12, 0x17, 0x0a, 0x07, 0x66, 0x69, 0x6c, 0x65, 0x5f, 0x6e,
+	0x6f, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x66, 0x69, 0x6c, 0x65, 0x4e, 0x6f, 0x12,
+	0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x4e, 0x75, 0x6d, 0x12, 0x1d, 0x0a, 0x0a,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x6d, 0x61, 0x73, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x4d, 0x61, 0x73, 0x73, 0x12, 0x1f, 0x0a, 0x0b, 0x63,
+	0x75, 0x72, 0x62, 0x5f, 0x77, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0a, 0x63, 0x75, 0x72, 0x62, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x21, 0x0a, 0x0c,
+	0x6c, 0x6f, 0x61, 0x64, 0x5f, 0x71, 0x75, 0x61, 0x6c, 0x69, 0x74, 0x79, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0b, 0x6c, 0x6f, 0x61, 0x64, 0x51, 0x75, 0x61, 0x6c, 0x69, 0x74, 0x79, 0x12,
+	0x23, 0x0a, 0x0d, 0x65, 0x78, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x5f, 0x73, 0x69, 0x7a, 0x65,
+	0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x65, 0x78, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c,
+	0x53, 0x69, 0x7a, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6d, 0x61, 0x72, 0x6b, 0x73, 0x18, 0x08, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x05, 0x6d, 0x61, 0x72, 0x6b, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65,
+	0x63, 0x6f, 0x72, 0x64, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x63, 0x6f,
+	0x72, 0x64, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x71, 0x75, 0x61, 0x73,
+	0x69, 0x5f, 0x6d, 0x61, 0x73, 0x73, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x74, 0x6f,
+	0x74, 0x61, 0x6c, 0x51, 0x75, 0x61, 0x73, 0x69, 0x4d, 0x61, 0x73, 0x73, 0x22, 0x82, 0x01, 0x0a,
+	0x15, 0x4d, 0x69, 0x78, 0x65, 0x64, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63, 0x72,
+	0x53, 0x74, 0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65,
+	0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73,
+	0x73, 0x61, 0x67, 0x65, 0x12, 0x3b, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x27, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70,
+	0x69, 0x2e, 0x4d, 0x69, 0x78, 0x65, 0x64, 0x49, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x4f, 0x63,
+	0x72, 0x53, 0x74, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x22, 0xd5, 0x01, 0x0a, 0x19, 0x4d, 0x69, 0x78, 0x65, 0x64, 0x49, 0x6e, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x4f, 0x63, 0x72, 0x53, 0x74, 0x72, 0x52, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12,
+	0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x1b, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x5f, 0x63, 0x6f,
+	0x73, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x74, 0x69, 0x6d, 0x65, 0x43, 0x6f,
+	0x73, 0x74, 0x12, 0x48, 0x0a, 0x10, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x66, 0x79, 0x5f, 0x72,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x53, 0x74, 0x72, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x0f, 0x69, 0x64, 0x65,
+	0x6e, 0x74, 0x69, 0x66, 0x79, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x73, 0x12, 0x1c, 0x0a, 0x09,
+	0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
+	0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x49, 0x64, 0x22, 0x80, 0x02, 0x0a, 0x0f, 0x54, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x53, 0x74, 0x72, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x12, 0x0a,
+	0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70,
+	0x65, 0x12, 0x20, 0x0a, 0x0b, 0x6f, 0x72, 0x69, 0x65, 0x6e, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x6f, 0x72, 0x69, 0x65, 0x6e, 0x74, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20,
+	0x03, 0x28, 0x05, 0x52, 0x06, 0x72, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x12, 0x1d, 0x0a, 0x0a, 0x69,
+	0x6d, 0x61, 0x67, 0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x05, 0x20, 0x03, 0x28, 0x05, 0x52,
+	0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61,
+	0x67, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x38,
+	0x0a, 0x07, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1e, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x53, 0x74, 0x72, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x52,
+	0x07, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x32, 0x0a, 0x05, 0x65, 0x78, 0x74, 0x72,
+	0x61, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x53, 0x74, 0x72,
+	0x45, 0x78, 0x74, 0x72, 0x61, 0x52, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x22, 0x8b, 0x1b, 0x0a,
+	0x10, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x53, 0x74, 0x72, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e,
+	0x74, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x21, 0x0a,
+	0x0c, 0x63, 0x6f, 0x64, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x72, 0x6d, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x6f, 0x64, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x72, 0x6d,
+	0x12, 0x25, 0x0a, 0x0e, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69,
+	0x72, 0x6d, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x72, 0x6d, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x65, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x70,
+	0x72, 0x65, 0x74, 0x61, 0x78, 0x5f, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0c, 0x70, 0x72, 0x65, 0x74, 0x61, 0x78, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
+	0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x19, 0x0a, 0x08, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f,
+	0x63, 0x6e, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x43,
+	0x6e, 0x12, 0x10, 0x0a, 0x03, 0x74, 0x61, 0x78, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
+	0x74, 0x61, 0x78, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x5f, 0x63, 0x6f, 0x64,
+	0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x43, 0x6f,
+	0x64, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x5f, 0x63, 0x6f,
+	0x64, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e,
+	0x65, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x18,
+	0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x12, 0x22, 0x0a,
+	0x0d, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x74, 0x61, 0x78, 0x5f, 0x69, 0x64, 0x18, 0x0d,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x54, 0x61, 0x78, 0x49,
+	0x64, 0x12, 0x26, 0x0a, 0x0f, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72,
+	0x5f, 0x74, 0x65, 0x6c, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x65, 0x6c, 0x6c,
+	0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x54, 0x65, 0x6c, 0x12, 0x2e, 0x0a, 0x13, 0x73, 0x65, 0x6c,
+	0x6c, 0x65, 0x72, 0x5f, 0x62, 0x61, 0x6e, 0x6b, 0x5f, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74,
+	0x18, 0x0f, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x42, 0x61,
+	0x6e, 0x6b, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x62, 0x75, 0x79,
+	0x65, 0x72, 0x18, 0x10, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x62, 0x75, 0x79, 0x65, 0x72, 0x12,
+	0x19, 0x0a, 0x08, 0x62, 0x75, 0x79, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x11, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x62, 0x75, 0x79, 0x65, 0x72, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0c, 0x62, 0x75,
+	0x79, 0x65, 0x72, 0x5f, 0x74, 0x61, 0x78, 0x5f, 0x69, 0x64, 0x18, 0x12, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0a, 0x62, 0x75, 0x79, 0x65, 0x72, 0x54, 0x61, 0x78, 0x49, 0x64, 0x12, 0x2c, 0x0a, 0x12,
+	0x62, 0x75, 0x79, 0x65, 0x72, 0x5f, 0x62, 0x61, 0x6e, 0x6b, 0x5f, 0x61, 0x63, 0x63, 0x6f, 0x75,
+	0x6e, 0x74, 0x18, 0x13, 0x20, 0x01, 0x28, 0x09, 0x52, 0x10, 0x62, 0x75, 0x79, 0x65, 0x72, 0x42,
+	0x61, 0x6e, 0x6b, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x62, 0x75,
+	0x79, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x5f, 0x74, 0x65, 0x6c, 0x18, 0x14, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0c, 0x62, 0x75, 0x79, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x54, 0x65, 0x6c,
+	0x12, 0x21, 0x0a, 0x0c, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x5f, 0x73, 0x65, 0x61, 0x6c,
+	0x18, 0x15, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x53,
+	0x65, 0x61, 0x6c, 0x12, 0x1b, 0x0a, 0x09, 0x66, 0x6f, 0x72, 0x6d, 0x5f, 0x74, 0x79, 0x70, 0x65,
+	0x18, 0x16, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x6f, 0x72, 0x6d, 0x54, 0x79, 0x70, 0x65,
+	0x12, 0x1b, 0x0a, 0x09, 0x66, 0x6f, 0x72, 0x6d, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x17, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x6f, 0x72, 0x6d, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a,
+	0x04, 0x6b, 0x69, 0x6e, 0x64, 0x18, 0x18, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6b, 0x69, 0x6e,
+	0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x63, 0x69, 0x70, 0x68, 0x65, 0x72, 0x74, 0x65, 0x78, 0x74, 0x18,
+	0x19, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x63, 0x69, 0x70, 0x68, 0x65, 0x72, 0x74, 0x65, 0x78,
+	0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x74, 0x72, 0x61, 0x76, 0x65, 0x6c, 0x5f, 0x74, 0x61, 0x78, 0x18,
+	0x1a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x74, 0x72, 0x61, 0x76, 0x65, 0x6c, 0x54, 0x61, 0x78,
+	0x12, 0x1c, 0x0a, 0x09, 0x72, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x6f, 0x72, 0x18, 0x1b, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x6f, 0x72, 0x12, 0x1a,
+	0x0a, 0x08, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x65, 0x72, 0x18, 0x1c, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x65, 0x72, 0x12, 0x16, 0x0a, 0x06, 0x69, 0x73,
+	0x73, 0x75, 0x65, 0x72, 0x18, 0x1d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x69, 0x73, 0x73, 0x75,
+	0x65, 0x72, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x6e, 0x63, 0x65, 0x18, 0x1e,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x6e, 0x63, 0x65, 0x12, 0x12,
+	0x0a, 0x04, 0x63, 0x69, 0x74, 0x79, 0x18, 0x1f, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x69,
+	0x74, 0x79, 0x12, 0x21, 0x0a, 0x0c, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5f, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x20, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x6d, 0x61, 0x72, 0x6b, 0x18,
+	0x21, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x6d, 0x61, 0x72, 0x6b, 0x12, 0x1d, 0x0a,
+	0x0a, 0x69, 0x74, 0x65, 0x6d, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x73, 0x18, 0x22, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x09, 0x69, 0x74, 0x65, 0x6d, 0x4e, 0x61, 0x6d, 0x65, 0x73, 0x12, 0x1d, 0x0a, 0x0a,
+	0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x6d, 0x61, 0x72, 0x6b, 0x18, 0x23, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x4d, 0x61, 0x72, 0x6b, 0x12, 0x29, 0x0a, 0x10, 0x61,
+	0x63, 0x71, 0x75, 0x69, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6d, 0x61, 0x72, 0x6b, 0x18,
+	0x24, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x61, 0x63, 0x71, 0x75, 0x69, 0x73, 0x69, 0x74, 0x69,
+	0x6f, 0x6e, 0x4d, 0x61, 0x72, 0x6b, 0x12, 0x1f, 0x0a, 0x0b, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f,
+	0x63, 0x68, 0x61, 0x69, 0x6e, 0x18, 0x25, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x62, 0x6c, 0x6f,
+	0x63, 0x6b, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x12, 0x27, 0x0a, 0x0f, 0x65, 0x6c, 0x65, 0x63, 0x74,
+	0x72, 0x6f, 0x6e, 0x69, 0x63, 0x5f, 0x6d, 0x61, 0x72, 0x6b, 0x18, 0x26, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0e, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x72, 0x6f, 0x6e, 0x69, 0x63, 0x4d, 0x61, 0x72, 0x6b,
+	0x12, 0x21, 0x0a, 0x0c, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x69, 0x74, 0x5f, 0x6d, 0x61, 0x72, 0x6b,
+	0x18, 0x27, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x69, 0x74, 0x4d,
+	0x61, 0x72, 0x6b, 0x12, 0x19, 0x0a, 0x08, 0x6f, 0x69, 0x6c, 0x5f, 0x6d, 0x61, 0x72, 0x6b, 0x18,
+	0x28, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6f, 0x69, 0x6c, 0x4d, 0x61, 0x72, 0x6b, 0x12, 0x21,
+	0x0a, 0x0c, 0x76, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x5f, 0x6d, 0x61, 0x72, 0x6b, 0x18, 0x29,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x76, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x4d, 0x61, 0x72,
+	0x6b, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x2a, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x18,
+	0x2b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x63,
+	0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x18, 0x2c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63,
+	0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x2d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x2e, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f,
+	0x67, 0x65, 0x74, 0x6f, 0x6e, 0x18, 0x2f, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x74, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x47, 0x65, 0x74, 0x6f, 0x6e, 0x12, 0x25, 0x0a, 0x0e, 0x73, 0x74, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x67, 0x65, 0x74, 0x6f, 0x66, 0x66, 0x18, 0x30, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0d, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x47, 0x65, 0x74, 0x6f, 0x66, 0x66,
+	0x12, 0x23, 0x0a, 0x0d, 0x6c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65, 0x5f, 0x70, 0x6c, 0x61, 0x74,
+	0x65, 0x18, 0x31, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65,
+	0x50, 0x6c, 0x61, 0x74, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x18, 0x32,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d,
+	0x69, 0x6c, 0x65, 0x61, 0x67, 0x65, 0x18, 0x33, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x69,
+	0x6c, 0x65, 0x61, 0x67, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x63,
+	0x79, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x34, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x63, 0x75,
+	0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x63, 0x61,
+	0x72, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x35, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x61,
+	0x72, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x63, 0x61, 0x72, 0x5f, 0x6d, 0x6f, 0x64,
+	0x65, 0x6c, 0x18, 0x36, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x61, 0x72, 0x4d, 0x6f, 0x64,
+	0x65, 0x6c, 0x12, 0x2d, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x37, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x17, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69,
+	0x2e, 0x47, 0x6f, 0x6f, 0x64, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x05, 0x69, 0x74, 0x65, 0x6d,
+	0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x74, 0x69, 0x6d, 0x65, 0x5f, 0x67, 0x65, 0x74, 0x6f, 0x6e, 0x18,
+	0x38, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x47, 0x65, 0x74, 0x6f, 0x6e,
+	0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x69, 0x6d, 0x65, 0x5f, 0x67, 0x65, 0x74, 0x6f, 0x66, 0x66, 0x18,
+	0x39, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x74, 0x69, 0x6d, 0x65, 0x47, 0x65, 0x74, 0x6f, 0x66,
+	0x66, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x6c, 0x61, 0x63, 0x65, 0x18, 0x3a, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x70, 0x6c, 0x61, 0x63, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x72, 0x61, 0x69, 0x6e,
+	0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x3b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74,
+	0x72, 0x61, 0x69, 0x6e, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x65,
+	0x61, 0x74, 0x18, 0x3c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x73, 0x65, 0x61, 0x74, 0x12, 0x23,
+	0x0a, 0x0d, 0x73, 0x65, 0x72, 0x69, 0x61, 0x6c, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18,
+	0x3d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x65, 0x72, 0x69, 0x61, 0x6c, 0x4e, 0x75, 0x6d,
+	0x62, 0x65, 0x72, 0x12, 0x1f, 0x0a, 0x0b, 0x67, 0x61, 0x74, 0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x62,
+	0x65, 0x72, 0x18, 0x3e, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x67, 0x61, 0x74, 0x65, 0x4e, 0x75,
+	0x6d, 0x62, 0x65, 0x72, 0x12, 0x1f, 0x0a, 0x0b, 0x73, 0x65, 0x61, 0x74, 0x5f, 0x6e, 0x75, 0x6d,
+	0x62, 0x65, 0x72, 0x18, 0x3f, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x73, 0x65, 0x61, 0x74, 0x4e,
+	0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x26, 0x0a, 0x0f, 0x70, 0x69, 0x63, 0x6b, 0x5f, 0x75, 0x70,
+	0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x40, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d,
+	0x70, 0x69, 0x63, 0x6b, 0x55, 0x70, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x1a, 0x0a,
+	0x08, 0x65, 0x6e, 0x74, 0x72, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x41, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x65, 0x6e, 0x74, 0x72, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x65, 0x78, 0x69,
+	0x74, 0x18, 0x42, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x65, 0x78, 0x69, 0x74, 0x12, 0x21, 0x0a,
+	0x0c, 0x68, 0x69, 0x67, 0x68, 0x77, 0x61, 0x79, 0x5f, 0x66, 0x6c, 0x61, 0x67, 0x18, 0x43, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x68, 0x69, 0x67, 0x68, 0x77, 0x61, 0x79, 0x46, 0x6c, 0x61, 0x67,
+	0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x44, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1c, 0x0a,
+	0x09, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x45, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x69,
+	0x73, 0x73, 0x75, 0x65, 0x5f, 0x62, 0x79, 0x18, 0x46, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x69,
+	0x73, 0x73, 0x75, 0x65, 0x42, 0x79, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x61, 0x72, 0x65, 0x18, 0x47,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x66, 0x61, 0x72, 0x65, 0x12, 0x25, 0x0a, 0x0e, 0x66, 0x75,
+	0x65, 0x6c, 0x5f, 0x73, 0x75, 0x72, 0x63, 0x68, 0x61, 0x72, 0x67, 0x65, 0x18, 0x48, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0d, 0x66, 0x75, 0x65, 0x6c, 0x53, 0x75, 0x72, 0x63, 0x68, 0x61, 0x72, 0x67,
+	0x65, 0x12, 0x32, 0x0a, 0x15, 0x63, 0x61, 0x61, 0x63, 0x5f, 0x64, 0x65, 0x76, 0x65, 0x6c, 0x6f,
+	0x70, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x66, 0x75, 0x6e, 0x64, 0x18, 0x49, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x13, 0x63, 0x61, 0x61, 0x63, 0x44, 0x65, 0x76, 0x65, 0x6c, 0x6f, 0x70, 0x6d, 0x65, 0x6e,
+	0x74, 0x46, 0x75, 0x6e, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x69, 0x6e, 0x73, 0x75, 0x72, 0x61, 0x6e,
+	0x63, 0x65, 0x18, 0x4a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x69, 0x6e, 0x73, 0x75, 0x72, 0x61,
+	0x6e, 0x63, 0x65, 0x12, 0x2d, 0x0a, 0x12, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x61, 0x6c, 0x5f, 0x66, 0x6c, 0x61, 0x67, 0x18, 0x4b, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x11, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x46, 0x6c,
+	0x61, 0x67, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x72, 0x69, 0x6e, 0x74, 0x5f, 0x6e, 0x75, 0x6d, 0x62,
+	0x65, 0x72, 0x18, 0x4c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x72, 0x69, 0x6e, 0x74, 0x4e,
+	0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x20, 0x0a, 0x0b, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x73, 0x65,
+	0x6d, 0x65, 0x6e, 0x74, 0x18, 0x4d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x65, 0x6e, 0x64, 0x6f,
+	0x72, 0x73, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x32, 0x0a, 0x07, 0x66, 0x6c, 0x69, 0x67, 0x68,
+	0x74, 0x73, 0x18, 0x4e, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65,
+	0x74, 0x6f, 0x63, 0x72, 0x61, 0x70, 0x69, 0x2e, 0x46, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x49, 0x6e,
+	0x66, 0x6f, 0x52, 0x07, 0x66, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x73, 0x12, 0x21, 0x0a, 0x0c, 0x63,
+	0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x4f, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x24,
+	0x0a, 0x0e, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x5f, 0x74, 0x61, 0x78, 0x5f, 0x69, 0x64,
+	0x18, 0x50, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x54,
+	0x61, 0x78, 0x49, 0x64, 0x12, 0x30, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x5f,
+	0x62, 0x61, 0x6e, 0x6b, 0x5f, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x51, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x12, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x42, 0x61, 0x6e, 0x6b, 0x41,
+	0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x23, 0x0a, 0x0d, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e,
+	0x79, 0x5f, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x18, 0x52, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x63,
+	0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x50, 0x68, 0x6f, 0x6e, 0x65, 0x12, 0x27, 0x0a, 0x0f, 0x63,
+	0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x53,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x41, 0x64, 0x64,
+	0x72, 0x65, 0x73, 0x73, 0x12, 0x2f, 0x0a, 0x13, 0x72, 0x65, 0x67, 0x69, 0x73, 0x74, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x54, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x12, 0x72, 0x65, 0x67, 0x69, 0x73, 0x74, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4e,
+	0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x1d, 0x0a, 0x0a, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65,
+	0x5f, 0x69, 0x64, 0x18, 0x55, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6d, 0x61, 0x63, 0x68, 0x69,
+	0x6e, 0x65, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x69,
+	0x64, 0x18, 0x56, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x49,
+	0x64, 0x12, 0x25, 0x0a, 0x0e, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x18, 0x57, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x65, 0x6c, 0x6c, 0x65,
+	0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x23, 0x0a, 0x0d, 0x62, 0x75, 0x79, 0x65,
+	0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x58, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0c, 0x62, 0x75, 0x79, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x25, 0x0a,
+	0x0e, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18,
+	0x59, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x4e, 0x75,
+	0x6d, 0x62, 0x65, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18,
+	0x5a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x18,
+	0x0a, 0x07, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x5b, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x30, 0x0a, 0x14, 0x74, 0x61, 0x78, 0x5f,
+	0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x74, 0x69, 0x65, 0x73, 0x5f, 0x63, 0x6f, 0x64, 0x65,
+	0x18, 0x5c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x12, 0x74, 0x61, 0x78, 0x41, 0x75, 0x74, 0x68, 0x6f,
+	0x72, 0x69, 0x74, 0x69, 0x65, 0x73, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x26, 0x0a, 0x0f, 0x63, 0x61,
+	0x72, 0x5f, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x5d, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0d, 0x63, 0x61, 0x72, 0x45, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x43, 0x6f,
+	0x64, 0x65, 0x12, 0x2d, 0x0a, 0x12, 0x63, 0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74,
+	0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x5e, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11,
+	0x63, 0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65,
+	0x72, 0x12, 0x19, 0x0a, 0x08, 0x74, 0x61, 0x78, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x5f, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x74, 0x61, 0x78, 0x52, 0x61, 0x74, 0x65, 0x12, 0x19, 0x0a, 0x08,
+	0x63, 0x61, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x60, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x63, 0x61, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x74, 0x6f, 0x6e, 0x6e, 0x61,
+	0x67, 0x65, 0x18, 0x61, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x74, 0x6f, 0x6e, 0x6e, 0x61, 0x67,
+	0x65, 0x12, 0x17, 0x0a, 0x07, 0x74, 0x61, 0x78, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x62, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x74, 0x61, 0x78, 0x4e, 0x75, 0x6d, 0x12, 0x24, 0x0a, 0x0e, 0x6d, 0x61,
+	0x78, 0x5f, 0x70, 0x65, 0x6f, 0x70, 0x6c, 0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x63, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0c, 0x6d, 0x61, 0x78, 0x50, 0x65, 0x6f, 0x70, 0x6c, 0x65, 0x4e, 0x75, 0x6d,
+	0x12, 0x16, 0x0a, 0x06, 0x6f, 0x72, 0x69, 0x67, 0x69, 0x6e, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x6f, 0x72, 0x69, 0x67, 0x69, 0x6e, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x74, 0x6f, 0x72,
+	0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x65, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x74,
+	0x6f, 0x72, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x75, 0x62, 0x74, 0x6f,
+	0x74, 0x61, 0x6c, 0x18, 0x66, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73, 0x75, 0x62, 0x74, 0x6f,
+	0x74, 0x61, 0x6c, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x69, 0x73, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18,
+	0x67, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x64, 0x69, 0x73, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12,
+	0x12, 0x0a, 0x04, 0x74, 0x69, 0x70, 0x73, 0x18, 0x68, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74,
+	0x69, 0x70, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x69, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x64, 0x61, 0x74, 0x65, 0x5f,
+	0x73, 0x74, 0x61, 0x72, 0x74, 0x18, 0x6a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x64, 0x61, 0x74,
+	0x65, 0x53, 0x74, 0x61, 0x72, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x65,
+	0x6e, 0x64, 0x18, 0x6b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x64, 0x61, 0x74, 0x65, 0x45, 0x6e,
+	0x64, 0x12, 0x27, 0x0a, 0x0f, 0x74, 0x61, 0x78, 0x5f, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69,
+	0x74, 0x69, 0x65, 0x73, 0x18, 0x6c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x74, 0x61, 0x78, 0x41,
+	0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x74, 0x69, 0x65, 0x73, 0x22, 0xb8, 0x03, 0x0a, 0x09, 0x47,
+	0x6f, 0x6f, 0x64, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0d,
+	0x73, 0x70, 0x65, 0x63, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x70, 0x65, 0x63, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x6e, 0x69, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x04, 0x75, 0x6e, 0x69, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x71, 0x75, 0x61, 0x6e, 0x74, 0x69,
+	0x74, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x71, 0x75, 0x61, 0x6e, 0x74, 0x69,
+	0x74, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61,
+	0x6c, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x19,
+	0x0a, 0x08, 0x74, 0x61, 0x78, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x74, 0x61, 0x78, 0x52, 0x61, 0x74, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x74, 0x61, 0x78,
+	0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x74, 0x61, 0x78, 0x12, 0x19, 0x0a, 0x08, 0x63,
+	0x61, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63,
+	0x61, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x74, 0x69, 0x6d, 0x65, 0x5f, 0x67,
+	0x65, 0x74, 0x6f, 0x6e, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65,
+	0x47, 0x65, 0x74, 0x6f, 0x6e, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x69, 0x74, 0x79, 0x18, 0x0b, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x69, 0x74, 0x79, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x69, 0x6c,
+	0x65, 0x61, 0x67, 0x65, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x69, 0x6c, 0x65,
+	0x61, 0x67, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x6c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65, 0x5f, 0x70,
+	0x6c, 0x61, 0x74, 0x65, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6c, 0x69, 0x63, 0x65,
+	0x6e, 0x73, 0x65, 0x50, 0x6c, 0x61, 0x74, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x76, 0x65, 0x68, 0x69,
+	0x63, 0x6c, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x10, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b,
+	0x76, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x73,
+	0x74, 0x61, 0x72, 0x74, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x18, 0x11, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x44, 0x61, 0x74, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x65, 0x6e,
+	0x64, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x18, 0x12, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x65, 0x6e,
+	0x64, 0x44, 0x61, 0x74, 0x65, 0x22, 0xd1, 0x02, 0x0a, 0x0a, 0x46, 0x6c, 0x69, 0x67, 0x68, 0x74,
+	0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x6c, 0x61, 0x73,
+	0x73, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63, 0x6c,
+	0x61, 0x73, 0x73, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x66, 0x6c, 0x69, 0x67, 0x68,
+	0x74, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c,
+	0x66, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x12, 0x0a, 0x04,
+	0x64, 0x61, 0x74, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65,
+	0x12, 0x12, 0x0a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x74, 0x69, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x65, 0x61, 0x74, 0x18, 0x07, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x73, 0x65, 0x61, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x61, 0x72, 0x72,
+	0x69, 0x65, 0x72, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x61, 0x72, 0x72, 0x69,
+	0x65, 0x72, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x18, 0x09, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x12, 0x1d, 0x0a, 0x0a, 0x66, 0x61, 0x72, 0x65,
+	0x5f, 0x62, 0x61, 0x73, 0x69, 0x73, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x66, 0x61,
+	0x72, 0x65, 0x42, 0x61, 0x73, 0x69, 0x73, 0x12, 0x28, 0x0a, 0x10, 0x6e, 0x6f, 0x74, 0x5f, 0x76,
+	0x61, 0x6c, 0x69, 0x64, 0x5f, 0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0e, 0x6e, 0x6f, 0x74, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x42, 0x65, 0x66, 0x6f, 0x72,
+	0x65, 0x12, 0x26, 0x0a, 0x0f, 0x6e, 0x6f, 0x74, 0x5f, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x5f, 0x61,
+	0x66, 0x74, 0x65, 0x72, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x6e, 0x6f, 0x74, 0x56,
+	0x61, 0x6c, 0x69, 0x64, 0x41, 0x66, 0x74, 0x65, 0x72, 0x22, 0xd3, 0x01, 0x0a, 0x0e, 0x54, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x53, 0x74, 0x72, 0x45, 0x78, 0x74, 0x72, 0x61, 0x12, 0x32, 0x0a, 0x15,
+	0x63, 0x68, 0x65, 0x63, 0x6b, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x5f, 0x63, 0x61, 0x6e, 0x64, 0x69,
+	0x64, 0x61, 0x74, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x13, 0x63, 0x68, 0x65,
+	0x63, 0x6b, 0x43, 0x6f, 0x64, 0x65, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x73,
+	0x12, 0x2d, 0x0a, 0x13, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x5f, 0x6c,
+	0x61, 0x73, 0x74, 0x5f, 0x73, 0x69, 0x78, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x10, 0x63,
+	0x68, 0x65, 0x63, 0x6b, 0x43, 0x6f, 0x64, 0x65, 0x4c, 0x61, 0x73, 0x74, 0x53, 0x69, 0x78, 0x12,
+	0x2c, 0x0a, 0x12, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x5f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f,
+	0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x03, 0x20, 0x03, 0x28, 0x09, 0x52, 0x10, 0x6e, 0x75, 0x6d,
+	0x62, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x16, 0x0a,
+	0x06, 0x71, 0x72, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x04, 0x20, 0x03, 0x28, 0x09, 0x52, 0x06, 0x71,
+	0x72, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x62, 0x61, 0x72, 0x63, 0x6f, 0x64, 0x65,
+	0x18, 0x05, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x62, 0x61, 0x72, 0x63, 0x6f, 0x64, 0x65, 0x42,
+	0x11, 0x5a, 0x0f, 0x2e, 0x2f, 0x3b, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x6f, 0x63, 0x72, 0x61,
+	0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_fizzy_ocr_proto_rawDescOnce sync.Once
-	file_fizzy_ocr_proto_rawDescData = file_fizzy_ocr_proto_rawDesc
+	file_ticket_ocr_proto_rawDescOnce sync.Once
+	file_ticket_ocr_proto_rawDescData = file_ticket_ocr_proto_rawDesc
 )
 
-func file_fizzy_ocr_proto_rawDescGZIP() []byte {
-	file_fizzy_ocr_proto_rawDescOnce.Do(func() {
-		file_fizzy_ocr_proto_rawDescData = protoimpl.X.CompressGZIP(file_fizzy_ocr_proto_rawDescData)
+func file_ticket_ocr_proto_rawDescGZIP() []byte {
+	file_ticket_ocr_proto_rawDescOnce.Do(func() {
+		file_ticket_ocr_proto_rawDescData = protoimpl.X.CompressGZIP(file_ticket_ocr_proto_rawDescData)
 	})
-	return file_fizzy_ocr_proto_rawDescData
+	return file_ticket_ocr_proto_rawDescData
 }
 
-var file_fizzy_ocr_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_fizzy_ocr_proto_goTypes = []interface{}{
-	(*Polygon)(nil),                    // 0: fizzyocrapi.Polygon
-	(*Coord)(nil),                      // 1: fizzyocrapi.Coord
-	(*GeneralPrintOCRReq)(nil),         // 2: fizzyocrapi.GeneralPrintOCRReq
-	(*GeneralPrintOCRRsp)(nil),         // 3: fizzyocrapi.GeneralPrintOCRRsp
-	(*GeneralPrintOCRRspData)(nil),     // 4: fizzyocrapi.GeneralPrintOCRRspData
-	(*GeneralPrintOCRRspDataItem)(nil), // 5: fizzyocrapi.GeneralPrintOCRRspDataItem
+var file_ticket_ocr_proto_msgTypes = make([]protoimpl.MessageInfo, 126)
+var file_ticket_ocr_proto_goTypes = []interface{}{
+	(*VatInvoiceOcrReq)(nil),                                      // 0: ticketocrapi.VatInvoiceOcrReq
+	(*VatInvoiceOcrRsp)(nil),                                      // 1: ticketocrapi.VatInvoiceOcrRsp
+	(*VatInvoiceOcrRspData)(nil),                                  // 2: ticketocrapi.VatInvoiceOcrRspData
+	(*TextVatInvoice)(nil),                                        // 3: ticketocrapi.TextVatInvoice
+	(*VatInvoiceItem)(nil),                                        // 4: ticketocrapi.VatInvoiceItem
+	(*FinanBillOcrReq)(nil),                                       // 5: ticketocrapi.FinanBillOcrReq
+	(*FinanBillOcrRsp)(nil),                                       // 6: ticketocrapi.FinanBillOcrRsp
+	(*FinanBillOcrRspData)(nil),                                   // 7: ticketocrapi.FinanBillOcrRspData
+	(*FinanBillInfo)(nil),                                         // 8: ticketocrapi.FinanBillInfo
+	(*VatRollInvoiceOcrReq)(nil),                                  // 9: ticketocrapi.VatRollInvoiceOcrReq
+	(*VatRollInvoiceOcrRsp)(nil),                                  // 10: ticketocrapi.VatRollInvoiceOcrRsp
+	(*VatRollInvoiceOcrRspData)(nil),                              // 11: ticketocrapi.VatRollInvoiceOcrRspData
+	(*VatRollInvoiceInfo)(nil),                                    // 12: ticketocrapi.VatRollInvoiceInfo
+	(*Rect)(nil),                                                  // 13: ticketocrapi.Rect
+	(*MixedInvoiceOcrReq)(nil),                                    // 14: ticketocrapi.MixedInvoiceOcrReq
+	(*MixedInvoiceOcrRsp)(nil),                                    // 15: ticketocrapi.MixedInvoiceOcrRsp
+	(*MixedInvoiceOcrRspData)(nil),                                // 16: ticketocrapi.MixedInvoiceOcrRspData
+	(*MixedInvoiceItem)(nil),                                      // 17: ticketocrapi.MixedInvoiceItem
+	(*SingleInvoiceInfo)(nil),                                     // 18: ticketocrapi.SingleInvoiceInfo
+	(*MixedInvoiceDetectReq)(nil),                                 // 19: ticketocrapi.MixedInvoiceDetectReq
+	(*MixedInvoiceDetectRsp)(nil),                                 // 20: ticketocrapi.MixedInvoiceDetectRsp
+	(*MixedInvoiceDetectRspData)(nil),                             // 21: ticketocrapi.MixedInvoiceDetectRspData
+	(*InvoiceDetectInfo)(nil),                                     // 22: ticketocrapi.InvoiceDetectInfo
+	(*InvoiceGeneralOcrReq)(nil),                                  // 23: ticketocrapi.InvoiceGeneralOcrReq
+	(*InvoiceGeneralOcrRsp)(nil),                                  // 24: ticketocrapi.InvoiceGeneralOcrRsp
+	(*InvoiceGeneralOcrRspData)(nil),                              // 25: ticketocrapi.InvoiceGeneralOcrRspData
+	(*InvoiceGeneralInfo)(nil),                                    // 26: ticketocrapi.InvoiceGeneralInfo
+	(*DutyPaidProofOcrReq)(nil),                                   // 27: ticketocrapi.DutyPaidProofOcrReq
+	(*DutyPaidProofOcrRsp)(nil),                                   // 28: ticketocrapi.DutyPaidProofOcrRsp
+	(*DutyPaidProofOcrRspData)(nil),                               // 29: ticketocrapi.DutyPaidProofOcrRspData
+	(*DutyPaidProofInfo)(nil),                                     // 30: ticketocrapi.DutyPaidProofInfo
+	(*TaxiInvoiceOcrReq)(nil),                                     // 31: ticketocrapi.TaxiInvoiceOcrReq
+	(*TaxiInvoiceOcrRsp)(nil),                                     // 32: ticketocrapi.TaxiInvoiceOcrRsp
+	(*TaxiInvoiceOcrRspData)(nil),                                 // 33: ticketocrapi.TaxiInvoiceOcrRspData
+	(*QuotaInvoiceOcrReq)(nil),                                    // 34: ticketocrapi.QuotaInvoiceOcrReq
+	(*QuotaInvoiceOcrRsp)(nil),                                    // 35: ticketocrapi.QuotaInvoiceOcrRsp
+	(*QuotaInvoiceOcrRspData)(nil),                                // 36: ticketocrapi.QuotaInvoiceOcrRspData
+	(*CarInvoiceOcrReq)(nil),                                      // 37: ticketocrapi.CarInvoiceOcrReq
+	(*CarInvoiceOcrRsp)(nil),                                      // 38: ticketocrapi.CarInvoiceOcrRsp
+	(*CarInvoiceOcrRspData)(nil),                                  // 39: ticketocrapi.CarInvoiceOcrRspData
+	(*CarInvoiceInfo)(nil),                                        // 40: ticketocrapi.CarInvoiceInfo
+	(*FinanBillSliceOcrReq)(nil),                                  // 41: ticketocrapi.FinanBillSliceOcrReq
+	(*FinanBillSliceOcrRsp)(nil),                                  // 42: ticketocrapi.FinanBillSliceOcrRsp
+	(*FinanBillSliceOcrRspData)(nil),                              // 43: ticketocrapi.FinanBillSliceOcrRspData
+	(*FinanBillSliceInfo)(nil),                                    // 44: ticketocrapi.FinanBillSliceInfo
+	(*FlightInvoiceOcrReq)(nil),                                   // 45: ticketocrapi.FlightInvoiceOcrReq
+	(*FlightInvoiceOcrRsp)(nil),                                   // 46: ticketocrapi.FlightInvoiceOcrRsp
+	(*FlightInvoiceOcrRspData)(nil),                               // 47: ticketocrapi.FlightInvoiceOcrRspData
+	(*FlightInvoiceInfo)(nil),                                     // 48: ticketocrapi.FlightInvoiceInfo
+	(*BusInvoiceOcrReq)(nil),                                      // 49: ticketocrapi.BusInvoiceOcrReq
+	(*BusInvoiceOcrRsp)(nil),                                      // 50: ticketocrapi.BusInvoiceOcrRsp
+	(*BusInvoiceOcrRspData)(nil),                                  // 51: ticketocrapi.BusInvoiceOcrRspData
+	(*BusInvoiceInfo)(nil),                                        // 52: ticketocrapi.BusInvoiceInfo
+	(*TrainTicketOcrReq)(nil),                                     // 53: ticketocrapi.TrainTicketOcrReq
+	(*TrainTicketOcrRsp)(nil),                                     // 54: ticketocrapi.TrainTicketOcrRsp
+	(*TrainTicketInfo)(nil),                                       // 55: ticketocrapi.TrainTicketInfo
+	(*ShipInvoiceOcrReq)(nil),                                     // 56: ticketocrapi.ShipInvoiceOcrReq
+	(*ShipInvoiceOcrRsp)(nil),                                     // 57: ticketocrapi.ShipInvoiceOcrRsp
+	(*ShipInvoiceOcrRspData)(nil),                                 // 58: ticketocrapi.ShipInvoiceOcrRspData
+	(*ShipInvoiceInfo)(nil),                                       // 59: ticketocrapi.ShipInvoiceInfo
+	(*TollInvoiceOcrReq)(nil),                                     // 60: ticketocrapi.TollInvoiceOcrReq
+	(*TollInvoiceOcrRsp)(nil),                                     // 61: ticketocrapi.TollInvoiceOcrRsp
+	(*TollInvoiceOcrRspData)(nil),                                 // 62: ticketocrapi.TollInvoiceOcrRspData
+	(*TollInvoiceInfo)(nil),                                       // 63: ticketocrapi.TollInvoiceInfo
+	(*WaybillOcrReq)(nil),                                         // 64: ticketocrapi.WaybillOcrReq
+	(*WaybillOcrRsp)(nil),                                         // 65: ticketocrapi.WaybillOcrRsp
+	(*WaybillOcrRspData)(nil),                                     // 66: ticketocrapi.WaybillOcrRspData
+	(*TextWaybill)(nil),                                           // 67: ticketocrapi.TextWaybill
+	(*WaybillObj)(nil),                                            // 68: ticketocrapi.WaybillObj
+	(*GeneralBasicOCRReq)(nil),                                    // 69: ticketocrapi.GeneralBasicOCRReq
+	(*Coord)(nil),                                                 // 70: ticketocrapi.Coord
+	(*ItemCoord)(nil),                                             // 71: ticketocrapi.ItemCoord
+	(*TextDetection)(nil),                                         // 72: ticketocrapi.TextDetection
+	(*GeneralBasicOCRRsp)(nil),                                    // 73: ticketocrapi.GeneralBasicOCRRsp
+	(*GeneralAccurateOCRReq)(nil),                                 // 74: ticketocrapi.GeneralAccurateOCRReq
+	(*GeneralAccurateOCRRsp)(nil),                                 // 75: ticketocrapi.GeneralAccurateOCRRsp
+	(*GeneralEfficientOCRReq)(nil),                                // 76: ticketocrapi.GeneralEfficientOCRReq
+	(*GeneralEfficientOCRRsp)(nil),                                // 77: ticketocrapi.GeneralEfficientOCRRsp
+	(*GeneralFastOCRReq)(nil),                                     // 78: ticketocrapi.GeneralFastOCRReq
+	(*GeneralFastOCRRsp)(nil),                                     // 79: ticketocrapi.GeneralFastOCRRsp
+	(*EnglishOCRReq)(nil),                                         // 80: ticketocrapi.EnglishOCRReq
+	(*Words)(nil),                                                 // 81: ticketocrapi.Words
+	(*TextDetectionEn)(nil),                                       // 82: ticketocrapi.TextDetectionEn
+	(*EnglishOCRRsp)(nil),                                         // 83: ticketocrapi.EnglishOCRRsp
+	(*GeneralHandwritingOCRReq)(nil),                              // 84: ticketocrapi.GeneralHandwritingOCRReq
+	(*Polygon)(nil),                                               // 85: ticketocrapi.Polygon
+	(*TextGeneralHandwriting)(nil),                                // 86: ticketocrapi.TextGeneralHandwriting
+	(*GeneralHandwritingOCRRsp)(nil),                              // 87: ticketocrapi.GeneralHandwritingOCRRsp
+	(*TextDetectReq)(nil),                                         // 88: ticketocrapi.TextDetectReq
+	(*TextDetectRsp)(nil),                                         // 89: ticketocrapi.TextDetectRsp
+	(*BankReceiptRecognizeReq)(nil),                               // 90: ticketocrapi.BankReceiptRecognizeReq
+	(*BankReceiptRecognizeRsp)(nil),                               // 91: ticketocrapi.BankReceiptRecognizeRsp
+	(*BankReceiptRecognizeRspData)(nil),                           // 92: ticketocrapi.BankReceiptRecognizeRspData
+	(*QrcodeResultsInfo)(nil),                                     // 93: ticketocrapi.QrcodeResultsInfo
+	(*QrcodeImgSize)(nil),                                         // 94: ticketocrapi.QrcodeImgSize
+	(*QRCodeReq)(nil),                                             // 95: ticketocrapi.QRCodeReq
+	(*QRCodeRsp)(nil),                                             // 96: ticketocrapi.QRCodeRsp
+	(*BankCardReq)(nil),                                           // 97: ticketocrapi.BankCardReq
+	(*BankCardRsp)(nil),                                           // 98: ticketocrapi.BankCardRsp
+	(*BankCardRspData)(nil),                                       // 99: ticketocrapi.BankCardRspData
+	(*EnterpriseLicenseReq)(nil),                                  // 100: ticketocrapi.EnterpriseLicenseReq
+	(*EnterpriseLicenseRsp)(nil),                                  // 101: ticketocrapi.EnterpriseLicenseRsp
+	(*EnterpriseLicenseRspData)(nil),                              // 102: ticketocrapi.EnterpriseLicenseRspData
+	(*EnterpriseLicenseInfo)(nil),                                 // 103: ticketocrapi.EnterpriseLicenseInfo
+	(*VehicleLicenseReq)(nil),                                     // 104: ticketocrapi.VehicleLicenseReq
+	(*VehicleLicenseRsp)(nil),                                     // 105: ticketocrapi.VehicleLicenseRsp
+	(*VehicleLicenseRspData)(nil),                                 // 106: ticketocrapi.VehicleLicenseRspData
+	(*TextVehicleFront)(nil),                                      // 107: ticketocrapi.TextVehicleFront
+	(*TextVehicleBack)(nil),                                       // 108: ticketocrapi.TextVehicleBack
+	(*MixedInvoiceOcrStrRsp)(nil),                                 // 109: ticketocrapi.MixedInvoiceOcrStrRsp
+	(*MixedInvoiceOcrStrRspData)(nil),                             // 110: ticketocrapi.MixedInvoiceOcrStrRspData
+	(*TicketStrResult)(nil),                                       // 111: ticketocrapi.TicketStrResult
+	(*TicketStrContent)(nil),                                      // 112: ticketocrapi.TicketStrContent
+	(*GoodsInfo)(nil),                                             // 113: ticketocrapi.GoodsInfo
+	(*FlightInfo)(nil),                                            // 114: ticketocrapi.FlightInfo
+	(*TicketStrExtra)(nil),                                        // 115: ticketocrapi.TicketStrExtra
+	(*GeneralBasicOCRRsp_GeneralBasicOCRRspData)(nil),             // 116: ticketocrapi.GeneralBasicOCRRsp.GeneralBasicOCRRspData
+	(*GeneralAccurateOCRRsp_GeneralAccurateOCRRspData)(nil),       // 117: ticketocrapi.GeneralAccurateOCRRsp.GeneralAccurateOCRRspData
+	(*GeneralEfficientOCRRsp_GeneralEfficientOCRRspData)(nil),     // 118: ticketocrapi.GeneralEfficientOCRRsp.GeneralEfficientOCRRspData
+	(*GeneralFastOCRRsp_GeneralFastOCRRspData)(nil),               // 119: ticketocrapi.GeneralFastOCRRsp.GeneralFastOCRRspData
+	(*TextDetectionEn_WordCoordPoint)(nil),                        // 120: ticketocrapi.TextDetectionEn.WordCoordPoint
+	(*TextDetectionEn_CandWord)(nil),                              // 121: ticketocrapi.TextDetectionEn.CandWord
+	(*EnglishOCRRsp_EnglishOCRRspData)(nil),                       // 122: ticketocrapi.EnglishOCRRsp.EnglishOCRRspData
+	(*GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData)(nil), // 123: ticketocrapi.GeneralHandwritingOCRRsp.GeneralHandwritingOCRRspData
+	(*TextDetectRsp_TextDetectRspData)(nil),                       // 124: ticketocrapi.TextDetectRsp.TextDetectRspData
+	(*QRCodeRsp_QRCodeRspData)(nil),                               // 125: ticketocrapi.QRCodeRsp.QRCodeRspData
 }
-var file_fizzy_ocr_proto_depIdxs = []int32{
-	1, // 0: fizzyocrapi.Polygon.left_top:type_name -> fizzyocrapi.Coord
-	1, // 1: fizzyocrapi.Polygon.right_top:type_name -> fizzyocrapi.Coord
-	1, // 2: fizzyocrapi.Polygon.right_bottom:type_name -> fizzyocrapi.Coord
-	1, // 3: fizzyocrapi.Polygon.left_bottom:type_name -> fizzyocrapi.Coord
-	4, // 4: fizzyocrapi.GeneralPrintOCRRsp.data:type_name -> fizzyocrapi.GeneralPrintOCRRspData
-	5, // 5: fizzyocrapi.GeneralPrintOCRRspData.item:type_name -> fizzyocrapi.GeneralPrintOCRRspDataItem
-	0, // 6: fizzyocrapi.GeneralPrintOCRRspDataItem.Polygon:type_name -> fizzyocrapi.Polygon
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+var file_ticket_ocr_proto_depIdxs = []int32{
+	2,   // 0: ticketocrapi.VatInvoiceOcrRsp.data:type_name -> ticketocrapi.VatInvoiceOcrRspData
+	3,   // 1: ticketocrapi.VatInvoiceOcrRspData.vat_invoice_infos:type_name -> ticketocrapi.TextVatInvoice
+	4,   // 2: ticketocrapi.VatInvoiceOcrRspData.items:type_name -> ticketocrapi.VatInvoiceItem
+	7,   // 3: ticketocrapi.FinanBillOcrRsp.data:type_name -> ticketocrapi.FinanBillOcrRspData
+	8,   // 4: ticketocrapi.FinanBillOcrRspData.finan_bill_infos:type_name -> ticketocrapi.FinanBillInfo
+	11,  // 5: ticketocrapi.VatRollInvoiceOcrRsp.data:type_name -> ticketocrapi.VatRollInvoiceOcrRspData
+	12,  // 6: ticketocrapi.VatRollInvoiceOcrRspData.vat_roll_invoice_infos:type_name -> ticketocrapi.VatRollInvoiceInfo
+	13,  // 7: ticketocrapi.VatRollInvoiceInfo.rect:type_name -> ticketocrapi.Rect
+	16,  // 8: ticketocrapi.MixedInvoiceOcrRsp.data:type_name -> ticketocrapi.MixedInvoiceOcrRspData
+	17,  // 9: ticketocrapi.MixedInvoiceOcrRspData.mixed_invoice_items:type_name -> ticketocrapi.MixedInvoiceItem
+	13,  // 10: ticketocrapi.MixedInvoiceItem.rect:type_name -> ticketocrapi.Rect
+	18,  // 11: ticketocrapi.MixedInvoiceItem.single_invoice_infos:type_name -> ticketocrapi.SingleInvoiceInfo
+	21,  // 12: ticketocrapi.MixedInvoiceDetectRsp.data:type_name -> ticketocrapi.MixedInvoiceDetectRspData
+	22,  // 13: ticketocrapi.MixedInvoiceDetectRspData.invoice_detect_infos:type_name -> ticketocrapi.InvoiceDetectInfo
+	13,  // 14: ticketocrapi.InvoiceDetectInfo.rect:type_name -> ticketocrapi.Rect
+	25,  // 15: ticketocrapi.InvoiceGeneralOcrRsp.data:type_name -> ticketocrapi.InvoiceGeneralOcrRspData
+	26,  // 16: ticketocrapi.InvoiceGeneralOcrRspData.invoice_general_infos:type_name -> ticketocrapi.InvoiceGeneralInfo
+	13,  // 17: ticketocrapi.InvoiceGeneralInfo.rect:type_name -> ticketocrapi.Rect
+	29,  // 18: ticketocrapi.DutyPaidProofOcrRsp.data:type_name -> ticketocrapi.DutyPaidProofOcrRspData
+	30,  // 19: ticketocrapi.DutyPaidProofOcrRspData.duty_paid_proof_infos:type_name -> ticketocrapi.DutyPaidProofInfo
+	13,  // 20: ticketocrapi.DutyPaidProofInfo.rect:type_name -> ticketocrapi.Rect
+	33,  // 21: ticketocrapi.TaxiInvoiceOcrRsp.data:type_name -> ticketocrapi.TaxiInvoiceOcrRspData
+	36,  // 22: ticketocrapi.QuotaInvoiceOcrRsp.data:type_name -> ticketocrapi.QuotaInvoiceOcrRspData
+	39,  // 23: ticketocrapi.CarInvoiceOcrRsp.data:type_name -> ticketocrapi.CarInvoiceOcrRspData
+	40,  // 24: ticketocrapi.CarInvoiceOcrRspData.car_invoice_infos:type_name -> ticketocrapi.CarInvoiceInfo
+	43,  // 25: ticketocrapi.FinanBillSliceOcrRsp.data:type_name -> ticketocrapi.FinanBillSliceOcrRspData
+	44,  // 26: ticketocrapi.FinanBillSliceOcrRspData.finan_bill_slice_infos:type_name -> ticketocrapi.FinanBillSliceInfo
+	47,  // 27: ticketocrapi.FlightInvoiceOcrRsp.data:type_name -> ticketocrapi.FlightInvoiceOcrRspData
+	48,  // 28: ticketocrapi.FlightInvoiceOcrRspData.flight_invoice_infos:type_name -> ticketocrapi.FlightInvoiceInfo
+	51,  // 29: ticketocrapi.BusInvoiceOcrRsp.data:type_name -> ticketocrapi.BusInvoiceOcrRspData
+	52,  // 30: ticketocrapi.BusInvoiceOcrRspData.bus_invoice_infos:type_name -> ticketocrapi.BusInvoiceInfo
+	13,  // 31: ticketocrapi.BusInvoiceInfo.rect:type_name -> ticketocrapi.Rect
+	55,  // 32: ticketocrapi.TrainTicketOcrRsp.data:type_name -> ticketocrapi.TrainTicketInfo
+	58,  // 33: ticketocrapi.ShipInvoiceOcrRsp.data:type_name -> ticketocrapi.ShipInvoiceOcrRspData
+	59,  // 34: ticketocrapi.ShipInvoiceOcrRspData.ship_invoice_infos:type_name -> ticketocrapi.ShipInvoiceInfo
+	13,  // 35: ticketocrapi.ShipInvoiceInfo.rect:type_name -> ticketocrapi.Rect
+	62,  // 36: ticketocrapi.TollInvoiceOcrRsp.data:type_name -> ticketocrapi.TollInvoiceOcrRspData
+	63,  // 37: ticketocrapi.TollInvoiceOcrRspData.toll_invoice_infos:type_name -> ticketocrapi.TollInvoiceInfo
+	13,  // 38: ticketocrapi.TollInvoiceInfo.rect:type_name -> ticketocrapi.Rect
+	66,  // 39: ticketocrapi.WaybillOcrRsp.data:type_name -> ticketocrapi.WaybillOcrRspData
+	67,  // 40: ticketocrapi.WaybillOcrRspData.text_detections:type_name -> ticketocrapi.TextWaybill
+	68,  // 41: ticketocrapi.TextWaybill.rec_name:type_name -> ticketocrapi.WaybillObj
+	68,  // 42: ticketocrapi.TextWaybill.rec_num:type_name -> ticketocrapi.WaybillObj
+	68,  // 43: ticketocrapi.TextWaybill.rec_addr:type_name -> ticketocrapi.WaybillObj
+	68,  // 44: ticketocrapi.TextWaybill.sender_name:type_name -> ticketocrapi.WaybillObj
+	68,  // 45: ticketocrapi.TextWaybill.sender_num:type_name -> ticketocrapi.WaybillObj
+	68,  // 46: ticketocrapi.TextWaybill.sender_addr:type_name -> ticketocrapi.WaybillObj
+	68,  // 47: ticketocrapi.TextWaybill.waybill_num:type_name -> ticketocrapi.WaybillObj
+	70,  // 48: ticketocrapi.TextDetection.polygon:type_name -> ticketocrapi.Coord
+	71,  // 49: ticketocrapi.TextDetection.item_polygon:type_name -> ticketocrapi.ItemCoord
+	116, // 50: ticketocrapi.GeneralBasicOCRRsp.data:type_name -> ticketocrapi.GeneralBasicOCRRsp.GeneralBasicOCRRspData
+	117, // 51: ticketocrapi.GeneralAccurateOCRRsp.data:type_name -> ticketocrapi.GeneralAccurateOCRRsp.GeneralAccurateOCRRspData
+	118, // 52: ticketocrapi.GeneralEfficientOCRRsp.data:type_name -> ticketocrapi.GeneralEfficientOCRRsp.GeneralEfficientOCRRspData
+	119, // 53: ticketocrapi.GeneralFastOCRRsp.data:type_name -> ticketocrapi.GeneralFastOCRRsp.GeneralFastOCRRspData
+	70,  // 54: ticketocrapi.TextDetectionEn.polygon:type_name -> ticketocrapi.Coord
+	120, // 55: ticketocrapi.TextDetectionEn.word_coord_point:type_name -> ticketocrapi.TextDetectionEn.WordCoordPoint
+	121, // 56: ticketocrapi.TextDetectionEn.cand_word:type_name -> ticketocrapi.TextDetectionEn.CandWord
+	81,  // 57: ticketocrapi.TextDetectionEn.words:type_name -> ticketocrapi.Words
+	122, // 58: ticketocrapi.EnglishOCRRsp.data:type_name -> ticketocrapi.EnglishOCRRsp.EnglishOCRRspData
+	70,  // 59: ticketocrapi.Polygon.left_top:type_name -> ticketocrapi.Coord
+	70,  // 60: ticketocrapi.Polygon.right_top:type_name -> ticketocrapi.Coord
+	70,  // 61: ticketocrapi.Polygon.right_bottom:type_name -> ticketocrapi.Coord
+	70,  // 62: ticketocrapi.Polygon.left_bottom:type_name -> ticketocrapi.Coord
+	70,  // 63: ticketocrapi.TextGeneralHandwriting.polygon:type_name -> ticketocrapi.Coord
+	85,  // 64: ticketocrapi.TextGeneralHandwriting.word_polygon:type_name -> ticketocrapi.Polygon
+	123, // 65: ticketocrapi.GeneralHandwritingOCRRsp.data:type_name -> ticketocrapi.GeneralHandwritingOCRRsp.GeneralHandwritingOCRRspData
+	124, // 66: ticketocrapi.TextDetectRsp.data:type_name -> ticketocrapi.TextDetectRsp.TextDetectRspData
+	92,  // 67: ticketocrapi.BankReceiptRecognizeRsp.data:type_name -> ticketocrapi.BankReceiptRecognizeRspData
+	13,  // 68: ticketocrapi.BankReceiptRecognizeRspData.rect:type_name -> ticketocrapi.Rect
+	18,  // 69: ticketocrapi.BankReceiptRecognizeRspData.single_invoice_infos:type_name -> ticketocrapi.SingleInvoiceInfo
+	85,  // 70: ticketocrapi.QrcodeResultsInfo.position:type_name -> ticketocrapi.Polygon
+	125, // 71: ticketocrapi.QRCodeRsp.data:type_name -> ticketocrapi.QRCodeRsp.QRCodeRspData
+	99,  // 72: ticketocrapi.BankCardRsp.data:type_name -> ticketocrapi.BankCardRspData
+	102, // 73: ticketocrapi.EnterpriseLicenseRsp.data:type_name -> ticketocrapi.EnterpriseLicenseRspData
+	103, // 74: ticketocrapi.EnterpriseLicenseRspData.enterprise_license_infos:type_name -> ticketocrapi.EnterpriseLicenseInfo
+	106, // 75: ticketocrapi.VehicleLicenseRsp.data:type_name -> ticketocrapi.VehicleLicenseRspData
+	107, // 76: ticketocrapi.VehicleLicenseRspData.front_info:type_name -> ticketocrapi.TextVehicleFront
+	108, // 77: ticketocrapi.VehicleLicenseRspData.bank_info:type_name -> ticketocrapi.TextVehicleBack
+	110, // 78: ticketocrapi.MixedInvoiceOcrStrRsp.data:type_name -> ticketocrapi.MixedInvoiceOcrStrRspData
+	111, // 79: ticketocrapi.MixedInvoiceOcrStrRspData.identify_results:type_name -> ticketocrapi.TicketStrResult
+	112, // 80: ticketocrapi.TicketStrResult.details:type_name -> ticketocrapi.TicketStrContent
+	115, // 81: ticketocrapi.TicketStrResult.extra:type_name -> ticketocrapi.TicketStrExtra
+	113, // 82: ticketocrapi.TicketStrContent.items:type_name -> ticketocrapi.GoodsInfo
+	114, // 83: ticketocrapi.TicketStrContent.flights:type_name -> ticketocrapi.FlightInfo
+	72,  // 84: ticketocrapi.GeneralBasicOCRRsp.GeneralBasicOCRRspData.text_detections:type_name -> ticketocrapi.TextDetection
+	72,  // 85: ticketocrapi.GeneralAccurateOCRRsp.GeneralAccurateOCRRspData.text_detections:type_name -> ticketocrapi.TextDetection
+	72,  // 86: ticketocrapi.GeneralEfficientOCRRsp.GeneralEfficientOCRRspData.text_detections:type_name -> ticketocrapi.TextDetection
+	72,  // 87: ticketocrapi.GeneralFastOCRRsp.GeneralFastOCRRspData.text_detections:type_name -> ticketocrapi.TextDetection
+	70,  // 88: ticketocrapi.TextDetectionEn.WordCoordPoint.polygon:type_name -> ticketocrapi.Coord
+	81,  // 89: ticketocrapi.TextDetectionEn.CandWord.word_coordinate:type_name -> ticketocrapi.Words
+	82,  // 90: ticketocrapi.EnglishOCRRsp.EnglishOCRRspData.text_detections:type_name -> ticketocrapi.TextDetectionEn
+	86,  // 91: ticketocrapi.GeneralHandwritingOCRRsp.GeneralHandwritingOCRRspData.text_detections:type_name -> ticketocrapi.TextGeneralHandwriting
+	93,  // 92: ticketocrapi.QRCodeRsp.QRCodeRspData.qrcode_results_info:type_name -> ticketocrapi.QrcodeResultsInfo
+	94,  // 93: ticketocrapi.QRCodeRsp.QRCodeRspData.img_size:type_name -> ticketocrapi.QrcodeImgSize
+	94,  // [94:94] is the sub-list for method output_type
+	94,  // [94:94] is the sub-list for method input_type
+	94,  // [94:94] is the sub-list for extension type_name
+	94,  // [94:94] is the sub-list for extension extendee
+	0,   // [0:94] is the sub-list for field type_name
 }
 
-func init() { file_fizzy_ocr_proto_init() }
-func file_fizzy_ocr_proto_init() {
-	if File_fizzy_ocr_proto != nil {
+func init() { file_ticket_ocr_proto_init() }
+func file_ticket_ocr_proto_init() {
+	if File_ticket_ocr_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_fizzy_ocr_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Polygon); i {
+		file_ticket_ocr_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VatInvoiceOcrReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -485,7 +11319,835 @@ func file_fizzy_ocr_proto_init() {
 				return nil
 			}
 		}
-		file_fizzy_ocr_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_ticket_ocr_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VatInvoiceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VatInvoiceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextVatInvoice); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VatInvoiceItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinanBillOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinanBillOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinanBillOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinanBillInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VatRollInvoiceOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VatRollInvoiceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VatRollInvoiceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VatRollInvoiceInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Rect); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MixedInvoiceOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MixedInvoiceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MixedInvoiceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MixedInvoiceItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SingleInvoiceInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MixedInvoiceDetectReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MixedInvoiceDetectRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MixedInvoiceDetectRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*InvoiceDetectInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*InvoiceGeneralOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*InvoiceGeneralOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*InvoiceGeneralOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*InvoiceGeneralInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DutyPaidProofOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DutyPaidProofOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DutyPaidProofOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DutyPaidProofInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TaxiInvoiceOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TaxiInvoiceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TaxiInvoiceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QuotaInvoiceOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QuotaInvoiceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QuotaInvoiceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CarInvoiceOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CarInvoiceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CarInvoiceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CarInvoiceInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinanBillSliceOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinanBillSliceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinanBillSliceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinanBillSliceInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FlightInvoiceOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FlightInvoiceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FlightInvoiceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FlightInvoiceInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BusInvoiceOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BusInvoiceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BusInvoiceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BusInvoiceInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TrainTicketOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TrainTicketOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TrainTicketInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ShipInvoiceOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ShipInvoiceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ShipInvoiceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ShipInvoiceInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TollInvoiceOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TollInvoiceOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TollInvoiceOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TollInvoiceInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WaybillOcrReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WaybillOcrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WaybillOcrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextWaybill); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WaybillObj); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralBasicOCRReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Coord); i {
 			case 0:
 				return &v.state
@@ -497,8 +12159,8 @@ func file_fizzy_ocr_proto_init() {
 				return nil
 			}
 		}
-		file_fizzy_ocr_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GeneralPrintOCRReq); i {
+		file_ticket_ocr_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ItemCoord); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -509,8 +12171,8 @@ func file_fizzy_ocr_proto_init() {
 				return nil
 			}
 		}
-		file_fizzy_ocr_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GeneralPrintOCRRsp); i {
+		file_ticket_ocr_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextDetection); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -521,8 +12183,8 @@ func file_fizzy_ocr_proto_init() {
 				return nil
 			}
 		}
-		file_fizzy_ocr_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GeneralPrintOCRRspData); i {
+		file_ticket_ocr_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralBasicOCRRsp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -533,8 +12195,620 @@ func file_fizzy_ocr_proto_init() {
 				return nil
 			}
 		}
-		file_fizzy_ocr_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GeneralPrintOCRRspDataItem); i {
+		file_ticket_ocr_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralAccurateOCRReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralAccurateOCRRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralEfficientOCRReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralEfficientOCRRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[78].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralFastOCRReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[79].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralFastOCRRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[80].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EnglishOCRReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[81].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Words); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[82].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextDetectionEn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[83].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EnglishOCRRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[84].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralHandwritingOCRReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[85].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Polygon); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[86].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextGeneralHandwriting); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[87].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralHandwritingOCRRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[88].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextDetectReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[89].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextDetectRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[90].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BankReceiptRecognizeReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[91].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BankReceiptRecognizeRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[92].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BankReceiptRecognizeRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[93].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QrcodeResultsInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[94].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QrcodeImgSize); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[95].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QRCodeReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[96].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QRCodeRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[97].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BankCardReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[98].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BankCardRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[99].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BankCardRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[100].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EnterpriseLicenseReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[101].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EnterpriseLicenseRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[102].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EnterpriseLicenseRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[103].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EnterpriseLicenseInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[104].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VehicleLicenseReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[105].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VehicleLicenseRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[106].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VehicleLicenseRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[107].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextVehicleFront); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[108].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextVehicleBack); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[109].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MixedInvoiceOcrStrRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[110].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MixedInvoiceOcrStrRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[111].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TicketStrResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[112].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TicketStrContent); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[113].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GoodsInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[114].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FlightInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[115].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TicketStrExtra); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[116].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralBasicOCRRsp_GeneralBasicOCRRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[117].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralAccurateOCRRsp_GeneralAccurateOCRRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[118].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralEfficientOCRRsp_GeneralEfficientOCRRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[119].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralFastOCRRsp_GeneralFastOCRRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[120].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextDetectionEn_WordCoordPoint); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[121].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextDetectionEn_CandWord); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[122].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EnglishOCRRsp_EnglishOCRRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[123].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeneralHandwritingOCRRsp_GeneralHandwritingOCRRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[124].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TextDetectRsp_TextDetectRspData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ticket_ocr_proto_msgTypes[125].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QRCodeRsp_QRCodeRspData); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -550,18 +12824,18 @@ func file_fizzy_ocr_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_fizzy_ocr_proto_rawDesc,
+			RawDescriptor: file_ticket_ocr_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   126,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_fizzy_ocr_proto_goTypes,
-		DependencyIndexes: file_fizzy_ocr_proto_depIdxs,
-		MessageInfos:      file_fizzy_ocr_proto_msgTypes,
+		GoTypes:           file_ticket_ocr_proto_goTypes,
+		DependencyIndexes: file_ticket_ocr_proto_depIdxs,
+		MessageInfos:      file_ticket_ocr_proto_msgTypes,
 	}.Build()
-	File_fizzy_ocr_proto = out.File
-	file_fizzy_ocr_proto_rawDesc = nil
-	file_fizzy_ocr_proto_goTypes = nil
-	file_fizzy_ocr_proto_depIdxs = nil
+	File_ticket_ocr_proto = out.File
+	file_ticket_ocr_proto_rawDesc = nil
+	file_ticket_ocr_proto_goTypes = nil
+	file_ticket_ocr_proto_depIdxs = nil
 }
