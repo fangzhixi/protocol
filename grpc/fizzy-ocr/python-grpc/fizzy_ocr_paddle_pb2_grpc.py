@@ -5,8 +5,8 @@ import grpc
 import fizzy_ocr_pb2 as fizzy__ocr__pb2
 
 
-class FizzyOcrStub(object):
-    """票据ocr接口在此定义
+class FizzyOcrPaddleStub(object):
+    """票据OCR接口在此定义
     """
 
     def __init__(self, channel):
@@ -16,14 +16,14 @@ class FizzyOcrStub(object):
             channel: A grpc.Channel.
         """
         self.GeneralPrintOCRV1 = channel.unary_unary(
-                '/fizzyocrpaddle.FizzyOcr/GeneralPrintOCRV1',
+                '/fizzyocr.FizzyOcrPaddle/GeneralPrintOCRV1',
                 request_serializer=fizzy__ocr__pb2.GeneralOCRReq.SerializeToString,
                 response_deserializer=fizzy__ocr__pb2.GeneralPrintOCRRsp.FromString,
                 )
 
 
-class FizzyOcrServicer(object):
-    """票据ocr接口在此定义
+class FizzyOcrPaddleServicer(object):
+    """票据OCR接口在此定义
     """
 
     def GeneralPrintOCRV1(self, request, context):
@@ -34,7 +34,7 @@ class FizzyOcrServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_FizzyOcrServicer_to_server(servicer, server):
+def add_FizzyOcrPaddleServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GeneralPrintOCRV1': grpc.unary_unary_rpc_method_handler(
                     servicer.GeneralPrintOCRV1,
@@ -43,13 +43,13 @@ def add_FizzyOcrServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'fizzyocrpaddle.FizzyOcr', rpc_method_handlers)
+            'fizzyocr.FizzyOcrPaddle', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class FizzyOcr(object):
-    """票据ocr接口在此定义
+class FizzyOcrPaddle(object):
+    """票据OCR接口在此定义
     """
 
     @staticmethod
@@ -63,7 +63,7 @@ class FizzyOcr(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/fizzyocrpaddle.FizzyOcr/GeneralPrintOCRV1',
+        return grpc.experimental.unary_unary(request, target, '/fizzyocr.FizzyOcrPaddle/GeneralPrintOCRV1',
             fizzy__ocr__pb2.GeneralOCRReq.SerializeToString,
             fizzy__ocr__pb2.GeneralPrintOCRRsp.FromString,
             options, channel_credentials,

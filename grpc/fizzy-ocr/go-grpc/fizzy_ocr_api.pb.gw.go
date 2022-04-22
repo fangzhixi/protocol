@@ -2,11 +2,11 @@
 // source: fizzy_ocr_api.proto
 
 /*
-Package fizzyocrapi is a reverse proxy.
+Package fizzyocr is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package fizzyocrapi
+package fizzyocr
 
 import (
 	"context"
