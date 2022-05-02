@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package fizzyocrapi;
-option go_package = "./;fizzyocrapi";
+package fizzyocr;
+option go_package = "./;fizzyocr";
 
 import "google/api/annotations.proto";
 import "fizzy_ocr.proto";
 
-//票据ocr接口在此定义
+//票据OCR接口在此定义
 service FizzyOcrApi {
 
     //通用印刷体识别V1
