@@ -16,5 +16,13 @@ service FizzyOcrApi {
            body:"*"
         };
     }
+
+    //居民身份证识别V1
+    rpc ResidentIdentityCardOCRV1(CommonOCRReq) returns(ResidentIdentityCardRsp){
+        option (google.api.http) = {
+            post:"/ocr-api/credentials/identity-card/v1"
+            body:"*"
+        };
+    }
 }
 
