@@ -34,7 +34,7 @@ message GeneralOCRReq{
 
 // OCR响应体
 message GeneralPrintOCRRsp{
-  int64 log_id = 1;//日志ID
+  string log_id = 1;//日志ID
   int32 code = 2;//状态码
   string message = 3;//响应信息
   int64 consum_time = 4;//接口耗时
@@ -57,7 +57,7 @@ message GeneralPrintOCRRspDataItem{
 
 /****************  OCR居民身份证识别  ****************/
 message ResidentIdentityCardRsp{
-  int64 log_id = 1;//日志ID
+  string log_id = 1;//日志ID
   int32 code = 2;//状态码
   string message = 3;//响应信息
   int64 consum_time = 4;//接口耗时
@@ -71,7 +71,7 @@ message ResidentIdentityCardRspData{
 
 //居民身份证结果
 message ResidentIdentityCardResult{
-  int64 ModelCode = 1;//模型代号
+  int32 ModelCode = 1;//模型代号
   Polygon polygon = 2;//身份证定位
   string issue_organization = 3;//签发机关
   string active_date = 4;//有效期限
