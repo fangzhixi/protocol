@@ -14,16 +14,20 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x66izzy_ocr.proto\x12\x08\x66izzyocr\"\x9d\x01\n\x07Polygon\x12!\n\x08left_top\x18\x01 \x01(\x0b\x32\x0f.fizzyocr.Coord\x12\"\n\tright_top\x18\x02 \x01(\x0b\x32\x0f.fizzyocr.Coord\x12%\n\x0cright_bottom\x18\x03 \x01(\x0b\x32\x0f.fizzyocr.Coord\x12$\n\x0bleft_bottom\x18\x04 \x01(\x0b\x32\x0f.fizzyocr.Coord\"\x1d\n\x05\x43oord\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\"F\n\rGeneralOCRReq\x12\x11\n\timage_url\x18\x01 \x01(\t\x12\x14\n\x0cimage_base64\x18\x02 \x01(\t\x12\x0c\n\x04lang\x18\x03 \x01(\t\"x\n\x12GeneralPrintOCRRsp\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x13\n\x0b\x63onsum_time\x18\x03 \x01(\x03\x12.\n\x04\x64\x61ta\x18\x04 \x01(\x0b\x32 .fizzyocr.GeneralPrintOCRRspData\"L\n\x16GeneralPrintOCRRspData\x12\x32\n\x04item\x18\x01 \x03(\x0b\x32$.fizzyocr.GeneralPrintOCRRspDataItem\"`\n\x1aGeneralPrintOCRRspDataItem\x12\"\n\x07polygon\x18\x01 \x01(\x0b\x32\x11.fizzyocr.Polygon\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\x12\r\n\x05score\x18\x03 \x01(\x02\x42\rZ\x0b./;fizzyocrb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x66izzy_ocr.proto\x12\x08\x66izzyocr\"\x9d\x01\n\x07Polygon\x12!\n\x08left_top\x18\x01 \x01(\x0b\x32\x0f.fizzyocr.Coord\x12\"\n\tright_top\x18\x02 \x01(\x0b\x32\x0f.fizzyocr.Coord\x12%\n\x0cright_bottom\x18\x03 \x01(\x0b\x32\x0f.fizzyocr.Coord\x12$\n\x0bleft_bottom\x18\x04 \x01(\x0b\x32\x0f.fizzyocr.Coord\"\x1d\n\x05\x43oord\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\"7\n\x0c\x43ommonOCRReq\x12\x11\n\timage_url\x18\x01 \x01(\t\x12\x14\n\x0cimage_base64\x18\x02 \x01(\t\"F\n\rGeneralOCRReq\x12\x11\n\timage_url\x18\x01 \x01(\t\x12\x14\n\x0cimage_base64\x18\x02 \x01(\t\x12\x0c\n\x04lang\x18\x03 \x01(\t\"\x88\x01\n\x12GeneralPrintOCRRsp\x12\x0e\n\x06log_id\x18\x01 \x01(\t\x12\x0c\n\x04\x63ode\x18\x02 \x01(\x05\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x13\n\x0b\x63onsum_time\x18\x04 \x01(\x03\x12.\n\x04\x64\x61ta\x18\x05 \x01(\x0b\x32 .fizzyocr.GeneralPrintOCRRspData\"L\n\x16GeneralPrintOCRRspData\x12\x32\n\x04item\x18\x01 \x03(\x0b\x32$.fizzyocr.GeneralPrintOCRRspDataItem\"`\n\x1aGeneralPrintOCRRspDataItem\x12\"\n\x07polygon\x18\x01 \x01(\x0b\x32\x11.fizzyocr.Polygon\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\x12\r\n\x05score\x18\x03 \x01(\x02\"\x82\x01\n\x0fIdentityCardRsp\x12\x0e\n\x06log_id\x18\x01 \x01(\t\x12\x0c\n\x04\x63ode\x18\x02 \x01(\x05\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x13\n\x0b\x63onsum_time\x18\x04 \x01(\x03\x12+\n\x04\x64\x61ta\x18\x05 \x01(\x0b\x32\x1d.fizzyocr.IdentityCardRspData\"[\n\x13IdentityCardRspData\x12\x15\n\rsuccess_total\x18\x01 \x01(\x05\x12-\n\x07results\x18\x02 \x03(\x0b\x32\x1c.fizzyocr.IdentityCardResult\"\xf7\x01\n\x12IdentityCardResult\x12\x11\n\tModelCode\x18\x01 \x01(\x05\x12\"\n\x07polygon\x18\x02 \x01(\x0b\x32\x11.fizzyocr.Polygon\x12\x1a\n\x12issue_organization\x18\x03 \x01(\t\x12\x13\n\x0b\x61\x63tive_date\x18\x04 \x01(\t\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x0e\n\x06gender\x18\x06 \x01(\x08\x12\x0e\n\x06nation\x18\x07 \x01(\t\x12\x13\n\x0bnation_code\x18\x08 \x01(\x05\x12\x10\n\x08\x62irthday\x18\t \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\n \x01(\t\x12\x13\n\x0bresident_id\x18\x0b \x01(\tB\rZ\x0b./;fizzyocrb\x06proto3')
 
 
 
 _POLYGON = DESCRIPTOR.message_types_by_name['Polygon']
 _COORD = DESCRIPTOR.message_types_by_name['Coord']
+_COMMONOCRREQ = DESCRIPTOR.message_types_by_name['CommonOCRReq']
 _GENERALOCRREQ = DESCRIPTOR.message_types_by_name['GeneralOCRReq']
 _GENERALPRINTOCRRSP = DESCRIPTOR.message_types_by_name['GeneralPrintOCRRsp']
 _GENERALPRINTOCRRSPDATA = DESCRIPTOR.message_types_by_name['GeneralPrintOCRRspData']
 _GENERALPRINTOCRRSPDATAITEM = DESCRIPTOR.message_types_by_name['GeneralPrintOCRRspDataItem']
+_IDENTITYCARDRSP = DESCRIPTOR.message_types_by_name['IdentityCardRsp']
+_IDENTITYCARDRSPDATA = DESCRIPTOR.message_types_by_name['IdentityCardRspData']
+_IDENTITYCARDRESULT = DESCRIPTOR.message_types_by_name['IdentityCardResult']
 Polygon = _reflection.GeneratedProtocolMessageType('Polygon', (_message.Message,), {
   'DESCRIPTOR' : _POLYGON,
   '__module__' : 'fizzy_ocr_pb2'
@@ -37,6 +41,13 @@ Coord = _reflection.GeneratedProtocolMessageType('Coord', (_message.Message,), {
   # @@protoc_insertion_point(class_scope:fizzyocr.Coord)
   })
 _sym_db.RegisterMessage(Coord)
+
+CommonOCRReq = _reflection.GeneratedProtocolMessageType('CommonOCRReq', (_message.Message,), {
+  'DESCRIPTOR' : _COMMONOCRREQ,
+  '__module__' : 'fizzy_ocr_pb2'
+  # @@protoc_insertion_point(class_scope:fizzyocr.CommonOCRReq)
+  })
+_sym_db.RegisterMessage(CommonOCRReq)
 
 GeneralOCRReq = _reflection.GeneratedProtocolMessageType('GeneralOCRReq', (_message.Message,), {
   'DESCRIPTOR' : _GENERALOCRREQ,
@@ -66,6 +77,27 @@ GeneralPrintOCRRspDataItem = _reflection.GeneratedProtocolMessageType('GeneralPr
   })
 _sym_db.RegisterMessage(GeneralPrintOCRRspDataItem)
 
+IdentityCardRsp = _reflection.GeneratedProtocolMessageType('IdentityCardRsp', (_message.Message,), {
+  'DESCRIPTOR' : _IDENTITYCARDRSP,
+  '__module__' : 'fizzy_ocr_pb2'
+  # @@protoc_insertion_point(class_scope:fizzyocr.IdentityCardRsp)
+  })
+_sym_db.RegisterMessage(IdentityCardRsp)
+
+IdentityCardRspData = _reflection.GeneratedProtocolMessageType('IdentityCardRspData', (_message.Message,), {
+  'DESCRIPTOR' : _IDENTITYCARDRSPDATA,
+  '__module__' : 'fizzy_ocr_pb2'
+  # @@protoc_insertion_point(class_scope:fizzyocr.IdentityCardRspData)
+  })
+_sym_db.RegisterMessage(IdentityCardRspData)
+
+IdentityCardResult = _reflection.GeneratedProtocolMessageType('IdentityCardResult', (_message.Message,), {
+  'DESCRIPTOR' : _IDENTITYCARDRESULT,
+  '__module__' : 'fizzy_ocr_pb2'
+  # @@protoc_insertion_point(class_scope:fizzyocr.IdentityCardResult)
+  })
+_sym_db.RegisterMessage(IdentityCardResult)
+
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
@@ -74,12 +106,20 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _POLYGON._serialized_end=187
   _COORD._serialized_start=189
   _COORD._serialized_end=218
-  _GENERALOCRREQ._serialized_start=220
-  _GENERALOCRREQ._serialized_end=290
-  _GENERALPRINTOCRRSP._serialized_start=292
-  _GENERALPRINTOCRRSP._serialized_end=412
-  _GENERALPRINTOCRRSPDATA._serialized_start=414
-  _GENERALPRINTOCRRSPDATA._serialized_end=490
-  _GENERALPRINTOCRRSPDATAITEM._serialized_start=492
-  _GENERALPRINTOCRRSPDATAITEM._serialized_end=588
+  _COMMONOCRREQ._serialized_start=220
+  _COMMONOCRREQ._serialized_end=275
+  _GENERALOCRREQ._serialized_start=277
+  _GENERALOCRREQ._serialized_end=347
+  _GENERALPRINTOCRRSP._serialized_start=350
+  _GENERALPRINTOCRRSP._serialized_end=486
+  _GENERALPRINTOCRRSPDATA._serialized_start=488
+  _GENERALPRINTOCRRSPDATA._serialized_end=564
+  _GENERALPRINTOCRRSPDATAITEM._serialized_start=566
+  _GENERALPRINTOCRRSPDATAITEM._serialized_end=662
+  _IDENTITYCARDRSP._serialized_start=665
+  _IDENTITYCARDRSP._serialized_end=795
+  _IDENTITYCARDRSPDATA._serialized_start=797
+  _IDENTITYCARDRSPDATA._serialized_end=888
+  _IDENTITYCARDRESULT._serialized_start=891
+  _IDENTITYCARDRESULT._serialized_end=1138
 # @@protoc_insertion_point(module_scope)

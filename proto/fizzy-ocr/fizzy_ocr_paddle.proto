@@ -6,6 +6,8 @@ option py_generic_services = true;
 
 import "fizzy_ocr.proto";
 
+// python -m grpc_tools.protoc --proto_path=proto proto/fizzy_ocr.proto proto/fizzy_ocr_paddle.proto --python_out=./ --grpc_python_out=./
+
 //票据OCR接口在此定义
 service FizzyOcrPaddle {
 

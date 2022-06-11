@@ -6,7 +6,9 @@ import fizzy_ocr_pb2 as fizzy__ocr__pb2
 
 
 class FizzyOcrPaddleStub(object):
-    """票据OCR接口在此定义
+    """python -m grpc_tools.protoc --proto_path=proto proto/fizzy_ocr.proto proto/fizzy_ocr_paddle.proto --python_out=./ --grpc_python_out=./
+
+    票据OCR接口在此定义
     """
 
     def __init__(self, channel):
@@ -23,7 +25,9 @@ class FizzyOcrPaddleStub(object):
 
 
 class FizzyOcrPaddleServicer(object):
-    """票据OCR接口在此定义
+    """python -m grpc_tools.protoc --proto_path=proto proto/fizzy_ocr.proto proto/fizzy_ocr_paddle.proto --python_out=./ --grpc_python_out=./
+
+    票据OCR接口在此定义
     """
 
     def GeneralPrintOCRV1(self, request, context):
@@ -49,7 +53,9 @@ def add_FizzyOcrPaddleServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class FizzyOcrPaddle(object):
-    """票据OCR接口在此定义
+    """python -m grpc_tools.protoc --proto_path=proto proto/fizzy_ocr.proto proto/fizzy_ocr_paddle.proto --python_out=./ --grpc_python_out=./
+
+    票据OCR接口在此定义
     """
 
     @staticmethod
