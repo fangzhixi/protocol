@@ -13,8 +13,8 @@ message Polygon {
 
 //坐标点
 message Coord {
-  float x = 1; //横坐标
-  float y = 2; //纵坐标
+  float64 x = 1; //横坐标
+  float64 y = 2; //纵坐标
 }
 
 //OCR识别常规请求体
@@ -50,7 +50,7 @@ message GeneralPrintOCRRspData{
 message GeneralPrintOCRRspDataItem{
   Polygon polygon = 1;//坐标点位
   string content = 2;//识别内容
-  float score = 3;//置信度
+  float64 score = 3;//置信度
 }
 
 /****************  OCR通用印刷体识别  ****************/
